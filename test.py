@@ -12,14 +12,37 @@ except:
 
 hkbytes = bytearray(stdinb.read())
 zeros = bytearray([0])*3
-#print(hex(len(hkbytes)), file=sys.stderr)
-for hk, val in zip(hotkeys.hk_order, (string.ascii_uppercase*5)[:-1]):
-	loc = hotkeys.hk_loc[hk][0]
-	
-	hkbytes[loc] = ord(val)
-	hkbytes[loc+8:loc+11] = zeros
-	
+def alpha():
+    for hk, val in zip(hotkeys.hk_order, (string.ascii_uppercase*5)[:-1]):
+        loc = hotkeys.hk_loc[hk][0]
 
-stdoutb.write(hkbytes)
+        hkbytes[loc] = ord(val)
+        hkbytes[loc+8:loc+11] = zeros
 
 
+    stdoutb.write(hkbytes)
+
+def ids():
+    #firstbytes = set()
+    #secondbytes = set()
+    for hk in hotkeys.hk_order:
+        loc = hotkeys.hk_loc[hk][0]
+        #firstbytes.add(hkbytes[loc+4])
+        #secondbytes.add(hkbytes[loc+5])
+        print hkbytes[loc+4], hk, hkbytes[loc+5]
+
+def unset():
+    for hk in hotkeys.hk_order:
+        loc = hotkeys.hk_loc[hk][0]
+        hkbytes[loc] = 0
+    stdoutb.write(hkbytes)
+
+
+def symbol():
+    for hk in hotkeys.hk_order:
+        if hk == 'monastery':
+            break
+        loc, desc = hotkeys.hk_loc[hk]
+        print hex(hkbytes[loc]), hkbytes[loc], desc
+
+symbol()
