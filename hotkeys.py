@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/bin/python
 import sys
 
 hk_loc = {

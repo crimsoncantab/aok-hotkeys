@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/bin/python
 import sys
 import zlib
 
@@ -13,7 +13,11 @@ def decompress(input):
     return output + d.flush()
 
 if __name__ == '__main__':
-    stdinb = sys.stdin.buffer
-    stdoutb = sys.stdout.buffer
+    try:
+        stdinb = sys.stdin.buffer
+        stdoutb = sys.stdout.buffer
+    except:
+        stdinb = sys.stdin
+        stdoutb = sys.stdout
     f = decompress if sys.argv[1] == 'd' else compress
     stdoutb.write(f(stdinb.read()))
