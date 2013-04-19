@@ -1,9 +1,9 @@
 __pycache__
 *.pyc
 *.log
+*.bak
 sessions
 errors
 databases
 cache
-private
 uploads

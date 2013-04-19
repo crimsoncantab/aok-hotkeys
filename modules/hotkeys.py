@@ -294,3 +294,16 @@ hk_order = [
 
 	'seed'
 ]
+
+
+
+def set_hotkeys(inbytes, **assign):
+    #infile should be uncompressed
+    for hk in hk_order:
+        pos, desc = hk_loc[hk]
+        if hk in assign:
+            a = assign[hk]
+        else:
+            a = (0, 0, 0, 0)
+        inbytes[pos] = a[0]
+        inbytes[pos+8:pos+11] = a[1:4]

@@ -18,12 +18,28 @@ def index():
     if you need a simple wiki simple replace the two lines below with:
     return auth.wiki()
     """
-    response.flash = T("Welcome to web2py!")
-    return dict(message=T('Hello World'))
+    #response.flash = T("Welcome to web2py!")
+    import hotkeys
+    return dict(hk_desc = [(hk, hotkeys.hk_loc[hk][1]) for hk in hotkeys.hk_order])
+
+def intify(s):
+    try:
+        return int(s) % 256
+    except:
+        return 0
+
+def hki():
+    import hotkeys, hkizip, os
+    hks = { k : (intify(v), 0, 0, 0) for k,v in request.post_vars.items()}
+    path=os.path.join(request.folder,'private','default.txt')
+    data = bytearray(open(path, 'rb').read())
+    hotkeys.set_hotkeys(data, **hks)
+    return hkizip.compress(str(data))
 
 
+"""
 def user():
-    """
+    "" "
     exposes:
     http://..../[app]/default/user/login
     http://..../[app]/default/user/logout
@@ -35,31 +51,31 @@ def user():
         @auth.requires_membership('group name')
         @auth.requires_permission('read','table name',record_id)
     to decorate functions that need access control
-    """
+    "" "
     return dict(form=auth())
 
 
 def download():
-    """
+    "" "
     allows downloading of uploaded files
     http://..../[app]/default/download/[filename]
-    """
+    "" "
     return response.download(request, db)
 
 
 def call():
-    """
+    "" "
     exposes services. for example:
     http://..../[app]/default/call/jsonrpc
     decorate with @services.jsonrpc the functions to expose
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
-    """
+    " ""
     return service()
 
 
 @auth.requires_signature()
 def data():
-    """
+    " ""
     http://..../[app]/default/data/tables
     http://..../[app]/default/data/create/[table]
     http://..../[app]/default/data/read/[table]/[id]
@@ -71,5 +87,6 @@ def data():
       A('table',_href=URL('data/tables',user_signature=True))
     or with the signed load operator
       LOAD('default','data.load',args='tables',ajax=True,user_signature=True)
-    """
+    " ""
     return dict(form=crud())
+"""
