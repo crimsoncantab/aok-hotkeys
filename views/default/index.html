@@ -1,9 +1,67 @@
-{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
+{{left_sidebar_enabled,right_sidebar_enabled=False,False}}
 {{extend 'layout.html'}}
+
+<script type="text/javascript">
+    /*
+        function sptoin(span_id) {
+        return span_id.replace('span', 'input');
+    }
+    var cur_pend = null;
+    
+    function set_pending(sp) {
+        sp.innerHTML = 'Type hotkey...';
+        sp.addClass('hk-pending');
+    }
+    function unset_pending(sp) {
+        sp.innerHTML = $('#'+sptoin(sp.attr('id'))).attr('value')
+        sp.removeClass('hk-pending');
+    }
+    */
+    function sync(sp) {
+        if ('hk' in sp.data()) {
+            sp.html(KeyCode.hot_key(sp.data('hk')));
+        }
+        else {
+            sp.html('Unassigned');
+        }
+    }
+    function test(sp) {
+        sp.data('hk', {
+            code: 65,
+            shift: true,
+            alt: false,
+            ctrl: false
+        });
+        sync(sp);
+    }
+    
+    function unset_pending() {
+        sync($(document).data('sp'));
+        $(document).removeData('sp');
+        $(document).off('click');
+    }
+    
+    function set_pending(e) {
+        e.stopPropagation();
+        if ('sp' in $(document).data()) {
+            unset_pending();
+        }
+        $(this).html('Waiting for input...');
+        $(document).data('sp', $(this));
+        $(document).click(unset_pending);
+    }
+    
+    $(document).ready(function() {
+        test($('#ground-span'));
+        $('.hk-click').click(set_pending);
+    });
+</script>
 
 <form action="{{=URL('default', 'hki.hki')}}" method="post">
 {{for hk, desc in hk_desc:}}
-    <div>{{=desc}}: <input type="text" name="{{=hk}}" /></div>
+    <div>{{=desc}}: 
+    <!--<input id="{{=hk}}-input" type="hidden" name="{{=hk}}" />-->
+    <span id="{{=hk}}-span" class="hk-click">Unassigned</span></div>
 {{pass}}
-    <input type="submit" value="Submit" />
+    <input type="submit" value="Download hotkey file" />
 </form>
