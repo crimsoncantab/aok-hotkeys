@@ -41,23 +41,40 @@
         $(document).off('click');
     }
     
-    function set_pending(e) {
-        e.stopPropagation();
+    function set_pending($sp) {
         if ('sp' in $(document).data()) {
             unset_pending();
         }
-        $(this).html('Waiting for input...');
-        $(document).data('sp', $(this));
-        $(document).click(unset_pending);
+        $sp.html('Waiting for input...');
+        $(document).data('sp', $sp);
+        $(document).mousedown(event_handler);
+    }
+    
+    function event_handler(e) {
+        e.stopPropagation();
+
+      	if ('sp' in $(document).data()) {
+            e.preventDefault();
+        }
+
+        if (e.which == 1 || e.which == 3) {
+            if ($(this).is('.hk-click')) {
+            	set_pending($(this));
+            }
+            else {
+            	unset_pending();
+            }
+        }
+        return false;
     }
     
     $(document).ready(function() {
         test($('#ground-span'));
-        $('.hk-click').click(set_pending);
+        $('.hk-click').mousedown(event_handler);
     });
 </script>
 
-<form action="{{=URL('default', 'hki.hki')}}" method="post">
+<form action="{{=URL('default', 'hki.hki')}}" method="post" oncontextmenu="return false;">
 {{for hk, desc in hk_desc:}}
     <div>{{=desc}}: 
     <!--<input id="{{=hk}}-input" type="hidden" name="{{=hk}}" />-->
