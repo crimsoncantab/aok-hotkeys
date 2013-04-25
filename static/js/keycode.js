@@ -78,15 +78,14 @@ var is_gecko = navigator.userAgent.indexOf('Gecko') != -1,
     is_konqueror = navigator.vendor && navigator.vendor.indexOf('KDE') != -1,
     is_icab = navigator.vendor && navigator.vendor.indexOf('iCab') != -1;
 
+//TODO - fix mappings for symbols
 var GECKO_IE_KEYMAP = {
-    186: 59, // ;: in IE
-    187: 61, // =+ in IE
-    188: 44, // ,<
-    109: 95, // -_ in Mozilla
-    107: 61, // =+ in Mozilla
+    59: 186, // ;: in Mozilla
+    173: 189, // -_ in Mozilla
+    61: 187, // =+ in Mozilla
     189: 95, // -_ in IE
-    190: 62, // .>
-    191: 47, // /?
+    //190: 62, // .>
+    //191: 47, // /?
     192: 126, // `~
     219: 91, // {[
     220: 92, // \|
@@ -117,6 +116,8 @@ if(is_konqueror) {
     KEY_MAP[127] = 46;
     KEY_MAP[45] = 95;
 }
+//remap middle button to 253
+KEY_MAP[2] = 253;
 
 var key_names = {
     32: 'SPACE',
@@ -126,9 +127,9 @@ var key_names = {
     16: 'SHIFT',
     17: 'CTRL',
     18: 'ALT',
-    20: 'CAPS_LOCK',
-    144: 'NUM_LOCK',
-    145: 'SCROLL_LOCK',
+    20: 'CAPS_LOCK', //nope - test it?
+    144: 'NUM_LOCK', //nope - test it?
+    145: 'SCROLL_LOCK', //nope - test it?
     37: 'LEFT',
     38: 'UP',
     39: 'RIGHT',
@@ -141,7 +142,12 @@ var key_names = {
     46: 'DELETE',
     27: 'ESCAPE',
     19: 'PAUSE',
-    222: "'"
+    222: "'",
+    251: 'EXTRA_BUTTON_2', //test with modifier?
+    252: 'EXTRA_BUTTON_1', //test with modifier?
+    253: 'MIDDLE_BUTTON',
+    254: 'WHEEL_DOWN',
+    255: 'WHEEL_UP'
 };
 function fn_name(code) {
     if(code >= 112 && code <= 123) return 'F' + (code - 111);
@@ -289,7 +295,7 @@ var KeyCode = window.KeyCode = {
 
         var c = key.code;
         var key_name = key_names[c] || fn_name(c) || num_name(c) || String.fromCharCode(c);
-        pieces.push(capitalize(key_name))
+        pieces.push(capitalize(key_name).replace(/_/g, ' '))
         return pieces.join('+');
     }
 };

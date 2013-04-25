@@ -2,43 +2,23 @@
 {{extend 'layout.html'}}
 
 <script type="text/javascript">
-    /*
-        function sptoin(span_id) {
-        return span_id.replace('span', 'input');
-    }
-    var cur_pend = null;
-    
-    function set_pending(sp) {
-        sp.innerHTML = 'Type hotkey...';
-        sp.addClass('hk-pending');
-    }
-    function unset_pending(sp) {
-        sp.innerHTML = $('#'+sptoin(sp.attr('id'))).attr('value')
-        sp.removeClass('hk-pending');
-    }
-    */
-    function sync(sp) {
-        if ('hk' in sp.data()) {
-            sp.html(KeyCode.hot_key(sp.data('hk')));
+    function sync($sp) {
+        if ('code' in $sp.data()) {
+            $sp.html(KeyCode.hot_key($sp.data()));
         }
         else {
-            sp.html('Unassigned');
+            $sp.html('Unassigned');
         }
     }
-    function test(sp) {
-        sp.data('hk', {
-            code: 65,
-            shift: true,
-            alt: false,
-            ctrl: false
-        });
-        sync(sp);
+    function test() {
+        
     }
     
     function unset_pending() {
         sync($(document).data('sp'));
         $(document).removeData('sp');
-        $(document).off('click');
+        $(document).off('mousedown keydown');
+        $('#extras').hide();
     }
     
     function set_pending($sp) {
@@ -48,14 +28,40 @@
         $sp.html('Waiting for input...');
         $(document).data('sp', $sp);
         $(document).mousedown(event_handler);
+        $(document).keydown(event_handler);
+        $('#extras').show();
     }
     
+    function assign_key(k) {
+    	var $sp = $(document).data('sp');
+    	$sp.data(k);
+    	sync($sp);
+    	unset_pending();
+    }
+
+    function unassign_key() {
+    	var $sp = $(document).data('sp');
+    	$sp.removeData();
+    	sync($sp);
+    	unset_pending();
+    }
+    
+/*
+stuff we need special handling for:
+-num minus and num plus
+*/
+
+    function extra_buttons(e) {
+    	e.which = parseInt($(this).attr('name'));
+    	event_handler(e);
+    }
+
     function event_handler(e) {
         e.stopPropagation();
+        e.preventDefault();
+        
+        //if ($(e.target).is('#document')) alert('blah'); //doesn't work
 
-      	if ('sp' in $(document).data()) {
-            e.preventDefault();
-        }
 
         if (e.which == 1 || e.which == 3) {
             if ($(this).is('.hk-click')) {
@@ -65,20 +71,42 @@
             	unset_pending();
             }
         }
+        else {
+            //this is because of keydown or middle mouse
+            key = KeyCode.translate_event(e);
+            console.log(key);
+            var s = KeyCode.SHIFT;
+            if (key.code ==KeyCode.SHIFT || key.code ==KeyCode.CTRL || key.code ==KeyCode.ALT) {
+                //fallthrough
+            } else if (key.code == KeyCode.ESCAPE) {
+                unassign_key();
+            }
+            else {
+                assign_key(key);
+            }
+        }
         return false;
     }
     
     $(document).ready(function() {
-        test($('#ground-span'));
+        test();
+        $('#extras').hide();
+        $('.extras').mousedown(extra_buttons);
         $('.hk-click').mousedown(event_handler);
     });
 </script>
 
 <form action="{{=URL('default', 'hki.hki')}}" method="post" oncontextmenu="return false;">
+    <div id="extras">
+        <input class="extras" type="button" value="Extra Button 1" name="252"/>
+        <input class="extras" type="button" value="Extra Button 2" name="251"/>
+        <!--<input class="extras" type="button" value="Num+" name="107"/>
+        <input class="extras" type="button" value="Num-" name="109"/>-->
+    </div>
 {{for hk, desc in hk_desc:}}
-    <div>{{=desc}}: 
+    <div><span style="font-weight:bold">{{=desc}}: </span>
     <!--<input id="{{=hk}}-input" type="hidden" name="{{=hk}}" />-->
     <span id="{{=hk}}-span" class="hk-click">Unassigned</span></div>
 {{pass}}
-    <input type="submit" value="Download hotkey file" />
+    <input type="button" value="Download hotkey file" />
 </form>
