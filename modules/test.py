@@ -45,4 +45,17 @@ def symbol():
         loc, desc = hotkeys.hk_loc[hk]
         print hex(hkbytes[loc]), hkbytes[loc], desc
 
-symbol()
+def unsettable():
+    hkbytes[hotkeys.hk_loc['delete'][0]] = 183
+    hkbytes[hotkeys.hk_loc['delete'][0]+8] = 1
+    #hkbytes[hotkeys.hk_loc['stop'][0]] = 0x5b
+    #hkbytes[hotkeys.hk_loc['diplomacy'][0]] = 0x5c
+    #hkbytes[hotkeys.hk_loc['diplomacy'][0]+8] = 1
+    #hkbytes[hotkeys.hk_loc['chatmenu'][0]] = 0x5d
+    #hkbytes[hotkeys.hk_loc['garrison'][0]] = 49
+    #hkbytes[hotkeys.hk_loc['garrison'][0]+10] = 1
+    #hkbytes[hotkeys.hk_loc['build'][0]] = 49
+    #hkbytes[hotkeys.hk_loc['build'][0]+8] = 1
+    stdoutb.write(hkbytes)
+#symbol()
+unsettable()
