@@ -1,5 +1,138 @@
 #!/bin/python
-import sys
+import hkizip, struct
+
+hk_ids = {
+'ground' : 0x4b14,
+'convert' : 0x4b16,
+'delete' : 0x4a38,
+'build' : 0x4b0e,
+'garrison' : 0x4a44,
+'heal' : 0x4b15,
+'mbuild' : 0x4b0f,
+'pack' : 0x4b29,
+'repair' : 0x4b18,
+'setgather' : 0x4a3a,
+'stop' : 0x4b10,
+'unload' : 0x4b19,
+'unpack' : 0x4b2a,
+'chatmenu' : 0x4b65,
+'diplomacy' : 0x4b62,
+'time' : 0x4a42,
+'stats' : 0x4b44,
+'tech' : 0x4b52,
+'flare' : 0x4b59,
+'range' : 0x4b46,
+'rax' : 0x4b45,
+'smith' : 0x4b4b,
+'castle' : 0x4b5a,
+'dock' : 0x4b49,
+'last' : 0x4a50,
+'last2' : 0x14a50,
+'lumber' : 0x4b5c,
+'market' : 0x4a53,
+'mill' : 0x4b4c,
+'mining' : 0x4b5b,
+'monastery' : 0x4b4a,
+'idlem' : 0x4a7c,
+'idlem2' : 0x14a7c,
+'idlev' : 0x4a4f,
+'idlev2' : 0x14a4f,
+'selected' : 0x4a51,
+'siege' : 0x4b48,
+'stable' : 0x4b47,
+'tc' : 0x4a52,
+'tc2' : 0x14a52,
+'university' : 0x4b4d,
+'cmap' : 0x4b5d,
+'emap' : 0x4b5e,
+'nmap' : 0x4b5f,
+'object' : 0x4b64,
+'pause' : 0x4b7b,
+'back' : 0x4b7e,
+'chatback' : 0x4a54,
+'chatfor' : 0x4a55,
+'chapter' : 0x4b80,
+'save' : 0x4b7d,
+'chat' : 0x4a39,
+'slow' : 0x4a3d,
+'fast' : 0x4a3c,
+'colors' : 0x4b7f,
+'down' : 0x4a41,
+'left' : 0x4a3e,
+'right' : 0x4a3f,
+'up' : 0x4a40,
+'brange' : 0x4a76,
+'brax' : 0x4a78,
+'bsmith' : 0x4a77,
+'bbombard' : 0x4b04,
+'bcastle' : 0x4a7a,
+'bdock' : 0x4a7b,
+'bfarm' : 0x4b00,
+'btrap' : 0x4b02,
+'bgate' : 0x4b40,
+'bhouse' : 0x4b0d,
+'blumber' : 0x4b53,
+'bmarket' : 0x4b25,
+'bmill' : 0x4b24,
+'bmining' : 0x4b58,
+'bmonastery' : 0x4a79,
+'bnext' : 0x4b2b,
+'boutpost' : 0x4b03,
+'bpalisade' : 0x4b0a,
+'bsiege' : 0x4b05,
+'bstable' : 0x4b06,
+'bwall' : 0x4b0b,
+'btower' : 0x4b01,
+'btc' : 0x4b26,
+'buniversity' : 0x4b08,
+'bwonder' : 0x4b09,
+'work' : 0x4b7c,
+'bell' : 0x4b77,
+'vill' : 0x4a6e,
+'longboat' : 0x4b78,
+'gcannon' : 0x4a6f,
+'demoship' : 0x4b50,
+'fireship' : 0x4b4f,
+'fish' : 0x4a65,
+'galley' : 0x4a73,
+'cog' : 0x4a64,
+'transport' : 0x4b54,
+'turtle' : 0x4a80,
+'eagle' : 0x4a7e,
+'huskarl' : 0x4a81,
+'sword' : 0x4a5b,
+'spear' : 0x4a5a,
+'archer' : 0x4a5e,
+'cavarcher' : 0x4a60,
+'hcannon' : 0x4a61,
+'skirm' : 0x4a63,
+'camel' : 0x4a57,
+'knight' : 0x4a56,
+'scout' : 0x4a74,
+'ram' : 0x4a70,
+'bcannon' : 0x4a67,
+'mangonel' : 0x4b55,
+'scorpion' : 0x4a69,
+'mission' : 0x4a7f,
+'monk' : 0x4a6b,
+'cart' : 0x4b56,
+'agg' : 0x4b73,
+'box' : 0x4b67,
+'def' : 0x4b74,
+'flank' : 0x4b6a,
+'follow' : 0x4b72,
+'guard' : 0x4b71,
+'line' : 0x4b68,
+'noattack' : 0x4b76,
+'patrol' : 0x4b70,
+'stag' : 0x4b69,
+'stand' : 0x4b75,
+'treb' : 0x4b79,
+'uu' : 0x4b7a,
+'petard' : 0x4a7d,
+'seed' : 0x4a82
+}
+
 
 hk_loc = {
 	'ground' : (0xB4, 'Attack Ground'),
@@ -295,6 +428,35 @@ hk_order = [
 	'seed'
 ]
 
+class HotkeyFile:
+
+    def __init__(self, hki):
+        header_format = count_format = struct.Struct('<I')
+        hk_format = struct.Struct('<II???x')
+        hk_data = hkizip.decompress(hki)
+        offset = 0
+        header, = header_format.unpack_from(hk_data, offset)
+        offset += header_format.size
+        num_menus, = count_format.unpack_from(hk_data, offset)
+        offset += count_format.size
+        data = []
+        hk_map = {}
+        for i in range(num_menus):
+            menu = []
+            data.append(menu)
+            menu_size, = count_format.unpack_from(hk_data, offset)
+            offset += count_format.size
+            for j in range(menu_size):
+                hotkey, id, ctrl, alt, shift = hk_format.unpack_from(hk_data, offset)
+                if (id != 0xffffffff):
+                    while id in hk_map: id+=0x10000
+                    hk_map[id] = (i,j)
+                offset += hk_format.size
+                menu.append((hotkey, id, ctrl, alt, shift))
+
+        self.header_format, self.count_format, self.hk_format = header_format, count_format, hk_format
+        self.header, self.data, self.hk_map = header, data, hk_map
+
 
 
 def set_hotkeys(inbytes, **assign):
@@ -307,3 +469,14 @@ def set_hotkeys(inbytes, **assign):
             a = (0, 0, 0, 0)
         inbytes[pos] = a[0]
         inbytes[pos+8:pos+11] = a[1:4]
+
+if __name__ == '__main__':
+    import sys
+    hki = sys.stdin.read()
+    hotkey_file = HotkeyFile(hki)
+    hku = bytearray(hkizip.decompress(hki))
+    print len(hotkey_file.hk_map), sum([len(menu) for menu in hotkey_file.data])
+    # for hk in hk_order:
+        # pos = hk_loc[hk][0]
+        # id = hku[pos+4] + (hku[pos+5]<<8)
+        # print '\'{:s}\' : 0x{:x},'.format(hk, id)
