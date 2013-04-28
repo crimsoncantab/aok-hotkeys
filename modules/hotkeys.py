@@ -1,6 +1,6 @@
 #!/bin/python
 import hkizip, struct
-
+from collections import namedtuple
 #these are derived from the numerical ids/text ids in the game configs
 hk_ids = {
     'ground' : 0x4b14,
@@ -681,11 +681,12 @@ hk22_order = [
 
 
 
+header_format = count_format = struct.Struct('<I')
+hk_format = struct.Struct('<Ii???x')
+Hotkey = namedtuple('Hotkey', 'assign id ctrl alt shift')
 class HotkeyFile:
 
     def __init__(self, hki):
-        header_format = count_format = struct.Struct('<I')
-        hk_format = struct.Struct('<II???x')
         hk_data = hkizip.decompress(hki)
         offset = 0
         header, = header_format.unpack_from(hk_data, offset)
@@ -700,45 +701,65 @@ class HotkeyFile:
             menu_size, = count_format.unpack_from(hk_data, offset)
             offset += count_format.size
             for j in range(menu_size):
-                hotkey, id, ctrl, alt, shift = hk_format.unpack_from(hk_data, offset)
-                if (id != 0xffffffff):
+                hotkey = Hotkey(*hk_format.unpack_from(hk_data, offset))._asdict()
+                id = hotkey['id']
+                if (id != -1):
                     while id in hk_map: id+=0x1000000
-                    hk_map[id] = (i,j)
+                    hk_map[id] = hotkey
                 offset += hk_format.size
-                menu.append((hotkey, id, ctrl, alt, shift))
+                menu.append(hotkey)
 
-        self.header_format, self.count_format, self.hk_format = header_format, count_format, hk_format
-        self.header, self.data, self.hk_map = header, data, hk_map
+        # self.header_format, self.count_format, self.hk_format = header_format, count_format, hk_format
+        self.data, self.hk_map = data, hk_map
+        self._header, self._file_size= header, offset
 
+    def serialize(self):
+        offset = 0
+        #update raw from data
+        raw = bytearray(self._file_size)
+        header_format.pack_into(raw, offset, self._header)
+        offset += header_format.size
+        count_format.pack_into(raw, offset, len(self.data))
+        offset += count_format.size
+        for menu in self.data:
+            count_format.pack_into(raw, offset, len(menu))
+            offset += count_format.size
+            for hotkey in menu:
+                hk_format.pack_into(raw, offset, *Hotkey(**hotkey))
+                offset += hk_format.size
+        assert offset == self._file_size
+        return hkizip.compress(str(raw))
+        # return str(raw)
 
-
-def set_hotkeys(inbytes, **assign):
-    #infile should be uncompressed
-    for hk in hk_order:
-        pos, desc = hk_loc[hk]
-        if hk in assign:
-            a = assign[hk]
-        else:
-            a = (0, 0, 0, 0)
-        inbytes[pos] = a[0]
-        inbytes[pos+8:pos+11] = a[1:4]
+# def set_hotkeys(inbytes, **assign):
+    ## infile should be uncompressed
+    # for hk in hk_order:
+        # pos, desc = hk_loc[hk]
+        # if hk in assign:
+            # a = assign[hk]
+        # else:
+            # a = (0, 0, 0, 0)
+        # inbytes[pos] = a[0]
+        # inbytes[pos+8:pos+11] = a[1:4]
 
 if __name__ == '__main__':
     import sys
     hki = sys.stdin.read()
     hotkey_file = HotkeyFile(hki)
-    hku = bytearray(hkizip.decompress(hki))
-    #print len(hotkey_file.hk_map), [len(menu) for menu in hotkey_file.data]
+    #hku = bytearray(hkizip.decompress(hki))
+    # print hex(len(hotkey_file._raw))
+    # print len(hotkey_file.hk_map), [len(menu) for menu in hotkey_file.data]
+    sys.stdout.write(hotkey_file.serialize())
     # for hk in hk_order:
         # pos = hk_loc[hk][0]
         # id = hku[pos+4] + (hku[pos+5]<<8)
         # print '\'{:s}\' : 0x{:x},'.format(hk, id)
-    ctrlgroups = hotkey_file.data[1][0:40]
+    # ctrlgroups = hotkey_file.data[1][0:40]
     # for hk in hk_order:
         # print '\'{:s}\' : \'{:s}\','.format(hk, hk_loc[hk][1])
-    for i, hk in enumerate(ctrlgroups):
-        if i < 20:
-            print '\'cgroup{:d}\','.format(i)
-        else:
-            print '\'sgroup{:d}\','.format(i % 20)
+    # for i, hk in enumerate(ctrlgroups):
+        # if i < 20:
+            # print '\'cgroup{:d}\','.format(i)
+        # else:
+            # print '\'sgroup{:d}\','.format(i % 20)
     # print len(hk_desc), len(hk_loc), len(hk_order), len(hk_ids)
