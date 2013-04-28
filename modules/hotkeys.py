@@ -683,7 +683,7 @@ hk22_order = [
 
 header_format = count_format = struct.Struct('<I')
 hk_format = struct.Struct('<Ii???x')
-Hotkey = namedtuple('Hotkey', 'assign id ctrl alt shift')
+Hotkey = namedtuple('Hotkey', 'key id ctrl alt shift')
 class HotkeyFile:
 
     def __init__(self, hki):
@@ -713,6 +713,12 @@ class HotkeyFile:
         self.data, self.hk_map = data, hk_map
         self._header, self._file_size= header, offset
 
+    def __getitem__(self, key):
+        return self.hk_map[hk_ids[key]]
+
+    def __contains__(self, key):
+        return key in hk_ids and hk_ids[key] in self.hk_map
+
     def serialize(self):
         offset = 0
         #update raw from data
@@ -729,31 +735,32 @@ class HotkeyFile:
                 offset += hk_format.size
         assert offset == self._file_size
         return hkizip.compress(str(raw))
-        # return str(raw)
-
-# def set_hotkeys(inbytes, **assign):
-    ## infile should be uncompressed
-    # for hk in hk_order:
-        # pos, desc = hk_loc[hk]
-        # if hk in assign:
-            # a = assign[hk]
-        # else:
-            # a = (0, 0, 0, 0)
-        # inbytes[pos] = a[0]
-        # inbytes[pos+8:pos+11] = a[1:4]
 
 if __name__ == '__main__':
     import sys
     hki = sys.stdin.read()
     hotkey_file = HotkeyFile(hki)
-    #hku = bytearray(hkizip.decompress(hki))
-    # print hex(len(hotkey_file._raw))
-    # print len(hotkey_file.hk_map), [len(menu) for menu in hotkey_file.data]
-    sys.stdout.write(hotkey_file.serialize())
+
+    print hotkey_file['idlev']
+    # h = Hotkey(**hotkey_file['left'])
+
+    # d = {'assign': 5, 'ctrl': 5}
+    # print set(d).issubset(set(hotkey_file['left']))
+
+    # print hotkey_file['left'], hotkey_file['up'],hotkey_file['right'],hotkey_file['down'],
+
+    # print 'build' in hotkey_file
+    # print 'cgroup0' in hotkey_file
+
+    # hotkey_file['build'].update({'assign': 65, 'ctrl' : True, 'alt' : False, 'shift' : True})
+
+    # sys.stdout.write(hotkey_file.serialize())
+
     # for hk in hk_order:
         # pos = hk_loc[hk][0]
         # id = hku[pos+4] + (hku[pos+5]<<8)
         # print '\'{:s}\' : 0x{:x},'.format(hk, id)
+
     # ctrlgroups = hotkey_file.data[1][0:40]
     # for hk in hk_order:
         # print '\'{:s}\' : \'{:s}\','.format(hk, hk_loc[hk][1])
@@ -762,4 +769,5 @@ if __name__ == '__main__':
             # print '\'cgroup{:d}\','.format(i)
         # else:
             # print '\'sgroup{:d}\','.format(i % 20)
+
     # print len(hk_desc), len(hk_loc), len(hk_order), len(hk_ids)
