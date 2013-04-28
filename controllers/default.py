@@ -20,7 +20,7 @@ def index():
     """
     #response.flash = T("Welcome to web2py!")
     import hotkeys
-    return dict(hk_desc = [(hk, hotkeys.hk_loc[hk][1]) for hk in hotkeys.hk_order])
+    return dict(hk_desc = [(hk, hotkeys.hk_desc[hk]) for hk in hotkeys.hk22_order])
 
 def intify(s):
     try:

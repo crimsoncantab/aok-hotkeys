@@ -206,7 +206,7 @@ var key_names = {
 	251 : 'Extra Button 2', // AoK uses this for Extra Button 2
 	252 : 'Extra Button 1', // AoK uses this for Extra Button 1
 	253 : 'Middle Button', // AoK uses this for Middle Button
-	254 : 'Wheel Up' // AoK uses this for Wheel Up
+	254 : 'Wheel Up', // AoK uses this for Wheel Up
 	255 : 'Wheel Down' // AoK uses this for Wheel Down
 }
 
@@ -391,7 +391,7 @@ var KeyCode = window.KeyCode = {
         var pieces = [];
         for(var i = 0; i < modifiers.length; ++i) {
             var modifier = modifiers[i];
-            if(key[modifier] && modifier.toUpperCase() != key_names[key.code]) {
+            if(key[modifier.toLowerCase()] && modifier != key_names[key.code]) {
                 pieces.push(capitalize(modifier));
             }
         }

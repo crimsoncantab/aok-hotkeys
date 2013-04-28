@@ -10,14 +10,11 @@
             $sp.html('Unassigned');
         }
     }
-    function test() {
-        
-    }
     
     function unset_pending() {
         sync($(document).data('sp'));
         $(document).removeData('sp');
-        $(document).off('mousedown keydown');
+        $(document).off('mousedown keydown mousewheel');
         $('#extras').hide();
     }
     
@@ -29,6 +26,7 @@
         $(document).data('sp', $sp);
         $(document).mousedown(event_handler);
         $(document).keydown(event_handler);
+        $(document).mousewheel(mousewheel_handler);
         $('#extras').show();
     }
     
@@ -50,6 +48,11 @@
 stuff we need special handling for:
 -num minus and num plus
 */
+    function mousewheel_handler(e, delta) {
+        //TODO: handle modifier keys
+        e.which = (delta < 0) ? 255 : 254;
+    	event_handler(e);
+    }
 
     function extra_buttons(e) {
     	e.which = parseInt($(this).attr('name'));
@@ -76,9 +79,9 @@ stuff we need special handling for:
             key = KeyCode.translate_event(e);
             console.log(key);
             var s = KeyCode.SHIFT;
-            if (key.code ==KeyCode.SHIFT || key.code ==KeyCode.CTRL || key.code ==KeyCode.ALT) {
+            if (key.code ==KeyCode.Shift || key.code ==KeyCode.Ctrl || key.code ==KeyCode.Alt) {
                 //fallthrough
-            } else if (key.code == KeyCode.ESCAPE) {
+            } else if (key.code == KeyCode.Escape) {
                 unassign_key();
             }
             else {
@@ -89,24 +92,27 @@ stuff we need special handling for:
     }
     
     $(document).ready(function() {
-        test();
+        //test();
         $('#extras').hide();
         $('.extras').mousedown(extra_buttons);
         $('.hk-click').mousedown(event_handler);
     });
 </script>
-
 <form action="{{=URL('default', 'hki.hki')}}" method="post" oncontextmenu="return false;">
-    <div id="extras">
-        <input class="extras" type="button" value="Extra Button 1" name="252"/>
-        <input class="extras" type="button" value="Extra Button 2" name="251"/>
-        <!--<input class="extras" type="button" value="Num+" name="107"/>
-        <input class="extras" type="button" value="Num-" name="109"/>-->
-    </div>
+    <div id="#assignments" style="width:400px; height:400px; overflow-y:scroll; float:left; padding: 0px 20px">
 {{for hk, desc in hk_desc:}}
-    <div><span style="font-weight:bold">{{=desc}}: </span>
+    <div><span style="font-weight:bold; float:left">{{=desc}}: </span>
     <!--<input id="{{=hk}}-input" type="hidden" name="{{=hk}}" />-->
-    <span id="{{=hk}}-span" class="hk-click">Unassigned</span></div>
+    <span id="{{=hk}}-span" class="hk-click" style="float:right">Unassigned</span>
+        <div style="clear: both"></div></div>
 {{pass}}
-    <input type="button" value="Download hotkey file" />
+</div>
+<div id="extras">
+    <input class="extras" type="button" value="Extra Button 1" name="252"/>
+    <input class="extras" type="button" value="Extra Button 2" name="251"/>
+    <!--<input class="extras" type="button" value="Num+" name="107"/>
+<input class="extras" type="button" value="Num-" name="109"/>-->
+</div>
+<div style="clear: both"></div>
+<input type="button" value="Download hotkey file" />
 </form>
