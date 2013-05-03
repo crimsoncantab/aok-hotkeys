@@ -20,7 +20,7 @@ def index():
     """
     #response.flash = T("Welcome to web2py!")
     import hotkeys
-    return dict(hk_desc = [(hk, hotkeys.hk_desc[hk]) for hk in hotkeys.hk22_order])
+    return dict(hk_desc = [(hk, hotkeys.hk_desc[hk]) for hk in hotkeys.hk_order])
 
 def intify(s):
     try:
@@ -28,10 +28,18 @@ def intify(s):
     except:
         return 0
 
-def hki():
+def player1():
+    import gluon.contrib.simplejson, hotkeys, os
+    data = gluon.contrib.simplejson.loads(request.post_vars['hotkeys'])
+    hkfile = hotkeys.HotkeyFile(open(os.path.join(request.folder, 'private', 'default22.hki')).read())
+    for hotkey, value in data.items():
+        hkfile[hotkey].update(value)
+    return hkfile.serialize()
+'''
     import hotkeys, hkizip, os
     hks = { k : (intify(v), 0, 0, 0) for k,v in request.post_vars.items()}
     path=os.path.join(request.folder,'private','default.txt')
     data = bytearray(open(path, 'rb').read())
     hotkeys.set_hotkeys(data, **hks)
     return hkizip.compress(str(data))
+'''

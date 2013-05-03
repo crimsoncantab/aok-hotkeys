@@ -347,6 +347,8 @@ hk_desc = {
     'sgroup19' : 'Select Group #19'
 }
 
+
+'''
 hk20_order = [
 	'ground' ,
 	'convert' ,
@@ -492,8 +494,9 @@ hk20_order = [
 
 	'seed'
 ]
+'''
 
-hk22_order = [
+hk_order = [
 	'ground' ,
 	'convert' ,
 	'delete' ,
@@ -683,7 +686,7 @@ hk22_order = [
 
 header_format = count_format = struct.Struct('<I')
 hk_format = struct.Struct('<Ii???x')
-Hotkey = namedtuple('Hotkey', 'key id ctrl alt shift')
+Hotkey = namedtuple('Hotkey', 'code id ctrl alt shift')
 class HotkeyFile:
 
     def __init__(self, hki):

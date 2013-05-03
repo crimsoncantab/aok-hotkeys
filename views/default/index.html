@@ -77,7 +77,7 @@ stuff we need special handling for:
         else {
             //this is because of keydown or middle mouse
             key = KeyCode.translate_event(e);
-            console.log(key);
+            //console.log(key);
             var s = KeyCode.SHIFT;
             if (key.code ==KeyCode.Shift || key.code ==KeyCode.Ctrl || key.code ==KeyCode.Alt) {
                 //fallthrough
@@ -91,28 +91,36 @@ stuff we need special handling for:
         return false;
     }
     
+    function serialize_hotkeys() {
+        var hotkeys = {}
+        $('.hk-click').each(function() {
+        	if ('code' in $(this).data()) hotkeys[$(this).attr('name')] = $(this).data();
+            else hotkeys[$(this).attr('name')] = {'code':0, 'ctrl': false, 'alt': false, 'shift' : false};
+        });
+        $('#hotkeys').val(JSON.stringify(hotkeys));
+    }
+    
     $(document).ready(function() {
-        //test();
         $('#extras').hide();
         $('.extras').mousedown(extra_buttons);
         $('.hk-click').mousedown(event_handler);
     });
 </script>
-<form action="{{=URL('default', 'hki.hki')}}" method="post" oncontextmenu="return false;">
     <div id="#assignments" style="width:400px; height:400px; overflow-y:scroll; float:left; padding: 0px 20px">
 {{for hk, desc in hk_desc:}}
     <div><span style="font-weight:bold; float:left">{{=desc}}: </span>
     <!--<input id="{{=hk}}-input" type="hidden" name="{{=hk}}" />-->
-    <span id="{{=hk}}-span" class="hk-click" style="float:right">Unassigned</span>
+        <span id="{{=hk}}-span" class="hk-click" name="{{=hk}}" style="float:right">Unassigned</span>
         <div style="clear: both"></div></div>
 {{pass}}
 </div>
 <div id="extras">
     <input class="extras" type="button" value="Extra Button 1" name="252"/>
     <input class="extras" type="button" value="Extra Button 2" name="251"/>
-    <!--<input class="extras" type="button" value="Num+" name="107"/>
-<input class="extras" type="button" value="Num-" name="109"/>-->
 </div>
 <div style="clear: both"></div>
-<input type="button" value="Download hotkey file" />
+<form action="{{=URL('default', 'player1.hki')}}" method="post" oncontextmenu="return false;">
+<!--<form action="{{=URL('default', 'player1.html')}}" method="post" oncontextmenu="return false;">-->
+    <input type="hidden" id="hotkeys" name="hotkeys" />
+	<input type="submit" onclick="serialize_hotkeys();" value="Download hotkey file" />
 </form>
