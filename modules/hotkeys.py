@@ -721,6 +721,11 @@ class HotkeyFile:
 
     def __contains__(self, key):
         return key in hk_ids and hk_ids[key] in self.hk_map
+        
+    def __iter__(self):
+        for k in hk_ids:
+            if k in self:
+                yield k, self[k]
 
     def serialize(self):
         offset = 0

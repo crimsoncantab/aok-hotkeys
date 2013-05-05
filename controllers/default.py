@@ -8,38 +8,49 @@
 ## - download is for downloading files uploaded in the db (does streaming)
 ## - call exposes all registered services (none by default)
 #########################################################################
-
+from gluon.contrib import simplejson as json
+import hotkeys, os
 
 def index():
-    """
-    example action using the internationalization operator T and flash
-    rendered by views/default/index.html or views/generic.html
+    return dict()
 
-    if you need a simple wiki simple replace the two lines below with:
-    return auth.wiki()
-    """
-    #response.flash = T("Welcome to web2py!")
+def editor():
     import hotkeys
     return dict(hk_desc = [(hk, hotkeys.hk_desc[hk]) for hk in hotkeys.hk_order])
 
-def intify(s):
-    try:
-        return int(s) % 256
-    except:
-        return 0
+def load_file(name):
+    return hotkeys.HotkeyFile(open(os.path.join(request.folder, 'private', name + '.hki')).read())
+    
+def get_file(*args):
+    return session.hkfile if session.hkfile else load_file('default')
+
+def copy_dict(d, *keys):
+    return {key: d[key] for key in keys}
+
+def recall():
+    hkfile = get_file()
+    from gluon.contrib import simplejson as json
+    return json.dumps({k:copy_dict(v,'code', 'ctrl', 'alt', 'shift') for (k,v) in hkfile})
+    
+def setfile():
+    f = request.args[0] if request.args else 'default'
+    
+    if f == 'upload' and 'hki' in request.vars:
+        hkfile = hotkeys.HotkeyFile(request.vars.hki.file.getvalue())
+    elif f == 'none':
+        hkfile = load_file('none')
+    elif f == 'default20':
+        hkfile = load_file('default20')
+    else:
+        hkfile = load_file('default')
+    session.hkfile = hkfile
+    redirect(URL(editor))
+
 
 def player1():
-    import gluon.contrib.simplejson, hotkeys, os
-    data = gluon.contrib.simplejson.loads(request.post_vars['hotkeys'])
-    hkfile = hotkeys.HotkeyFile(open(os.path.join(request.folder, 'private', 'default22.hki')).read())
+    data = json.loads(request.vars.hotkeys)
+    hkfile = get_file()
     for hotkey, value in data.items():
+        #del value['id'] # need to do this?
         hkfile[hotkey].update(value)
     return hkfile.serialize()
-'''
-    import hotkeys, hkizip, os
-    hks = { k : (intify(v), 0, 0, 0) for k,v in request.post_vars.items()}
-    path=os.path.join(request.folder,'private','default.txt')
-    data = bytearray(open(path, 'rb').read())
-    hotkeys.set_hotkeys(data, **hks)
-    return hkizip.compress(str(data))
-'''
