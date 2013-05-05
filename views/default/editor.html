@@ -1,0 +1,204 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,False}}
+{{extend 'layout.html'}}
+{{block head}}
+<script type="text/javascript">
+    function sync($sp) {
+        if ('code' in $sp.data() && $sp.data('code') != 0) {
+            $sp.html(KeyCode.hot_key($sp.data()));
+            $sp.removeClass("hk-pending hk-unassign").addClass("hk-assign");
+        }
+        else {
+    		$sp.removeData();
+            $sp.html('Unassigned');
+            $sp.removeClass("hk-pending hk-assign").addClass("hk-unassign");
+        }
+    }
+    
+    function unset_pending() {
+        sync($(document).data('sp'));
+        $(document).removeData('sp');
+        $(document).off('mousedown keydown mousewheel contextmenu');
+        $('#extras').hide();
+    }
+    
+    function set_pending($sp) {
+        if ('sp' in $(document).data()) {
+            unset_pending();
+        }
+        $sp.html('Waiting for input...');
+        $sp.removeClass("hk-unassign hk-assign").addClass("hk-pending");
+        $(document).data('sp', $sp);
+        $(document).mousedown(event_handler);
+        $(document).keydown(event_handler);
+        $(document).mousewheel(mousewheel_handler);
+        $(document).contextmenu(function(){return false;});
+        $('#extras').show();
+    }
+    
+    function assign_key(k) {
+    	var $sp = $(document).data('sp');
+    	$sp.data(k);
+    	sync($sp);
+    	unset_pending();
+    }
+
+    function unassign_key() {
+    	var $sp = $(document).data('sp');
+    	$sp.removeData();
+    	sync($sp);
+    	unset_pending();
+    }
+    
+    function mousewheel_handler(e, delta) {
+        //TODO: handle modifier keys
+        e.which = (delta < 0) ? 255 : 254;
+    	event_handler(e);
+    }
+
+    function extra_buttons(e) {
+    	e.which = parseInt($(this).attr('name'));
+    	event_handler(e);
+    }
+
+    function event_handler(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        if (e.which == 1 || e.which == 3) {
+            if ($(this).is('.hk-click')) {
+            	set_pending($(this));
+            }
+            else {
+            	unset_pending();
+            }
+        }
+        else {
+            //this is because of keydown or middle mouse
+            key = KeyCode.translate_event(e);
+            var s = KeyCode.SHIFT;
+            if (key.code ==KeyCode.Shift || key.code ==KeyCode.Ctrl || key.code ==KeyCode.Alt) {
+                //fallthrough
+            } else if (key.code == KeyCode.Escape) {
+                unassign_key();
+            }
+            else {
+                assign_key(key);
+            }
+        }
+        return false;
+    }
+    
+    function serialize_hotkeys() {
+        var hotkeys = {}
+        $('.hk-click').each(function() {
+        	if ('code' in $(this).data()) hotkeys[$(this).attr('name')] = $(this).data();
+            else hotkeys[$(this).attr('name')] = {'code':0, 'ctrl': false, 'alt': false, 'shift' : false};
+        });
+        $('#hotkeys').val(JSON.stringify(hotkeys));
+    }
+    
+    function deserialize_hotkeys(data) {
+    	data = JSON.parse(data);
+    	$('.hk').each(function() {
+        	$this = $(this);
+            if ($this.attr('name') in data) {
+            	$this.data(data[$this.attr('name')]);
+            	$this.addClass('hk-click');
+            	sync($this);
+            }
+        });
+    }
+    
+    $(document).ready(function() {
+        $('#extras').hide();
+        $('.extras').mousedown(extra_buttons);
+        $.ajax('{{=URL('recall')}}')
+        	.done(function(data) { deserialize_hotkeys(data); })
+            .fail(function() { alert("There was an error loading the hotkey file into the editor"); })
+            .always(function() { $('.hk-click').mousedown(event_handler); });
+        
+        
+    });
+</script>
+<style>
+    .hk-desc {
+        font-weight:bold;
+        float:left;
+        margin-right:-300px;
+    }
+    .hk {
+        min-width:100px;
+        background: #cccccc;
+        border: 1px solid #666666;
+        float:right;
+        text-align: center;
+        padding: 1px 2px;
+    }
+    .hk-click {
+        cursor: pointer;
+    }
+    .hk-pending {
+        background: #ffffe0;
+        border-color: #ffff00;
+        font-style: italic;
+    }
+    .hk-unassign {
+        background: #e0e0ff;
+        border-color: #0000ff;
+    }
+    .hk-assign {
+        background: #e0ffe0;
+        border-color: #00ff00;
+    }
+    .hk-disabled {
+        background #000000;
+    }
+    .hk-wrap {
+        width:400px;
+        padding: 2px;
+        margin: 2px;
+        float:left;
+        border: 1px solid #808080;
+        background: #d0d0d0;
+    }
+    #functions {
+        position: fixed;
+        left: 0px;
+        top: 45px;
+        width: 100%;
+        background: #ffffff;
+    }
+    #functions>div {
+        margin: 4px 10px 0px;
+        width: 300px;
+        float:left;
+    }
+    #assignments {
+        margin: 150px auto 0px;
+    }
+</style>
+{{end}}
+<div id="functions">
+    <div id="download-div" style="" >
+    
+    <form action="{{=URL('default', 'player1.hki')}}" method="post">
+        <input type="hidden" id="hotkeys" name="hotkeys" />
+        Change hotkeys by clicking on the key binding, then simply entering the desired key combo for the respective hotkey.  When finished, <input type="submit" onclick="serialize_hotkeys();" value="Generate .hki File" />
+    </form>
+    </div>
+    <div id="extras" style="float:left">
+        <div>Type &lt;Esc&gt; to unassign the given hotkey.  Use the buttons below for the &lt;Back&gt; and &lt;Forward&gt; buttons on the mouse.  The mousewheel works also, with modifier keys.</div>
+        <input class="extras" type="button" value="Extra Button 1" name="252"/>
+        <input class="extras" type="button" value="Extra Button 2" name="251"/>
+    </div>
+</div>
+<div id="assignments" style="padding: 20px">
+{{for hk, desc in hk_desc:}}
+    <div class="hk-wrap" >
+        <div class="hk-desc">{{=desc}}: </div>
+        <div id="{{=hk}}-div" class="hk" name="{{=hk}}">Disabled</div>
+        <div style="clear: both"></div>
+    </div>
+{{pass}}
+</div>
+<div style="clear: both"></div>
