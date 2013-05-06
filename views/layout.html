@@ -77,6 +77,9 @@
           top:50%;
           margin-left: -100px;
       }
+      h1, h2, h3, h4, h5 {
+          font-family: Georgia, serif;
+      }
   </style>
 
   {{
@@ -146,7 +149,7 @@
     </header>
     {{pass}}
 
-    <section id="main" class="main row">
+    <section id="main" class="main">
         {{if left_sidebar_enabled:}}
         <div class="span3 left-sidebar">
             {{block left_sidebar}}
@@ -156,7 +159,7 @@
         </div>
         {{pass}}
 
-        <div class="{{=middle_columns}}">
+        <div>
             {{block center}}
             {{include}}
             {{end}}

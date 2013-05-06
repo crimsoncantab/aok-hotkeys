@@ -11,8 +11,8 @@
         var hotkeys = {}
         add_to_hotkeys(hotkeys, $sp);
         $.ajax({url : '{{=URL('save')}}', type: "POST", data : {'hotkeys' :JSON.stringify(hotkeys)}})
-        	.done(function() { $('.flash').html('Saved'); $('.flash').stop(true, true).show().fadeOut(800);})
-            .fail(function() { alert("Error Saving"); });
+        	.done(function() { $('.flash').html('Hotkey Saved').stop(true, true).show().fadeOut(800);})
+            .fail(function() { $('.flash').html('Error Saving Hotkey').stop(true, true).show().fadeOut(3000);});
     }
     
     function sync($sp) {
@@ -144,6 +144,7 @@
         min-width:100px;
         background: #cccccc;
         border: 1px solid #666666;
+        border-radius: 4px;
         float:right;
         text-align: center;
         padding: 1px 2px;
@@ -173,7 +174,28 @@
         margin: 2px;
         float:left;
         border: 1px solid #808080;
-        background: #d0d0d0;
+        border-radius: 4px;
+        background: #f0f0f0;
+    }
+    .hk-desc {
+        color: #333333;
+    }
+    .hk-group {
+        margin: 0px 5px 12px;
+        padding: 0;
+        border: 2px solid #a0a0a0;
+    }
+    .hk-group-desc {
+        cursor: pointer;
+        padding: 2px;
+        background: #e5e5e5;
+    }
+    .hk-group-desc:hover {
+        background: #ffffff;
+    }
+    .hk-group-hk {
+        padding: 2px;
+        border-top: 2px dotted #a0a0a0;
     }
     #functions {
         position: fixed;
@@ -184,11 +206,17 @@
     }
     #functions>div {
         margin: 4px 10px 0px;
-        width: 300px;
+        width: 400px;
         float:left;
     }
     #assignments {
-        margin: 150px auto 0px;
+        margin: 150px 0px 0px;
+    }
+    h5 {
+        font-variant:small-caps;
+        padding: 0;
+        padding-bottom: 3px;
+        margin: 0;
     }
 </style>
 {{end}}
@@ -206,13 +234,20 @@
         <input class="extras" type="button" value="Extra Button 2" name="251"/>
     </div>
 </div>
-<div id="assignments" style="padding: 20px">
-{{for hk, desc in hk_desc:}}
-    <div class="hk-wrap" >
-        <div class="hk-desc">{{=desc}}: </div>
-        <div id="{{=hk}}-div" class="hk" name="{{=hk}}">Disabled</div>
-        <div style="clear: both"></div>
+<div id="assignments">
+{{for group, hks in hk_desc:}}
+    <div class="hk-group">
+        <div class="hk-group-desc" onclick="$(this).next().toggle();"><h5>{{=group}}</h5></div>
+        <div class="hk-group-hk">
+        	{{for hk, desc in hks:}}
+            <div class="hk-wrap" >
+                <div class="hk-desc">{{=desc}}: </div>
+                <div id="{{=hk}}-div" class="hk" name="{{=hk}}">Disabled</div>
+                <div style="clear: both"></div>
+            </div>
+        	{{pass}}
+        </div>
+        <div style="clear: both; height: 0px"></div>
     </div>
 {{pass}}
 </div>
-<div style="clear: both"></div>

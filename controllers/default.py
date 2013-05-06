@@ -15,14 +15,16 @@ def index():
     return dict()
 
 def editor():
-    import hotkeys
-    return dict(hk_desc = [(hk, hotkeys.hk_desc[hk]) for hk in hotkeys.hk_order])
+    #TODO - memcache the list comprehension?
+    return dict(hk_desc = [(group, [(hk, hotkeys.hk_desc[hk]) for hk in hks]) for (group, hks) in hotkeys.hk_groups])
 
 def load_file(name):
     return hotkeys.HotkeyFile(open(os.path.join(request.folder, 'private', name + '.hki')).read())
     
 def get_file(*args):
-    return session.hkfile if session.hkfile else load_file('default')
+    if not session.hkfile:
+        session.hkfile = load_file('default')
+    return session.hkfile
 
 def copy_dict(d, *keys):
     return {key: d[key] for key in keys}

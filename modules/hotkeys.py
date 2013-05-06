@@ -187,7 +187,7 @@ hk_desc = {
     'repair' : 'Repair',
     'setgather' : 'Set Gather Point',
     'stop' : 'Stop',
-    'unload' : 'Unload',
+    'unload' : 'Unload/Ungarrison',
     'unpack' : 'Unpack',
     'chatmenu' : 'Chat Dialog',
     'diplomacy' : 'Diplomacy',
@@ -348,153 +348,225 @@ hk_desc = {
 }
 
 
-'''
-hk20_order = [
-	'ground' ,
-	'convert' ,
-	'delete' ,
-	'build' ,
-	'garrison' ,
-	'heal' ,
-	'mbuild' ,
-	'pack' ,
-	'repair' ,
-	'setgather' ,
-	'stop' ,
-	'unload' ,
-	'unpack' ,
-	
-	'chatmenu' ,
-	'diplomacy' ,
-	'time' ,
-	'stats' ,
-	'tech' ,
-	'flare' ,
-	'range' ,
-	'rax' ,
-	'smith' ,
-	'castle' ,
-	'dock' ,
-	'last' ,
-	'last2' ,
-	'lumber' ,
-	'market' ,
-	'mill' ,
-	'mining' ,
-	'monastery' ,
-	'idlem' ,
-	'idlem2' ,
-	'idlev' ,
-	'idlev2' ,
-	'selected' ,
-	'siege' ,
-	'stable' ,
-	'tc' ,
-	'tc2' ,
-	'university' ,
-	'cmap' ,
-	'emap' ,
-	'nmap' ,
-	'object',
-	'pause' ,
-	'back' ,
-	'chatback' ,
-	'chatfor' ,
-	'chapter' ,
-	'save' ,
-	'chat' ,
-	'slow' ,
-	'fast' ,
-	'colors' ,
-	
-	'down' ,
-	'left' ,
-	'right' ,
-	'up' ,
-	
-	'brange' ,
-	'brax' ,
-	'bsmith' ,
-	'bbombard' ,
-	'bcastle' ,
-	'bdock' ,
-	'bfarm' ,
-	'btrap' ,
-	'bgate' ,
-	'bhouse' ,
-	'blumber' ,
-	'bmarket' ,
-	'bmill' ,
-	'bmining' ,
-	'bmonastery' ,
-	'bnext' ,
-	'boutpost' ,
-	'bpalisade' ,
-	'bsiege' ,
-	'bstable' ,
-	'bwall' ,
-	'btower' ,
-	'btc' ,
-	'buniversity' ,
-	'bwonder' ,
-	
-	'work' ,
-	'bell' ,
-	'vill' ,
-	
-	'longboat' ,
-	'gcannon' ,
-	'demoship' ,
-	'fireship' ,
-	'fish' ,
-	'galley' ,
-	'cog' ,
-	'transport' ,
-	'turtle' ,
-	
-	'eagle' ,
-	'huskarl' ,
-	'sword' ,
-	'spear' ,
-	
-	'archer' ,
-	'cavarcher' ,
-	'hcannon' ,
-	'skirm' ,
-	
-	'camel' ,
-	'knight' ,
-	'scout' ,
-	
-	'ram' ,
-	'bcannon' ,
-	'mangonel' ,
-	'scorpion' ,
-	
-	'mission' ,
-	'monk' ,
-	
-	'cart' ,
 
-	'agg' ,
-	'box' ,
-	'def' ,
-	'flank' ,
-	'follow' ,
-	'guard' ,
-	'line' ,
-	'noattack' ,
-	'patrol' ,
-	'stag' ,
-	'stand' ,
+hk_groups = [
 	
-	'treb' ,
-	'uu' ,
-	'petard' ,
-
-	'seed'
+	
+	('Menus/Settings/Game Commands', [
+        'chatmenu' ,
+        'diplomacy' ,
+        'time' ,
+        'stats' ,
+        'tech' ,
+        'flare' ,#??????
+        'cmap' ,
+        'emap' ,
+        'nmap' ,
+        'object',
+        'pause' ,
+        'chatback' ,
+        'chatfor' ,
+        'chapter' ,
+        'save' ,
+        'chat' ,
+        'slow' ,
+        'fast' ,
+        'colors'
+	]),
+	('Scrolling', [
+        'down' ,
+        'left' ,
+        'right' ,
+        'up'
+	]),
+	('Control Groups', [
+        'cgroup0',
+        'cgroup1',
+        'cgroup2',
+        'cgroup3',
+        'cgroup4',
+        'cgroup5',
+        'cgroup6',
+        'cgroup7',
+        'cgroup8',
+        'cgroup9',
+        'cgroup10',
+        'cgroup11',
+        'cgroup12',
+        'cgroup13',
+        'cgroup14',
+        'cgroup15',
+        'cgroup16',
+        'cgroup17',
+        'cgroup18',
+        'cgroup19',
+        'sgroup0',
+        'sgroup1',
+        'sgroup2',
+        'sgroup3',
+        'sgroup4',
+        'sgroup5',
+        'sgroup6',
+        'sgroup7',
+        'sgroup8',
+        'sgroup9',
+        'sgroup10',
+        'sgroup11',
+        'sgroup12',
+        'sgroup13',
+        'sgroup14',
+        'sgroup15',
+        'sgroup16',
+        'sgroup17',
+        'sgroup18',
+        'sgroup19'
+	]),
+	('Go-To Commands', [
+        'range' ,
+        'rax' ,
+        'smith' ,
+        'castle' ,
+        'dock' ,
+        'last' ,
+        'last2' ,
+        'lumber' ,
+        'market' ,
+        'mill' ,
+        'mining' ,
+        'monastery' ,
+        'idlem' ,
+        'idlem2' ,
+        'idlev' ,
+        'idlev2' ,
+        'selected' ,
+        'siege' ,
+        'stable' ,
+        'tc' ,
+        'tc2' ,
+        'university' ,
+        'back'
+	]),
+	('All Units', [
+        'delete' ,
+        'garrison' ,
+        'stop'
+	]),
+	('Military Units', [
+        'agg' ,
+        'box' ,
+        'def' ,
+        'flank' ,
+        'follow' ,
+        'guard' ,
+        'line' ,
+        'noattack' ,
+        'patrol' ,
+        'stag' ,
+        'stand'
+	]),
+	('Siege Units', [
+        'ground' ,
+        'pack' ,
+        'unpack'
+	]),
+	('Monks', [
+        'convert' ,
+        'heal'
+	]),
+	('Villagers', [
+        'build' ,
+        'mbuild' ,
+        'repair'
+	]),
+	('Buildings/Transports', [
+        'setgather' ,
+        'unload' ,
+        'work'
+	]),('Economic Build Menu', [
+        'bsmith' ,
+        'bdock' ,
+        'bfarm' ,
+        'bhouse' ,
+        'blumber' ,
+        'bmarket' ,
+        'bmill' ,
+        'bmining' ,
+        'bmonastery' ,
+        'btc' ,
+        'buniversity' ,
+        'bwonder',
+        'bnext'
+	]),('Military Build Menu', [
+        'brange' ,
+        'brax' ,
+        'bbombard' ,
+        'bcastle' ,
+        'bgate' ,
+        'boutpost' ,
+        'bpalisade' ,
+        'bsiege' ,
+        'bstable' ,
+        'bwall' ,
+        'btower'
+	]),
+	('Fishing Ship Build', [
+        'btrap'
+	]),
+	('Town Center', [
+        'bell' ,
+        'vill'
+	]),
+	('Dock', [
+        'longboat' ,
+        'gcannon' ,
+        'demoship' ,
+        'fireship' ,
+        'fish' ,
+        'galley' ,
+        'cog' ,
+        'transport' ,
+        'turtle'
+	]),
+	('Barracks', [
+        'eagle' ,
+        'huskarl' ,
+        'sword' ,
+        'spear'
+	]),
+	('Archery Range', [
+        'archer' ,
+        'cavarcher' ,
+        'hcannon' ,
+        'skirm'
+	]),
+	('Stable', [
+        'camel' ,
+        'knight' ,
+        'scout'
+	]),
+	('Siege Workshop', [
+        'ram' ,
+        'bcannon' ,
+        'mangonel' ,
+        'scorpion'
+	]),
+	('Monastery', [
+        'mission' ,
+        'monk'
+	]),
+	('Market', [
+        'cart'
+	]),
+	('Castle', [
+        'treb' ,
+        'uu' ,
+        'petard'
+	]),
+	('Mill', [
+        'seed'
+	])
 ]
-'''
+
 
 hk_order = [
 	'ground' ,
