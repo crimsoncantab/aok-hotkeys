@@ -7,14 +7,14 @@
 
 #response.logo = A(B('web',SPAN(2),'py'),XML('&trade;&nbsp;'),
 #                  _class="brand",_href="http://www.web2py.com/")
-response.title = T('Better Hotkeys')
-response.subtitle = T('for AoE2:HD')
+response.title = T('Hotkey Editor')
+response.subtitle = T('for AoE II')
 
 ## read more at http://dev.w3.org/html5/markup/meta.name.html
 #TODO
-#response.meta.author = 'Your Name <you@example.com>'
-response.meta.description = 'a cool new app'
-response.meta.keywords = 'web2py, python, framework'
+response.meta.author = 'Crimson Cantab'
+response.meta.description = 'Age of Empires II Hotkey Editor'
+response.meta.keywords = 'aok, aoe2, hotkeys'
 response.meta.generator = 'Web2py Web Framework'
 
 ## your http://google.com/analytics id
@@ -27,7 +27,7 @@ response.google_analytics_id = None
 response.menu = [
     (T('Home'), False, URL('default', 'index'), [])
 ]
-
+'''
 DEVELOPMENT_MENU = False
 
 #########################################################################
@@ -137,3 +137,4 @@ def _():
                 ]
          )]
 if DEVELOPMENT_MENU: _()
+'''
