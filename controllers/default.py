@@ -60,3 +60,7 @@ def save():
 
 def player1():
     return update_hkfile(json.loads(request.vars.hotkeys)).serialize()
+    
+    
+def googled34aee2b940141cc():
+    return open(os.path.join(request.folder, 'private', 'googled34aee2b940141cc.html')).read()
