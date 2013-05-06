@@ -15,8 +15,8 @@
     <h4>How?</h4>
     <p>AoK stores your hotkeys in a file called <span style="font-weight:bold">player1.hki</span> underneath the <span style="font-weight:bold">savegame\</span> directory in the root game directory. Generally (for the HD version) the full path is:</p>
     <div style="font-weight:bold">C:\Program&nbsp;Files&nbsp;(x86)\Steam\SteamApps\common\Age2HD\savegame\player1.hki</div>
-    <p>The file is stored in a compressed binary format, which makes editing it directly painful.  This editor provides an interface to upload your current hotkey file, edit the hotkeys in your browser, then download the new version.  Move the downloaded file to the above location and start AoK to use your new hotkeys.</p>
-    <p>If you've used the editor before, you can <a href="{{=URL('editor')}}">pick up where you left off</a> (if you have cookies enabled). Or get started by using the <a href="{{=URL('setfile', args='default')}}">default key bindings</a>, leaving <a href="{{=URL('setfile', args='none')}}">every hotkey unbound</a>, or uploading your current hotkeys directly to the editor:</p>
+    <p>The file is stored in a compressed binary format, which makes it painful to edit directly.  This editor provides a way to upload your current hotkey file, edit the hotkeys with a user-friendly interface, then download the edited file.  Move the downloaded file to the above location and start AoK to use your new hotkeys.</p>
+    <p>If you've used the editor before, you can <a href="{{=URL('editor')}}">pick up where you left off</a> (requires session cookie). Or get started by using the <a href="{{=URL('setfile', args='default')}}">default key bindings</a>, leaving <a href="{{=URL('setfile', args='none')}}">every hotkey unbound</a>, or uploading your current hotkeys directly to the editor:</p>
     <form action="">
     </form>
     <form action="{{=URL('setfile', args='upload')}}" method="post" enctype="multipart/form-data">

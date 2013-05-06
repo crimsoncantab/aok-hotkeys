@@ -46,11 +46,17 @@ def setfile():
     session.hkfile = hkfile
     redirect(URL(editor))
 
-
-def player1():
-    data = json.loads(request.vars.hotkeys)
+def update_hkfile(data):
     hkfile = get_file()
     for hotkey, value in data.items():
         #del value['id'] # need to do this?
         hkfile[hotkey].update(value)
-    return hkfile.serialize()
+    return hkfile
+
+
+def save():
+    update_hkfile(json.loads(request.vars.hotkeys))
+    return ''
+
+def player1():
+    return update_hkfile(json.loads(request.vars.hotkeys)).serialize()

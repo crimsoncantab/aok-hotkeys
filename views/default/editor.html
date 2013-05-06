@@ -2,13 +2,25 @@
 {{extend 'layout.html'}}
 {{block head}}
 <script type="text/javascript">
+    function add_to_hotkeys(hotkeys, $sp) {
+        if ('code' in $sp.data()) hotkeys[$sp.attr('name')] = $sp.data();
+        else hotkeys[$sp.attr('name')] = {code:0, ctrl: false, alt: false, shift : false};
+    }
+    
+    function save($sp) {
+        var hotkeys = {}
+        add_to_hotkeys(hotkeys, $sp);
+        $.ajax({url : '{{=URL('save')}}', type: "POST", data : {'hotkeys' :JSON.stringify(hotkeys)}})
+        	.done(function() { $('.flash').html('Saved'); $('.flash').stop(true, true).show().fadeOut(800);})
+            .fail(function() { alert("Error Saving"); });
+    }
+    
     function sync($sp) {
-        if ('code' in $sp.data() && $sp.data('code') != 0) {
+        if ('code' in $sp.data()) {
             $sp.html(KeyCode.hot_key($sp.data()));
             $sp.removeClass("hk-pending hk-unassign").addClass("hk-assign");
         }
         else {
-    		$sp.removeData();
             $sp.html('Unassigned');
             $sp.removeClass("hk-pending hk-assign").addClass("hk-unassign");
         }
@@ -39,6 +51,7 @@
     	var $sp = $(document).data('sp');
     	$sp.data(k);
     	sync($sp);
+    	save($sp);
     	unset_pending();
     }
 
@@ -46,6 +59,7 @@
     	var $sp = $(document).data('sp');
     	$sp.removeData();
     	sync($sp);
+    	save($sp);
     	unset_pending();
     }
     
@@ -78,7 +92,7 @@
             var s = KeyCode.SHIFT;
             if (key.code ==KeyCode.Shift || key.code ==KeyCode.Ctrl || key.code ==KeyCode.Alt) {
                 //fallthrough
-            } else if (key.code == KeyCode.Escape) {
+            } else if (key.code == KeyCode.Escape || key.code == 0) {
                 unassign_key();
             }
             else {
@@ -91,8 +105,7 @@
     function serialize_hotkeys() {
         var hotkeys = {}
         $('.hk-click').each(function() {
-        	if ('code' in $(this).data()) hotkeys[$(this).attr('name')] = $(this).data();
-            else hotkeys[$(this).attr('name')] = {'code':0, 'ctrl': false, 'alt': false, 'shift' : false};
+        	add_to_hotkeys(hotkeys, $(this));
         });
         $('#hotkeys').val(JSON.stringify(hotkeys));
     }
@@ -102,7 +115,8 @@
     	$('.hk').each(function() {
         	$this = $(this);
             if ($this.attr('name') in data) {
-            	$this.data(data[$this.attr('name')]);
+            	var k = data[$this.attr('name')];
+            	if (k['code'] != 0) $this.data(k);
             	$this.addClass('hk-click');
             	sync($this);
             }
