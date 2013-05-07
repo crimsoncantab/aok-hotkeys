@@ -44,6 +44,7 @@
   response.files.append(URL('static','js/keycode.js'))
   response.files.append(URL('static','js/mousewheel.js'))
   response.files.append(URL('static','js/json2.js'))
+  response.files.append(URL('static','js/masonry.min.js'))
   }}
 
   {{include 'web2py_ajax.html'}}
@@ -184,11 +185,20 @@
       <![endif]-->
   
   {{if response.google_analytics_id:}}
-  <script src="{{=URL('static','js/analytics.min.js')}}"></script>
   <script type="text/javascript">
-  analytics.initialize({
-    'Google Analytics':{trackingId:'{{=response.google_analytics_id}}'} 
-  });</script>
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-40663883-1']);
+  _gaq.push(['_setDomainName', 'aokhotkeys.appspot.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
   {{pass}}
 </body>
 </html>

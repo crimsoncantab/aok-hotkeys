@@ -18,7 +18,7 @@ response.meta.keywords = 'aok, aoe2, hotkeys'
 response.meta.generator = 'Web2py Web Framework'
 
 ## your http://google.com/analytics id
-response.google_analytics_id = None
+response.google_analytics_id = 'UA-40663883-1'
 
 #########################################################################
 ## this is the main application menu add/remove items as required

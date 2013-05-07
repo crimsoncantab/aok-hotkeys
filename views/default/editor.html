@@ -124,6 +124,7 @@
     }
     
     $(document).ready(function() {
+        $('#assignments').masonry();
         $('#extras').hide();
         $('.extras').mousedown(extra_buttons);
         $.ajax('{{=URL('recall')}}')
@@ -144,10 +145,10 @@
         min-width:100px;
         background: #cccccc;
         border: 1px solid #666666;
-        border-radius: 4px;
+        border-radius: 10px;
         float:right;
         text-align: center;
-        padding: 1px 2px;
+        padding: 1px 4px;
     }
     .hk-click {
         cursor: pointer;
@@ -169,10 +170,8 @@
         background #000000;
     }
     .hk-wrap {
-        width:400px;
         padding: 2px;
         margin: 2px;
-        float:left;
         border: 1px solid #808080;
         border-radius: 4px;
         background: #f0f0f0;
@@ -181,17 +180,15 @@
         color: #333333;
     }
     .hk-group {
+        width:400px;
+        float:left;
         margin: 0px 5px 12px;
         padding: 0;
         border: 2px solid #a0a0a0;
     }
     .hk-group-desc {
-        cursor: pointer;
         padding: 2px;
         background: #e5e5e5;
-    }
-    .hk-group-desc:hover {
-        background: #ffffff;
     }
     .hk-group-hk {
         padding: 2px;
@@ -200,12 +197,13 @@
     #functions {
         position: fixed;
         left: 0px;
-        top: 45px;
+        top: 0px;
         width: 100%;
         background: #ffffff;
+        z-index:100;
     }
     #functions>div {
-        margin: 4px 10px 0px;
+        margin: 45px 10px 0px;
         width: 400px;
         float:left;
     }
@@ -237,7 +235,7 @@
 <div id="assignments">
 {{for group, hks in hk_desc:}}
     <div class="hk-group">
-        <div class="hk-group-desc" onclick="$(this).next().toggle();"><h5>{{=group}}</h5></div>
+        <div class="hk-group-desc"><h5>{{=group}}</h5></div>
         <div class="hk-group-hk">
         	{{for hk, desc in hks:}}
             <div class="hk-wrap" >
