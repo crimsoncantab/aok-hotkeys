@@ -66,6 +66,7 @@ def save():
     return ''
 
 def player1():
+    response.headers['Content-Type'] = 'application/octet-stream';
     return update_hkfile(json.loads(request.vars.hotkeys)).serialize()
     
     
