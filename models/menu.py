@@ -25,7 +25,8 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    (T('Home'), False, URL('default', 'index'), [])
+    (T('Editor'), False, URL('default', 'editor'), []),
+    (T('Report Bug'), False, 'https://github.com/crimsoncantab/aok-hotkeys/issues/new', [])
 ]
 '''
 DEVELOPMENT_MENU = False
