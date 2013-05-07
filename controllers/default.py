@@ -10,6 +10,10 @@
 #########################################################################
 from gluon.contrib import simplejson as json
 import hotkeys, os
+try:
+    from google.appengine.ext.db import transactional
+except:
+    transactional = lambda x: x
 
 def index():
     return dict()
@@ -48,6 +52,7 @@ def setfile():
     session.hkfile = hkfile
     redirect(URL(editor))
 
+@transactional
 def update_hkfile(data):
     hkfile = get_file()
     for hotkey, value in data.items():
