@@ -2,6 +2,10 @@
 {{extend 'layout.html'}}
 {{block head}}
 <script type="text/javascript">
+    function notify(message, duration) {
+    	$('.flash').html(message).stop(true, true).show().fadeOut(duration);
+    }
+    
     function add_to_hotkeys(hotkeys, $sp) {
         if ('code' in $sp.data()) hotkeys[$sp.attr('name')] = $sp.data();
         else hotkeys[$sp.attr('name')] = {code:0, ctrl: false, alt: false, shift : false};
@@ -11,8 +15,8 @@
         var hotkeys = {}
         add_to_hotkeys(hotkeys, $sp);
         $.ajax({url : '{{=URL('save')}}', type: "POST", data : {'hotkeys' :JSON.stringify(hotkeys)}})
-        	.done(function() { $('.flash').html('Hotkey Saved').stop(true, true).show().fadeOut(800);})
-            .fail(function() { $('.flash').html('Error Saving Hotkey').stop(true, true).show().fadeOut(3000);});
+        	.done(function() { notify('Hotkey Saved',800);})
+            .fail(function() { notify('Error Saving Hotkey',3000);});
     }
     
     function sync($sp) {
@@ -123,16 +127,27 @@
         });
     }
     
+    function load_hotkeys() {
+        $('#generate-file').attr('disabled','disabled');
+        $('.hk').removeClass('hk-click hk-pending hk-unassign hk-assign').off('mousedown').html('Disabled');
+        $.ajax('{{=URL('recall')}}')
+        	.done(function(data) { deserialize_hotkeys(data); $('#generate-file').removeAttr('disabled');})
+            .fail(function() { alert("There was an error loading the hotkey file into the editor"); })
+            .always(function() { $('.hk-click').mousedown(event_handler); });
+    	
+    }
+    
+    function change_version(v) {
+        $.ajax({url : '{{=URL('version')}}', type: "POST", data : {'version' : v}})
+                .done(function() { notify('Version Changed',800); load_hotkeys();})
+                .fail(function() { notify('Error Changing Version',3000);});
+    }
+    
     $(document).ready(function() {
         $('#assignments').masonry();
         $('#extras').hide();
         $('.extras').mousedown(extra_buttons);
-        $.ajax('{{=URL('recall')}}')
-        	.done(function(data) { deserialize_hotkeys(data); })
-            .fail(function() { alert("There was an error loading the hotkey file into the editor"); })
-            .always(function() { $('.hk-click').mousedown(event_handler); });
-        
-        
+        load_hotkeys();
     });
 </script>
 <style>
@@ -165,9 +180,6 @@
     .hk-assign {
         background: #e0ffe0;
         border-color: #00ff00;
-    }
-    .hk-disabled {
-        background #000000;
     }
     .hk-wrap {
         padding: 2px;
@@ -209,7 +221,7 @@
         float:left;
     }
     #assignments {
-        margin: 150px 0px 0px;
+        margin: 180px 0px 0px;
     }
     h5 {
         font-variant:small-caps;
@@ -221,10 +233,16 @@
 {{end}}
 <div id="functions">
     <div id="download-div" style="" >
-    
+        Change hotkeys by clicking on the key binding, then simply entering the desired key combo for the respective hotkey.<br />
+        Version:
+        <select id="versions" onchange="change_version($(this).val());">
+            {{for k, v in hk_versions.items():}}
+            <option value="{{=k}}" {{= 'selected' if k == version else ''}}>{{=v[2]}}</option>
+            {{pass}}
+        </select>
     <form action="{{=URL('default', 'player1.hki')}}" method="post">
         <input type="hidden" id="hotkeys" name="hotkeys" />
-        Change hotkeys by clicking on the key binding, then simply entering the desired key combo for the respective hotkey.  When finished, <input type="submit" onclick="serialize_hotkeys();" value="Generate .hki File" />
+        <input id="generate-file" type="submit" onclick="serialize_hotkeys();" value="Generate .hki File" />
     </form>
     </div>
     <div id="extras" style="float:left">

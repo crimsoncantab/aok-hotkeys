@@ -567,204 +567,38 @@ hk_groups = [
 	])
 ]
 
-
-hk_order = [
-	'ground' ,
-	'convert' ,
-	'delete' ,
-	'build' ,
-	'garrison' ,
-	'heal' ,
-	'mbuild' ,
-	'pack' ,
-	'repair' ,
-	'setgather' ,
-	'stop' ,
-	'unload' ,
-	'unpack' ,
-	
-	'chatmenu' ,
-    'cgroup0',
-    'cgroup1',
-    'cgroup10',
-    'cgroup11',
-    'cgroup12',
-    'cgroup13',
-    'cgroup14',
-    'cgroup15',
-    'cgroup16',
-    'cgroup17',
-    'cgroup18',
-    'cgroup19',
-    'cgroup2',
-    'cgroup3',
-    'cgroup4',
-    'cgroup5',
-    'cgroup6',
-    'cgroup7',
-    'cgroup8',
-    'cgroup9',
-	'diplomacy' ,
-	'time' ,
-	'stats' ,
-	'tech' ,
-	'flare' ,
-	'range' ,
-	'rax' ,
-	'smith' ,
-	'castle' ,
-	'dock' ,
-	'last' ,
-	'last2' ,
-	'lumber' ,
-	'market' ,
-	'mill' ,
-	'mining' ,
-	'monastery' ,
-	'idlem' ,
-	'idlem2' ,
-	'idlev' ,
-	'idlev2' ,
-	'selected' ,
-	'siege' ,
-	'stable' ,
-	'tc' ,
-	'tc2' ,
-	'university' ,
-	'cmap' ,
-	'emap' ,
-	'nmap' ,
-	'object',
-	'pause' ,
-	'back' ,
-	'chatback' ,
-	'chatfor' ,
-	'chapter' ,
-	'save' ,
-    'sgroup0',
-    'sgroup1',
-    'sgroup10',
-    'sgroup11',
-    'sgroup12',
-    'sgroup13',
-    'sgroup14',
-    'sgroup15',
-    'sgroup16',
-    'sgroup17',
-    'sgroup18',
-    'sgroup19',
-    'sgroup2',
-    'sgroup3',
-    'sgroup4',
-    'sgroup5',
-    'sgroup6',
-    'sgroup7',
-    'sgroup8',
-    'sgroup9',
-	'chat' ,
-	'slow' ,
-	'fast' ,
-	'colors' ,
-	
-	'down' ,
-	'left' ,
-	'right' ,
-	'up' ,
-	
-	'brange' ,
-	'brax' ,
-	'bsmith' ,
-	'bbombard' ,
-	'bcastle' ,
-	'bdock' ,
-	'bfarm' ,
-	'btrap' ,
-	'bgate' ,
-	'bhouse' ,
-	'blumber' ,
-	'bmarket' ,
-	'bmill' ,
-	'bmining' ,
-	'bmonastery' ,
-	'bnext' ,
-	'boutpost' ,
-	'bpalisade' ,
-	'bsiege' ,
-	'bstable' ,
-	'bwall' ,
-	'btower' ,
-	'btc' ,
-	'buniversity' ,
-	'bwonder' ,
-	
-	'work' ,
-	'bell' ,
-	'vill' ,
-	
-	'longboat' ,
-	'gcannon' ,
-	'demoship' ,
-	'fireship' ,
-	'fish' ,
-	'galley' ,
-	'cog' ,
-	'transport' ,
-	'turtle' ,
-	
-	'eagle' ,
-	'huskarl' ,
-	'sword' ,
-	'spear' ,
-	
-	'archer' ,
-	'cavarcher' ,
-	'hcannon' ,
-	'skirm' ,
-	
-	'camel' ,
-	'knight' ,
-	'scout' ,
-	
-	'ram' ,
-	'bcannon' ,
-	'mangonel' ,
-	'scorpion' ,
-	
-	'mission' ,
-	'monk' ,
-	
-	'cart' ,
-
-	'agg' ,
-	'box' ,
-	'def' ,
-	'flank' ,
-	'follow' ,
-	'guard' ,
-	'line' ,
-	'noattack' ,
-	'patrol' ,
-	'stag' ,
-	'stand' ,
-	
-	'treb' ,
-	'uu' ,
-	'petard' ,
-
-	'seed'
-]
-
-
-
+hk_versions = {
+    'aok' : (0x3f800000, 2080, 'Vanilla AoK'),
+    'aoc' : (0x3f800000, 2192, 'AoC/FE/HD2.0'),
+    '22' : (0x40000000, 2432, 'HD2.2+')
+}
 header_format = count_format = struct.Struct('<I')
 hk_format = struct.Struct('<Ii???x')
 Hotkey = namedtuple('Hotkey', 'code id ctrl alt shift')
+
+def copy_dict(d, *keys):
+    return {key: d[key] for key in keys}
+
+class HotkeyAssign:
+    def __init__(self, hkfile):
+        self.version, self.hotkeys = hkfile.version, { k : copy_dict(v,'code', 'ctrl', 'alt', 'shift') for (k,v) in hkfile}
+        self.hotkeys.update({ k : {'code':0, 'ctrl' : False, 'alt' : False, 'shift' : False} for k in hk_desc if k not in self.hotkeys})
+        
+    def get_hotkeys(self, version_hotkeys):
+        return {k : v for (k,v) in self.hotkeys.items() if k in version_hotkeys}
+
 class HotkeyFile:
 
     def __init__(self, hki):
         hk_data = hkizip.decompress(hki)
         offset = 0
         header, = header_format.unpack_from(hk_data, offset)
+        version = None
+        for k, (head, size, desc) in hk_versions.items():
+            if len(hk_data) == size and header == head:
+                version = k
+        if not version:
+            raise Exception('Unrecognized file format')
         offset += header_format.size
         num_menus, = count_format.unpack_from(hk_data, offset)
         offset += count_format.size
@@ -784,8 +618,8 @@ class HotkeyFile:
                 offset += hk_format.size
                 menu.append(hotkey)
 
-        # self.header_format, self.count_format, self.hk_format = header_format, count_format, hk_format
-        self.data, self.hk_map = data, hk_map
+        
+        self.data, self.hk_map, self.version = data, hk_map, version
         self._header, self._file_size= header, offset
 
     def __getitem__(self, key):

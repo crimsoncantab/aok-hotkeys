@@ -10,38 +10,54 @@
 #########################################################################
 from gluon.contrib import simplejson as json
 import hotkeys, os
-try:
-    from google.appengine.ext.db import transactional
-except:
-    transactional = lambda x: x
 
 def index():
     return dict()
 
 def editor():
-    #TODO - memcache the list comprehension?
-    return dict(hk_desc = [(group, [(hk, hotkeys.hk_desc[hk]) for hk in hks]) for (group, hks) in hotkeys.hk_groups])
+    v = get_assign().version
+    return cache.ram('editor_' + v, lambda: response.render(dict(
+                hk_desc = [(group, [(hk, hotkeys.hk_desc[hk]) for hk in hks]) for (group, hks) in hotkeys.hk_groups],
+                hk_versions = hotkeys.hk_versions, version = v
+                )), time_expire=None)
 
 def load_file(name):
-    return hotkeys.HotkeyFile(open(os.path.join(request.folder, 'private', name + '.hki')).read())
-    
-def get_file(*args):
-    if not session.hkfile:
-        session.hkfile = load_file('default')
-    return session.hkfile
+    filename = name + '.hki'
+    return cache.ram(filename, lambda: hotkeys.HotkeyFile(open(os.path.join(request.folder, 'private', name + '.hki')).read()), time_expire=None)
 
-def copy_dict(d, *keys):
-    return {key: d[key] for key in keys}
+def version_hotkeys(version):
+    return cache.ram(version, lambda: [k for k in hotkeys.hk_desc if k in load_file('default_' + version)], time_expire=None)
+
+def set_assign(hkfile):
+    session.assign = hotkeys.HotkeyAssign(hkfile)
+
+def get_assign(*args):
+    if not session.assign:
+        log.warn('Setting default session data')
+        set_assign(load_file('default_22'))
+    return session.assign
+
+def update_assign(data):
+    assign = get_assign()
+    assign.hotkeys.update(data)
+    return assign
 
 def recall():
-    hkfile = get_file()
+    assign = get_assign()
     from gluon.contrib import simplejson as json
-    return json.dumps({k:copy_dict(v,'code', 'ctrl', 'alt', 'shift') for (k,v) in hkfile})
+    return json.dumps(assign.get_hotkeys(version_hotkeys(assign.version)))
+    
+def version():
+    if request.vars.version not in hotkeys.hk_versions:
+        raise HTTP(400, 'Bad version specified')
+    get_assign().version = request.vars.version
     
 def setfile():
     f = request.args[0] if request.args else 'default'
     
     if f == 'upload' and 'hki' in request.vars:
+        if not request.vars.hki:
+            raise HTTP(400, 'File not specified')
         hkfile = hotkeys.HotkeyFile(request.vars.hki.file.getvalue())
     elif f == 'none':
         hkfile = load_file('none')
@@ -49,25 +65,22 @@ def setfile():
         hkfile = load_file('default20')
     else:
         hkfile = load_file('default')
-    session.hkfile = hkfile
+    log.info('File version: {:s}'.format(hkfile.version))
+    set_assign(hkfile)
     redirect(URL(editor))
 
-@transactional
-def update_hkfile(data):
-    hkfile = get_file()
-    for hotkey, value in data.items():
-        #del value['id'] # need to do this?
-        hkfile[hotkey].update(value)
-    return hkfile
-
-
 def save():
-    update_hkfile(json.loads(request.vars.hotkeys))
+    update_assign(json.loads(request.vars.hotkeys))
     return ''
 
 def player1():
     response.headers['Content-Type'] = 'application/octet-stream';
-    return update_hkfile(json.loads(request.vars.hotkeys)).serialize()
+    assign = update_assign(json.loads(request.vars.hotkeys))
+    hkfile = load_file('default_' + assign.version)
+    for hotkey, value in assign.hotkeys.items():
+        if hotkey in hkfile:
+            hkfile[hotkey].update(value)
+    return hkfile.serialize()
     
     
 def googled34aee2b940141cc():
