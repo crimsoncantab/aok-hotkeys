@@ -206,8 +206,8 @@ var key_names = {
 	251 : 'Extra Button 2', // AoK uses this for Extra Button 2
 	252 : 'Extra Button 1', // AoK uses this for Extra Button 1
 	253 : 'Middle Button', // AoK uses this for Middle Button
-	254 : 'Wheel Up', // AoK uses this for Wheel Up
-	255 : 'Wheel Down' // AoK uses this for Wheel Down
+	254 : 'Wheel Down', // AoK uses this for Wheel Down
+	255 : 'Wheel Up' // AoK uses this for Wheel Up
 }
 
 
