@@ -48,7 +48,7 @@ def recall():
     return json.dumps(assign.get_hotkeys(version_hotkeys(assign.version)))
     
 def version():
-    if request.vars.version not in hotkeys.hk_versions:
+    if request.vars.version not in [v[0] for v in hotkeys.hk_versions]:
         raise HTTP(400, 'Bad version specified')
     get_assign().version = request.vars.version
     
@@ -56,9 +56,12 @@ def setfile():
     f = request.args[0] if request.args else 'default'
     
     if f == 'upload' and 'hki' in request.vars:
-        if not request.vars.hki:
+        if request.vars.hki == '':
             raise HTTP(400, 'File not specified')
-        hkfile = hotkeys.HotkeyFile(request.vars.hki.file.getvalue())
+        try:
+            hkfile = hotkeys.HotkeyFile(request.vars.hki.file.getvalue())
+        except:
+            raise HTTP(400, 'File format not recognized')
     elif f == 'none':
         hkfile = load_file('none')
     elif f == 'default20':

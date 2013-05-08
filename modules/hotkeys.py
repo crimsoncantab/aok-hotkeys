@@ -567,11 +567,11 @@ hk_groups = [
 	])
 ]
 
-hk_versions = {
-    'aok' : (0x3f800000, 2080, 'Vanilla AoK'),
-    'aoc' : (0x3f800000, 2192, 'AoC/FE/HD2.0'),
-    '22' : (0x40000000, 2432, 'HD2.2+')
-}
+hk_versions = [
+    ('aok', 0x3f800000, 2080, 'Vanilla AoK'),
+    ('aoc', 0x3f800000, 2192, 'AoC/FE/HD2.0'),
+    ('22' , 0x40000000, 2432, 'HD2.2+')
+]
 header_format = count_format = struct.Struct('<I')
 hk_format = struct.Struct('<Ii???x')
 Hotkey = namedtuple('Hotkey', 'code id ctrl alt shift')
@@ -594,7 +594,7 @@ class HotkeyFile:
         offset = 0
         header, = header_format.unpack_from(hk_data, offset)
         version = None
-        for k, (head, size, desc) in hk_versions.items():
+        for (k, head, size, desc) in hk_versions:
             if len(hk_data) == size and header == head:
                 version = k
         if not version:

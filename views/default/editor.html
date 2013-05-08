@@ -236,8 +236,8 @@
         Change hotkeys by clicking on the key binding, then simply entering the desired key combo for the respective hotkey.<br />
         Version:
         <select id="versions" onchange="change_version($(this).val());">
-            {{for k, v in hk_versions.items():}}
-            <option value="{{=k}}" {{= 'selected' if k == version else ''}}>{{=v[2]}}</option>
+            {{for v, header, size, desc in hk_versions:}}
+            <option value="{{=v}}" {{= 'selected' if v == version else ''}}>{{=desc}}</option>
             {{pass}}
         </select>
     <form action="{{=URL('default', 'player1.hki')}}" method="post">
