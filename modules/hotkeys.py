@@ -651,37 +651,10 @@ class HotkeyFile:
         return hkizip.compress(str(raw))
 
 if __name__ == '__main__':
-    import sys
-    hki = sys.stdin.read()
-    hotkey_file = HotkeyFile(hki)
-
-    print hotkey_file['idlev']
-    # h = Hotkey(**hotkey_file['left'])
-
-    # d = {'assign': 5, 'ctrl': 5}
-    # print set(d).issubset(set(hotkey_file['left']))
-
-    # print hotkey_file['left'], hotkey_file['up'],hotkey_file['right'],hotkey_file['down'],
-
-    # print 'build' in hotkey_file
-    # print 'cgroup0' in hotkey_file
-
-    # hotkey_file['build'].update({'assign': 65, 'ctrl' : True, 'alt' : False, 'shift' : True})
-
-    # sys.stdout.write(hotkey_file.serialize())
-
-    # for hk in hk_order:
-        # pos = hk_loc[hk][0]
-        # id = hku[pos+4] + (hku[pos+5]<<8)
-        # print '\'{:s}\' : 0x{:x},'.format(hk, id)
-
-    # ctrlgroups = hotkey_file.data[1][0:40]
-    # for hk in hk_order:
-        # print '\'{:s}\' : \'{:s}\','.format(hk, hk_loc[hk][1])
-    # for i, hk in enumerate(ctrlgroups):
-        # if i < 20:
-            # print '\'cgroup{:d}\','.format(i)
-        # else:
-            # print '\'sgroup{:d}\','.format(i % 20)
-
-    # print len(hk_desc), len(hk_loc), len(hk_order), len(hk_ids)
+	import sys
+	hki = sys.stdin.read()
+	hotkey_file = HotkeyFile(hki)
+	for i, hk in enumerate(hk_groups[2][1]):
+		hotkey_file[hk]['code'] = 252 - i
+    
+	print hotkey_file.serialize()
