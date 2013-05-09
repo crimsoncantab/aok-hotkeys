@@ -6,15 +6,42 @@
         width: 600px;
         margin: 100px auto 0px;
     }
+    #presets {
+        float:right;
+        margin: 100px 100px 0px 0px;
+        padding: 4px;
+    }
 </style>
 {{end}}
+<div id="presets">
+    <h4> Popular Presets:</h4>
+<div style="border: 1px solid #cccccc;">
+<table>
+<thead>
+    <tr>
+        <th>Preset Name</th>
+        <th>Version</th>
+    </tr>
+</thead>
+<tbody>
+{{for p in presets: }}
+	<tr>
+        <td><a href="{{=URL('preset', args=p.id)}}">{{=p.name}}</a></td>
+        <td>{{=versions[p.version]}}</td>
+	</tr>
+{{pass}}
+</tbody>
+</table>
+    </div>
+    {{if len(presets) == 10:}}<div><a href="{{=URL('getpresets')}}">See all &hellip;</a></div>{{pass}}
+</div>
 <div id="welcome">
     <p style="color:red;cursor:pointer;border: 1px solid #cccccc;padding:4px;border-radius:4px;" onclick="$(this).hide()">Welcome to the web-based Age of Empires II (AoK) hotkey editor! This website assumes you have played AoK and are familiar with its hotkey system. If not, go <a href="http://www.ageofempires.com/age2.html">check out the HD version</a> right now!</p>
     <h4>Get Started</h4>
     <p>If you've used the editor before, you can <a onclick="function(e){e.stopPropagation();}();return false;" href="{{=URL('editor')}}">pick up where you left off</a> (requires session cookie). Or get started by using the <a href="{{=URL('setfile', args='default')}}">default key bindings (for  AoE2:HD v 2.3)</a>, leaving <a href="{{=URL('setfile', args='none')}}">every hotkey unbound</a>, or uploading your current hotkeys directly to the editor:</p>
     <form action="">
     </form>
-    <form action="{{=URL('setfile', args='upload')}}" method="post" enctype="multipart/form-data">
+    <form action="{{=URL('upload')}}" method="post" enctype="multipart/form-data">
         <div><input type="file" name="hki" /></div>
         <div><input type="submit" value="Edit File" /></div>
     </form>

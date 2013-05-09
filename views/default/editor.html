@@ -2,6 +2,11 @@
 {{extend 'layout.html'}}
 {{block head}}
 <script type="text/javascript">
+    
+    function place_assignments() {
+    	jQuery('#assignments').css({'margin-top': $('#functions').height()+20}); 
+    }
+    
     function notify(message, duration) {
     	$('.flash').html(message).stop(true, true).show().fadeOut(duration);
     }
@@ -11,12 +16,11 @@
         else hotkeys[$sp.attr('name')] = {code:0, ctrl: false, alt: false, shift : false};
     }
     
-    function save($sp) {
-        var hotkeys = {}
-        add_to_hotkeys(hotkeys, $sp);
-        $.ajax({url : '{{=URL('save')}}', type: "POST", data : {'hotkeys' :JSON.stringify(hotkeys)}})
-        	.done(function() { notify('Hotkey Saved',800);})
-            .fail(function() { notify('Error Saving Hotkey',3000);});
+    function save() {
+        serialize_hotkeys();
+        $.ajax({url : '{{=URL('save')}}', type: "POST", data : {'hotkeys' : $('#hotkeys').val()}})
+        	.done(function() { notify('Hotkeys Saved',800);})
+            .fail(function() { notify('Error Saving Hotkeys',3000);});
     }
     
     function sync($sp) {
@@ -55,7 +59,7 @@
     	var $sp = $(document).data('sp');
     	$sp.data(k);
     	sync($sp);
-    	save($sp);
+    	save();
     	unset_pending();
     }
 
@@ -63,7 +67,7 @@
     	var $sp = $(document).data('sp');
     	$sp.removeData();
     	sync($sp);
-    	save($sp);
+    	save();
     	unset_pending();
     }
     
@@ -138,12 +142,22 @@
     }
     
     function change_version(v) {
-        $.ajax({url : '{{=URL('version')}}', type: "POST", data : {'version' : v}})
+        $.ajax({url : '{{=URL('version')}}', type: "POST", data : {version : v}})
                 .done(function() { notify('Version Changed',800); load_hotkeys();})
                 .fail(function() { notify('Error Changing Version',3000);});
     }
     
+    function create_preset() {
+        serialize_hotkeys();
+        $.ajax({url : '{{=URL('addpreset')}}', type: "POST", data : {hotkeys : $('#hotkeys').val(), name : $('#presetname').val()}})
+            .done(function(data) { notify('Preset Created!',1500); $('#preseturl').html('Preset url: <textarea readonly="readonly">' + data + '</textarea>')})
+            .fail(function(data) { notify('Error Creating Preset: ' + data,3000);})
+        	.always(function() {place_assignments();});
+    }
+    
     $(document).ready(function() {
+        place_assignments();
+        
         $('#assignments').masonry();
         $('#extras').hide();
         $('.extras').mousedown(extra_buttons);
@@ -221,7 +235,7 @@
         float:left;
     }
     #assignments {
-        margin: 180px 0px 0px;
+        margin: 0;
     }
     h5 {
         font-variant:small-caps;
@@ -244,6 +258,12 @@
         <input type="hidden" id="hotkeys" name="hotkeys" />
         <input id="generate-file" type="submit" onclick="serialize_hotkeys();" value="Generate .hki File" />
     </form>
+    </div>
+    <div id="setpreset" style="float:left">
+        Create preset bindings that others can use as a starting point:
+        <input type="text" id="presetname" maxlength="32" placeholder="Preset Name"/>
+        <input type="button" id="preset" onclick="create_preset();" value="Create Preset" />
+        <div id="preseturl"></div>
     </div>
     <div id="extras" style="float:left">
         <div>Type &lt;Esc&gt; to unassign the given hotkey.  Use the buttons below for the &lt;Back&gt; and &lt;Forward&gt; buttons on the mouse.  The mousewheel works also, with modifier keys.</div>

@@ -1,0 +1,32 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,False}}
+{{extend 'layout.html'}}
+{{block head}}
+<style>
+    #presets {
+        width:200px;
+        margin: 100px auto 0px;
+        padding: 4px;
+  		text-align:center;
+    }
+</style>
+{{end}}
+<div id="presets">
+    <div style="border: 1px solid #cccccc; border-radius: 4px; display:inline-block;">
+<table>
+<thead>
+    <tr>
+        <th>Preset Name</th>
+        <th>Version</th>
+    </tr>
+</thead>
+<tbody>
+{{for p in presets: }}
+	<tr>
+        <td><a href="{{=URL('preset', args=p.id)}}">{{=p.name}}</a></td>
+        <td>{{=versions[p.version]}}</td>
+	</tr>
+{{pass}}
+</tbody>
+</table>
+    </div>
+</div>

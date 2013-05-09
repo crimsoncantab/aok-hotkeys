@@ -1,32 +1,24 @@
-# -*- coding: utf-8 -*-
-# this file is released under public domain and you can use without limitations
-
-#########################################################################
-## This is a samples controller
-## - index is the default action of any application
-## - user is required for authentication and authorization
-## - download is for downloading files uploaded in the db (does streaming)
-## - call exposes all registered services (none by default)
-#########################################################################
 from gluon.contrib import simplejson as json
 import hotkeys, os
 
-def index():
-    return dict()
+#@arg_cache(cache_key = lambda n : 'presets_' + str(n))
+def popular_presets(n):
+    if n == 0:
+        return db().select(db.presets.id, db.presets.version, db.presets.name, orderby=~db.presets.usage)
+    else:
+        return db().select(db.presets.id, db.presets.version, db.presets.name, orderby=~db.presets.usage, limitby=(0,n))
 
-def editor():
-    v = get_assign().version
-    return cache.ram('editor_' + v, lambda: response.render(dict(
-                hk_desc = [(group, [(hk, hotkeys.hk_desc[hk]) for hk in hks]) for (group, hks) in hotkeys.hk_groups],
-                hk_versions = hotkeys.hk_versions, version = v
-                )), time_expire=None)
+#def load_file(name):
+#    filename = name + '.hki'
+#    return cache.ram(filename, lambda: hotkeys.HotkeyFile(open(os.path.join(request.folder, 'private', name + '.hki')).read()), time_expire=None)
 
+@arg_cache(cache_key = lambda name : name + '.hki')
 def load_file(name):
-    filename = name + '.hki'
-    return cache.ram(filename, lambda: hotkeys.HotkeyFile(open(os.path.join(request.folder, 'private', name + '.hki')).read()), time_expire=None)
+    return hotkeys.HotkeyFile(open(os.path.join(request.folder, 'private', name + '.hki')).read())
 
+@arg_cache(cache_key = lambda v : 'version_' + v)
 def version_hotkeys(version):
-    return cache.ram(version, lambda: [k for k in hotkeys.hk_desc if k in load_file('default_' + version)], time_expire=None)
+    return [k for k in hotkeys.hk_desc if k in load_file('default_' + version)]
 
 def set_assign(hkfile):
     session.assign = hotkeys.HotkeyAssign(hkfile)
@@ -42,6 +34,17 @@ def update_assign(data):
     assign.hotkeys.update(data)
     return assign
 
+@arg_cache(cache_key = lambda : request.env.path_info, time_expire=3600)
+def index():
+    return response.render(dict(presets = popular_presets(10), versions = { id : name for (id, head, size, name) in hotkeys.hk_versions}))
+
+@arg_cache(cache_key = lambda : 'editor_' + get_assign().version)
+def editor():
+    return response.render(dict(
+                hk_desc = [(group, [(hk, hotkeys.hk_desc[hk]) for hk in hks]) for (group, hks) in hotkeys.hk_groups],
+                hk_versions = hotkeys.hk_versions, version = get_assign().version
+                ))
+
 def recall():
     assign = get_assign()
     from gluon.contrib import simplejson as json
@@ -52,25 +55,45 @@ def version():
         raise HTTP(400, 'Bad version specified')
     get_assign().version = request.vars.version
     
-def setfile():
-    f = request.args[0] if request.args else 'default'
+def preset():
+    preset_id = request.args[0] if len(request.args) else 0
+    p = db.presets[preset_id]
+    if not p:
+        raise HTTP(404, 'Preset not found')
+    #this isn't transactional, that's okay
+    #usage field doesn't have to be exact
+    session.assign = p.assign
+    p.usage += 1
+    p.update_record()
+    redirect(URL('editor'))
     
-    if f == 'upload' and 'hki' in request.vars:
-        if request.vars.hki == '':
-            raise HTTP(400, 'File not specified')
+    
+def upload():
+    if 'hki' in request.vars and request.vars.hki != '':
         try:
             hkfile = hotkeys.HotkeyFile(request.vars.hki.file.getvalue())
         except:
             raise HTTP(400, 'File format not recognized')
-    elif f == 'none':
-        hkfile = load_file('none')
-    elif f == 'default20':
-        hkfile = load_file('default20')
     else:
-        hkfile = load_file('default')
+        raise HTTP(400, 'File not specified')
     log.info('File version: {:s}'.format(hkfile.version))
     set_assign(hkfile)
-    redirect(URL(editor))
+    redirect(URL('editor'))
+    
+
+def addpreset():
+    assign = update_assign(json.loads(request.vars.hotkeys))
+    name = request.vars.name
+    if not name:
+        raise HTTP(400, 'Specify a name')
+    if len(name) > 32:
+        name = name[:32]
+    preset_id = db.presets.insert(name=name, version=assign.version, assign = assign)
+    return URL(preset, args=str(preset_id), scheme=True, host=True)
+
+@arg_cache(cache_key = lambda : request.env.path_info, time_expire=3600)
+def getpresets():
+    return response.render(dict(presets = popular_presets(0), versions={ id : name for (id, head, size, name) in hotkeys.hk_versions}))
 
 def save():
     update_assign(json.loads(request.vars.hotkeys))
