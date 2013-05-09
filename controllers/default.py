@@ -8,10 +8,6 @@ def popular_presets(n):
     else:
         return db().select(db.presets.id, db.presets.version, db.presets.name, orderby=~db.presets.usage, limitby=(0,n))
 
-#def load_file(name):
-#    filename = name + '.hki'
-#    return cache.ram(filename, lambda: hotkeys.HotkeyFile(open(os.path.join(request.folder, 'private', name + '.hki')).read()), time_expire=None)
-
 @arg_cache(cache_key = lambda name : name + '.hki')
 def load_file(name):
     return hotkeys.HotkeyFile(open(os.path.join(request.folder, 'private', name + '.hki')).read())
@@ -19,6 +15,11 @@ def load_file(name):
 @arg_cache(cache_key = lambda v : 'version_' + v)
 def version_hotkeys(version):
     return [k for k in hotkeys.hk_desc if k in load_file('default_' + version)]
+
+#this can't be cached right now...
+#@arg_cache(cache_key = lambda p : 'preset_' + p)
+def load_preset(preset_id):
+    return db.presets[preset_id]
 
 def set_assign(hkfile):
     session.assign = hotkeys.HotkeyAssign(hkfile)
@@ -34,7 +35,7 @@ def update_assign(data):
     assign.hotkeys.update(data)
     return assign
 
-@arg_cache(cache_key = lambda : request.env.path_info, time_expire=3600)
+@arg_cache(cache_key = lambda : 'index', time_expire=3600)
 def index():
     return response.render(dict(presets = popular_presets(10), versions = { id : name for (id, head, size, name) in hotkeys.hk_versions}))
 
@@ -54,10 +55,10 @@ def version():
     if request.vars.version not in [v[0] for v in hotkeys.hk_versions]:
         raise HTTP(400, 'Bad version specified')
     get_assign().version = request.vars.version
-    
+
 def preset():
     preset_id = request.args[0] if len(request.args) else 0
-    p = db.presets[preset_id]
+    p = load_preset(preset_id)
     if not p:
         raise HTTP(404, 'Preset not found')
     #this isn't transactional, that's okay
@@ -89,9 +90,11 @@ def addpreset():
     if len(name) > 32:
         name = name[:32]
     preset_id = db.presets.insert(name=name, version=assign.version, assign = assign)
+    cache.ram.clear('index')
+    cache.ram.clear('getpresets')
     return URL(preset, args=str(preset_id), scheme=True, host=True)
 
-@arg_cache(cache_key = lambda : request.env.path_info, time_expire=3600)
+@arg_cache(cache_key = lambda : 'getpresets', time_expire=3600)
 def getpresets():
     return response.render(dict(presets = popular_presets(0), versions={ id : name for (id, head, size, name) in hotkeys.hk_versions}))
 

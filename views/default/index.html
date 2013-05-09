@@ -3,19 +3,27 @@
 {{block head}}
 <style>
     #welcome {
-        width: 600px;
+        width: 30%;
         margin: 100px auto 0px;
     }
     #presets {
-        float:right;
-        margin: 100px 100px 0px 0px;
+        position:absolute;
+        top:20%;
+        left:70%;
+        max-width:20%;
         padding: 4px;
+    }
+    #features {
+        position:absolute;
+        top:20%;
+        left:10%;
+        width:20%;
     }
 </style>
 {{end}}
 <div id="presets">
-    <h4> Popular Presets:</h4>
-<div style="border: 1px solid #cccccc;">
+    <h4> Popular Presets</h4>
+    <div style="border: 1px solid #cccccc; border-radius:4px">
 <table>
 <thead>
     <tr>
@@ -35,28 +43,43 @@
     </div>
     {{if len(presets) == 10:}}<div><a href="{{=URL('getpresets')}}">See all &hellip;</a></div>{{pass}}
 </div>
-<div id="welcome">
-    <p style="color:red;cursor:pointer;border: 1px solid #cccccc;padding:4px;border-radius:4px;" onclick="$(this).hide()">Welcome to the web-based Age of Empires II (AoK) hotkey editor! This website assumes you have played AoK and are familiar with its hotkey system. If not, go <a href="http://www.ageofempires.com/age2.html">check out the HD version</a> right now!</p>
-    <h4>Get Started</h4>
-    <p>If you've used the editor before, you can <a onclick="function(e){e.stopPropagation();}();return false;" href="{{=URL('editor')}}">pick up where you left off</a> (requires session cookie). Or get started by using the <a href="{{=URL('setfile', args='default')}}">default key bindings (for  AoE2:HD v 2.3)</a>, leaving <a href="{{=URL('setfile', args='none')}}">every hotkey unbound</a>, or uploading your current hotkeys directly to the editor:</p>
-    <form action="">
-    </form>
-    <form action="{{=URL('upload')}}" method="post" enctype="multipart/form-data">
-        <div><input type="file" name="hki" /></div>
-        <div><input type="submit" value="Edit File" /></div>
-    </form>
-    <h4>Why?</h4>
+<div id="features">
+<h4>Features</h4>
+<div style="border: 1px solid #cccccc; padding: 4px; border-radius:4px">
     <p>AoK has always had a hotkey editor, so why create another? The in-game editor may be convenient, but it has several shortcomings. This editor adds several features:</p>
     <ul>
         <li>Use key bindings that the in-game editor does not allow (like Caps Lock).</li>
         <li>Assign conflicting hotkeys.  Allowing conflicts has been a feature available in later Age games, so backporting it to AoK would only be natural.</li>
         <li>Better organization of hotkeys.</li>
         <li>Web based interface that saves hotkeys with a session cookie as you edit them.</li>
-        <li>Supports multiple versions of AoK.</li>
-    </ul><!--For example, the in-game editor has no option to allow conflicts. In some cases what the game considers conflicts effectively never conflict (e.g. the "Pack" and "Build" hotkeys, used exclusively by trebuchets and villagers respectively). In other cases using conflicting hotkeys can be useful as long as the player understands the behavior (if you use "B" for both building and selecting a barracks, the only time they conflict is in the villager build menu, where the build command is always favored).   Additionally, this editor can bind keys that are not accessible in the in-game editor, like the Caps Lock key.-->
+        <li>Supports all versions of AoK.</li>
+        <li>Preset bindings to choose from and customize.</li>
+    </ul>
+</div>
+</div>
+<div id="welcome">
+    <p style="color:red;border: 1px solid #cccccc;padding:4px;border-radius:4px;">Welcome to the web-based Age of Empires II (AoK) hotkey editor! This website assumes you have played AoK and are familiar with its hotkey system. If not, go <a href="http://www.ageofempires.com/age2.html" target="_blank">check out the HD version</a> right now! Or take a look at the excellent fan-made expansion <a href="http://www.forgottenempires.net/" target="_blank">Forgotten Empires!</a></p>
+    <h4>Get Started</h4>
+    <p>If you've used the editor before, you can <a onclick="function(e){e.stopPropagation();}();return false;" href="{{=URL('editor')}}">pick up where you left off</a> (requires session cookie). Alternatively pick a preset from the list on the right or upload your current hotkeys directly to the editor:</p>
+    <form action="">
+    </form>
+    <form action="{{=URL('upload')}}" method="post" enctype="multipart/form-data">
+        <div><input type="file" name="hki" /></div>
+        <div><input type="submit" value="Edit File" /></div>
+    </form>
     <h4>How?</h4>
+    <ol>
+        <li>Upload a your own <span style="font-weight:bold">*.hki</span> file or choose a preset</li>
+        <li>Edit your hotkey bindings directly in the browser</li>
+        <li>Download the new <span style="font-weight:bold">player1.hki</span> file</li>
+        <li>Replace the file in your game directory. The file is generally located:</li>
+        <ul>
+            <li>For AoK/AoC/FE:<textarea readonly>C:\Program&nbsp;Files&nbsp;(x86)\Microsoft&nbsp;Games\Age&nbsp;of&nbsp;Empires&nbsp;II\player1.hki</textarea></li>
+            <li>For HD:<textarea readonly>C:\Program&nbsp;Files&nbsp;(x86)\Steam\SteamApps\common\Age2HD\savegame\player1.hki</textarea></li>
+        </ul>
+    </ol>
     <p>AoK stores your hotkeys in a file called <span style="font-weight:bold">player1.hki</span> underneath the <span style="font-weight:bold">savegame\</span> directory in the root game directory. Generally (for the HD version) the full path is:</p>
-    <p style="font-weight:bold">C:\Program&nbsp;Files&nbsp;(x86)\Steam\SteamApps\common\Age2HD\savegame\player1.hki</p>
+    
     <p>The file is stored in a compressed binary format, which makes it painful to edit directly.  This editor provides a way to upload your current hotkey file, edit the hotkeys with a user-friendly interface, then download the edited file.  Move the downloaded file to the above location and start AoK to use your new hotkeys.</p>
 
     

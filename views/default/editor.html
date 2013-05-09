@@ -150,7 +150,7 @@
     function create_preset() {
         serialize_hotkeys();
         $.ajax({url : '{{=URL('addpreset')}}', type: "POST", data : {hotkeys : $('#hotkeys').val(), name : $('#presetname').val()}})
-            .done(function(data) { notify('Preset Created!',1500); $('#preseturl').html('Preset url: <textarea readonly="readonly">' + data + '</textarea>')})
+            .done(function(data) { notify('Preset Created!',1500); $('#preseturl').html('Preset url: <textarea readonly>' + data + '</textarea>')})
             .fail(function(data) { notify('Error Creating Preset: ' + data,3000);})
         	.always(function() {place_assignments();});
     }
