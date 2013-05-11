@@ -40,11 +40,11 @@ def update_assign(data):
     assign.hotkeys.update(data)
     return assign
 
-@arg_cache(cache_key = lambda : 'index', time_expire=3600)
+@arg_cache(cache_key = lambda : 'index_{:s}'.format(T.accepted_language), time_expire=3600)
 def index():
     return response.render(dict(presets = popular_presets(10), versions = { id : name for (id, head, size, name) in hotkeys.hk_versions}))
 
-@arg_cache(cache_key = lambda : 'editor_' + get_assign().version)
+@arg_cache(cache_key = lambda : 'editor_{:s}_{:s}'.format(get_assign().version, T.accepted_language))
 def editor():
     return response.render(dict(
                 hk_desc = [(group, [(hk, hotkeys.hk_desc[hk]) for hk in hks]) for (group, hks) in hotkeys.hk_groups],
@@ -99,7 +99,7 @@ def addpreset():
     cache.ram.clear('getpresets')
     return URL(preset, args=str(preset_id), scheme=True, host=True)
 
-@arg_cache(cache_key = lambda : 'getpresets', time_expire=3600)
+@arg_cache(cache_key = lambda : 'getpresets_{:s}'.format(T.accepted_language), time_expire=3600)
 def getpresets():
     return response.render(dict(presets = popular_presets(0), versions={ id : name for (id, head, size, name) in hotkeys.hk_versions}))
 
