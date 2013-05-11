@@ -10,12 +10,7 @@ def popular_presets(n):
 
 @arg_cache(cache_key = lambda v : 'file_{:s}'.format(v))
 def load_file(version):
-    hkfile = db(db.hkfiles.version == version).select(db.hkfiles.file).first().file
-    if not hkfile:
-        log.warn('Inserting hkfile for version {:s}'.format(version))
-        hkfile = hotkeys.HotkeyFile(open(os.path.join(request.folder, 'private', 'default_{:s}.hki'.format(version))).read())
-        db.hkfiles.insert(version=version, file = hkfile)
-    return hkfile
+    return hotkeys.HotkeyFile(open(os.path.join(request.folder, 'private', 'default_{:s}.hki'.format(version))).read())
 
 @arg_cache(cache_key = lambda v : 'version_{:s}'.format(v))
 def version_hotkeys(version):
@@ -39,6 +34,12 @@ def update_assign(data):
     assign = get_assign()
     assign.hotkeys.update(data)
     return assign
+
+def cacheversion():
+    for v in [v[0] for v in hotkeys.hk_versions]:
+        load_file(v)
+        version_hotkeys(v)
+    return 'Data cached'
 
 @arg_cache(cache_key = lambda : 'index_{:s}'.format(T.accepted_language), time_expire=3600)
 def index():

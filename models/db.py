@@ -23,7 +23,6 @@ pickled = SQLCustomType(
     decoder = (lambda x: pickle.loads(x))
 )
 db.define_table('presets', Field('version', 'string', length=3), Field('name', 'string', length=32), Field('assign', pickled), Field('usage', 'integer', default=0))
-db.define_table('hkfiles', Field('version', 'string', length=3), Field('file', pickled))
 
 def arg_cache(cache_key = lambda x: x, time_expire=None):
     def decorator(method):
