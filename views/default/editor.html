@@ -151,7 +151,7 @@
         serialize_hotkeys();
         $.ajax({url : '{{=URL('addpreset')}}', type: "POST", data : {hotkeys : $('#hotkeys').val(), name : $('#presetname').val()}})
             .done(function(data) { notify('Preset Created!',1500); $('#preseturl').html('Preset url: <textarea readonly>' + data + '</textarea>')})
-            .fail(function(data) { notify('Error Creating Preset: ' + data,3000);})
+            .fail(function(data) { notify('Error Creating Preset: ' + data.responseText,3000);})
         	.always(function() {place_assignments();});
     }
     
