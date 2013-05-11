@@ -8,13 +8,18 @@ def popular_presets(n):
     else:
         return db().select(db.presets.id, db.presets.version, db.presets.name, orderby=~db.presets.usage, limitby=(0,n))
 
-@arg_cache(cache_key = lambda name : name + '.hki')
-def load_file(name):
-    return hotkeys.HotkeyFile(open(os.path.join(request.folder, 'private', name + '.hki')).read())
+@arg_cache(cache_key = lambda v : 'file_{:s}'.format(v))
+def load_file(version):
+    hkfile = db(db.hkfiles.version == version).select(db.hkfiles.file).first().file
+    if not hkfile:
+        log.warn('Inserting hkfile for version {:s}'.format(version))
+        hkfile = hotkeys.HotkeyFile(open(os.path.join(request.folder, 'private', 'default_{:s}.hki'.format(version))).read())
+        db.hkfiles.insert(version=version, file = hkfile)
+    return hkfile
 
-@arg_cache(cache_key = lambda v : 'version_' + v)
+@arg_cache(cache_key = lambda v : 'version_{:s}'.format(v))
 def version_hotkeys(version):
-    return [k for k in hotkeys.hk_desc if k in load_file('default_' + version)]
+    return [k for k in hotkeys.hk_desc if k in load_file(version)]
 
 #this can't be cached right now...
 #@arg_cache(cache_key = lambda p : 'preset_' + p)
@@ -27,7 +32,7 @@ def set_assign(hkfile):
 def get_assign(*args):
     if not session.assign:
         log.warn('Setting default session data')
-        set_assign(load_file('default_22'))
+        set_assign(load_file('22'))
     return session.assign
 
 def update_assign(data):
@@ -105,7 +110,7 @@ def save():
 def player1():
     response.headers['Content-Type'] = 'application/octet-stream';
     assign = update_assign(json.loads(request.vars.hotkeys))
-    hkfile = load_file('default_' + assign.version)
+    hkfile = load_file(assign.version)
     for hotkey, value in assign.hotkeys.items():
         if hotkey in hkfile:
             hkfile[hotkey].update(value)
