@@ -352,32 +352,38 @@ hk_desc = {
 hk_groups = [
 	
 	
-	('Menus/Settings/Game Commands', [
-        'chatmenu' ,
-        'diplomacy' ,
-        'time' ,
-        'stats' ,
-        'tech' ,
-        'flare' ,#??????
-        'cmap' ,
-        'emap' ,
-        'nmap' ,
+	('Menus', [
         'object',
+        'tech' ,
+        'chatmenu' ,
+        'diplomacy'
+	]),
+	('Settings', [
+        'colors',
+        'stats' ,
+        'time' ,
+        'emap' ,
+        'cmap' ,
+        'nmap' ,
+        'slow' ,
+        'fast'
+	]),
+	('Game Commands', [
+        'flare' ,
         'pause' ,
+        'save' ,
+        'chapter'
+	]),
+	('Chat', [
+        'chat' ,
         'chatback' ,
         'chatfor' ,
-        'chapter' ,
-        'save' ,
-        'chat' ,
-        'slow' ,
-        'fast' ,
-        'colors'
 	]),
 	('Scrolling', [
-        'down' ,
+        'up',
         'left' ,
         'right' ,
-        'up'
+        'down'
 	]),
 	('Control Groups', [
         'cgroup0',
@@ -422,28 +428,28 @@ hk_groups = [
         'sgroup19'
 	]),
 	('Go-To Commands', [
-        'range' ,
-        'rax' ,
-        'smith' ,
-        'castle' ,
-        'dock' ,
-        'last' ,
-        'last2' ,
-        'lumber' ,
-        'market' ,
         'mill' ,
         'mining' ,
+        'lumber' ,
+        'dock' ,
+        'smith' ,
+        'market' ,
         'monastery' ,
+        'university' ,
+        'tc' ,
+        'tc2' ,
+        'rax' ,
+        'range' ,
+        'stable' ,
+        'siege' ,
+        'castle' ,
         'idlem' ,
         'idlem2' ,
         'idlev' ,
         'idlev2' ,
         'selected' ,
-        'siege' ,
-        'stable' ,
-        'tc' ,
-        'tc2' ,
-        'university' ,
+        'last' ,
+        'last2' ,
         'back'
 	]),
 	('All Units', [
@@ -452,22 +458,22 @@ hk_groups = [
         'stop'
 	]),
 	('Military Units', [
-        'agg' ,
-        'box' ,
-        'def' ,
-        'flank' ,
-        'follow' ,
-        'guard' ,
-        'line' ,
-        'noattack' ,
         'patrol' ,
+        'guard' ,
+        'follow' ,
+        'agg' ,
+        'def' ,
+        'stand',
+        'noattack' ,
+        'line' ,
+        'box' ,
         'stag' ,
-        'stand'
+        'flank'
 	]),
 	('Siege Units', [
-        'ground' ,
+        'unpack',
         'pack' ,
-        'unpack'
+        'ground' #onager is different spot
 	]),
 	('Monks', [
         'convert' ,
@@ -480,86 +486,86 @@ hk_groups = [
 	]),
 	('Buildings/Transports', [
         'setgather' ,
-        'unload' ,
-        'work'
+        'work',
+        'unload' #transport is different spot
 	]),('Economic Build Menu', [
-        'bsmith' ,
-        'bdock' ,
-        'bfarm' ,
         'bhouse' ,
-        'blumber' ,
-        'bmarket' ,
         'bmill' ,
         'bmining' ,
+        'blumber' ,
+        'bdock' ,
+        'bfarm' ,
+        'bsmith' ,
+        'bmarket' ,
         'bmonastery' ,
-        'btc' ,
         'buniversity' ,
+        'btc' ,
         'bwonder',
         'bnext'
 	]),('Military Build Menu', [
-        'brange' ,
         'brax' ,
-        'bbombard' ,
-        'bcastle' ,
-        'bgate' ,
+        'brange' ,
+        'bstable' ,
+        'bsiege' ,
         'boutpost' ,
         'bpalisade' ,
-        'bsiege' ,
-        'bstable' ,
         'bwall' ,
-        'btower'
+        'btower' ,
+        'bbombard' ,
+        'bgate' ,
+        'bcastle'
 	]),
 	('Fishing Ship Build', [
         'btrap'
 	]),
 	('Town Center', [
-        'bell' ,
-        'vill'
+        'vill',
+        'bell'
 	]),
 	('Dock', [
-        'longboat' ,
-        'gcannon' ,
+        'fish' ,
+        'transport' ,
+        'cog' ,
+        'galley' ,
         'demoship' ,
         'fireship' ,
-        'fish' ,
-        'galley' ,
-        'cog' ,
-        'transport' ,
+        'gcannon' ,
+        'longboat' ,
         'turtle'
 	]),
 	('Barracks', [
-        'eagle' ,
-        'huskarl' ,
         'sword' ,
-        'spear'
+        'spear' ,
+        'huskarl' ,
+        'eagle'
 	]),
 	('Archery Range', [
         'archer' ,
+        'skirm' ,
         'cavarcher' ,
-        'hcannon' ,
-        'skirm'
+        'hcannon'
 	]),
 	('Stable', [
-        'camel' ,
+        'scout',
         'knight' ,
-        'scout'
+        'camel'
 	]),
 	('Siege Workshop', [
         'ram' ,
-        'bcannon' ,
         'mangonel' ,
-        'scorpion'
+        'scorpion',
+        'bcannon'
 	]),
 	('Monastery', [
-        'mission' ,
-        'monk'
+        'monk',
+        'mission'
 	]),
 	('Market', [
         'cart'
 	]),
 	('Castle', [
-        'treb' ,
         'uu' ,
+        'treb' ,
         'petard'
 	]),
 	('Mill', [
