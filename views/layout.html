@@ -81,6 +81,15 @@ response.include_files()
       h1, h2, h3, h4, h5 {
           font-family: Georgia, serif;
       }
+      @media print {
+          .navbar {
+              display: none;
+          }
+          .container {
+              width: 50%;
+              margin:0;
+          }
+      }
   </style>
 
   {{
@@ -137,19 +146,6 @@ response.include_files()
   </div><!--/top navbar -->
 
   <div class="container">
-    {{if False:}}
-    <!-- Masthead ================================================== -->
-    <header class="mastheader row" id="header">
-        <div class="span12">
-            <div class="page-header">
-                <h2>
-                    {{=response.title}}
-                    <small>{{=response.subtitle or ''}}</small>
-                </h2>
-            </div>
-        </div>
-    </header>
-    {{pass}}
 
     <section id="main" class="main">
         {{if left_sidebar_enabled:}}
