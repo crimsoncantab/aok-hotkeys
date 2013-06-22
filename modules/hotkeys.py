@@ -576,7 +576,8 @@ hk_groups = [
 hk_versions = [
     ('aok', 0x3f800000, 2080, 'Vanilla AoK'),
     ('aoc', 0x3f800000, 2192, 'AoC/FE/HD2.0'),
-    ('22' , 0x40000000, 2432, 'HD2.2+')
+    ('22' , 0x40000000, 2432, 'HD2.2-3'),
+    ('24' , 0x40400000, 2192, 'HD2.4+')
 ]
 header_format = count_format = struct.Struct('<I')
 hk_format = struct.Struct('<Ii???x')
