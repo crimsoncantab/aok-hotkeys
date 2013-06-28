@@ -18,7 +18,7 @@
     
     function save() {
         serialize_hotkeys();
-        $.ajax({url : '{{=URL('save')}}', type: "POST", data : {'hotkeys' : $('#hotkeys').val()}})
+        $.ajax({url : '{{=URL('hotkeys', 'save')}}', type: "POST", data : {'hotkeys' : $('#hotkeys').val()}})
         	.done(function() { notify('Hotkeys Saved',800);})
             .fail(function() { notify('Error Saving Hotkeys',3000);});
     }
@@ -142,7 +142,7 @@
     }
     
     function change_version(v) {
-        $.ajax({url : '{{=URL('version')}}', type: "POST", data : {version : v}})
+        $.ajax({url : '{{=URL('hotkeys', 'version')}}', type: "POST", data : {version : v}})
                 .done(function() { notify('Version Changed',800); load_hotkeys();})
                 .fail(function() { notify('Error Changing Version',3000);});
     }
@@ -263,7 +263,7 @@
             <option value="{{=v}}" {{= 'selected' if v == version else ''}}>{{=desc}}</option>
             {{pass}}
         </select>
-    <form action="{{=URL('default', 'player1.hki')}}" method="post">
+    <form action="{{=URL('hotkeys', 'download', args='player1.hki')}}" method="post">
         <input type="hidden" id="hotkeys" name="hotkeys" />
         <input id="generate-file" type="submit" onclick="serialize_hotkeys();" value="Generate .hki File" />
     </form>
