@@ -22,20 +22,6 @@ def version():
 
 def preset():
     redirect(URL('presets', 'get', r=request))
-    
-    
-def upload():
-    if 'hki' in request.vars and request.vars.hki != '':
-        try:
-            hkfile = hotkeys.HotkeyFile(request.vars.hki.file.getvalue())
-        except:
-            raise HTTP(400, 'File format not recognized')
-    else:
-        raise HTTP(400, 'File not specified')
-    log.info('File version: {:s}'.format(hkfile.version))
-    set_assign(hkfile)
-    redirect(URL('editor'))
-    
 
 def save():
     update_assign(json.loads(request.vars.hotkeys))

@@ -63,7 +63,7 @@
     <p>If you've used the editor before, you can <a onclick="function(e){e.stopPropagation();}();return false;" href="{{=URL('editor')}}">pick up where you left off</a> (requires session cookie). Alternatively pick a preset from the list on the right or upload your current hotkeys directly to the editor:</p>
     <form action="">
     </form>
-    <form action="{{=URL('upload')}}" method="post" enctype="multipart/form-data">
+    <form action="{{=URL('hotkeys', 'upload')}}" method="post" enctype="multipart/form-data">
         <div><input type="file" name="hki" /></div>
         <div><input type="submit" value="Edit File" /></div>
     </form>
