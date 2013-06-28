@@ -27,16 +27,7 @@ def version():
     get_assign().version = request.vars.version
 
 def preset():
-    preset_id = request.args[0] if len(request.args) else 0
-    p = load_preset(preset_id)
-    if not p:
-        raise HTTP(404, 'Preset not found')
-    #this isn't transactional, that's okay
-    #usage field doesn't have to be exact
-    session.assign = p.assign
-    p.usage += 1
-    p.update_record()
-    redirect(URL('editor'))
+    redirect(URL('presets', 'get', r=request))
     
     
 def upload():
@@ -51,19 +42,6 @@ def upload():
     set_assign(hkfile)
     redirect(URL('editor'))
     
-
-def addpreset():
-    assign = update_assign(json.loads(request.vars.hotkeys))
-    name = request.vars.name
-    if not name:
-        raise HTTP(400, 'Specify a name')
-    if len(name) > 32:
-        name = name[:32]
-    preset_id = db.presets.insert(name=name, version=assign.version, assign = assign)
-    cache.ram.clear('index')
-    cache.ram.clear('presets')
-    return URL(preset, args=str(preset_id), scheme=True, host=True)
-
 
 def save():
     update_assign(json.loads(request.vars.hotkeys))
