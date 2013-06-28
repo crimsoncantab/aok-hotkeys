@@ -14,12 +14,6 @@ def editor():
                 hk_desc = [(group, [(hk, hotkeys.hk_desc[hk]) for hk in hks]) for (group, hks) in hotkeys.hk_groups],
                 hk_versions = hotkeys.hk_versions, version = get_assign().version
                 ))
-
-
-def recall():
-    assign = get_assign()
-    from gluon.contrib import simplejson as json
-    return json.dumps(assign.get_hotkeys(version_hotkeys(assign.version)))
     
 def version():
     if request.vars.version not in [v[0] for v in hotkeys.hk_versions]:

@@ -119,7 +119,7 @@
     }
     
     function deserialize_hotkeys(data) {
-    	data = JSON.parse(data);
+        //data = JSON.parse(data);
     	$('.hk').each(function() {
         	$this = $(this);
             if ($this.attr('name') in data) {
@@ -134,7 +134,7 @@
     function load_hotkeys() {
         $('#generate-file').attr('disabled','disabled');
         $('.hk').removeClass('hk-click hk-pending hk-unassign hk-assign').off('mousedown').html('Disabled');
-        $.ajax('{{=URL('recall')}}')
+        $.ajax('{{=URL('hotkeys','get.json')}}')
         	.done(function(data) { deserialize_hotkeys(data); $('#generate-file').removeAttr('disabled');})
             .fail(function() { alert("There was an error loading the hotkey file into the editor"); })
             .always(function() { $('.hk-click').mousedown(event_handler); });
