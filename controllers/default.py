@@ -4,11 +4,12 @@ def cacheversion():
         version_hotkeys(v)
     return 'Data cached'
 
-@arg_cache(cache_key = lambda : 'index')
+@arg_cache('index')
 def index():
+    log.info(type(request.args))
     return response.render(dict(presets = popular_presets(10), versions = { id : name for (id, head, size, name) in hotkeys.hk_versions}))
 
-@arg_cache(cache_key = lambda : 'editor_{:s}'.format(get_assign().version))
+@arg_cache('editor_{:s}'.format(get_assign().version))
 def editor():
     return response.render(dict(
                 hk_desc = [(group, [(hk, hotkeys.hk_desc[hk]) for hk in hks]) for (group, hks) in hotkeys.hk_groups],
