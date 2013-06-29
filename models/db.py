@@ -1,4 +1,6 @@
 import logging as log
+import pickle
+from gluon.dal import SQLCustomType
 
 if not request.env.web2py_runtime_gae:
     ## if NOT running on Google App Engine use SQLite or other DB
@@ -14,8 +16,6 @@ else:
     #session.connect(request, response, db = MEMDB(Client()))
 
 response.generic_patterns = ['*'] if request.is_local else []
-import pickle
-from gluon.dal import SQLCustomType
 pickled = SQLCustomType(
     type = 'text',
     native = 'text',
@@ -23,14 +23,3 @@ pickled = SQLCustomType(
     decoder = (lambda x: pickle.loads(x))
 )
 db.define_table('presets', Field('version', 'string', length=3), Field('name', 'string', length=32), Field('assign', pickled), Field('usage', 'integer', default=0))
-
-def arg_cache(cache_key = lambda x: x, time_expire=None):
-    def decorator(method):
-        def wrap(*args):
-            key = cache_key(*args)
-            def log_wrap(*args):
-                log.info('Caching key {:s}'.format(key)) 
-                return method(*args)
-            return cache.ram(key, lambda: log_wrap(*args), time_expire=time_expire)
-        return wrap
-    return decorator
