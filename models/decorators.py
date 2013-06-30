@@ -12,6 +12,21 @@ def arg_cache(cache_key, time_expire=None):
         return wrap
     return decorator
 
+def __valid_item(valid, item, key):
+    has_default = type(valid) == tuple
+    t = valid[0] if has_default else valid
+    if item == None or item == '':
+        if has_default:
+            item = valid[1]
+        else:
+            log.warn('No value specified: {}'.format(key))
+            raise HTTP(400) #not found if no arg and no default
+    try:
+        return item if isinstance(item, t) else t(item)
+    except (TypeError, ValueError):
+        log.warn('Could not cast var: {} is not castable to {}'.format(item, t))
+        raise HTTP(400) #not found if we can't cast
+    #TODO should be a runtime error if we can't cast the default value
 
 def valid_request(*vargs, **vvars):
     """
@@ -21,22 +36,13 @@ def valid_request(*vargs, **vvars):
     """
     def decorator(method):
         def wrap():
-            def valid_item(valid, item):
-                has_default = type(valid) == tuple
-                t = valid[0] if has_default else valid
-                if not (item or has_default): raise HTTP(400) #not found if no arg and no default
-                try: return t(item if item else valid[1])
-                except (TypeError, ValueError):
-                    log.warn('Could not cast var')
-                    raise HTTP(400) #not found if we can't cast
-                #TODO should be a runtime error if we can't cast the default value
             rargs = request.args
             rargs += [None]*(len(vargs)-len(rargs)) #pad rargs to be same length as vargs
             for i, varg in enumerate(vargs):
-                rargs[i] = valid_item(varg, rargs[i])
+                rargs[i] = __valid_item(varg, rargs[i], i)
             rvars = request.vars
             for k, vvar in vvars.items():
-                rvars[k] = valid_item(vvar, rvars[k])
+                rvars[k] = __valid_item(vvar, rvars[k], k)
             method()
         return wrap
     return decorator

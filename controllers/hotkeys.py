@@ -2,14 +2,13 @@ def get():
     assign = get_assign()
     return assign.get_hotkeys(version_hotkeys(assign.version))
 
+from cgi import FieldStorage
+@valid_request(hki=FieldStorage)
 def upload():
-    if 'hki' in request.vars and request.vars.hki != '':
-        try:
-            hkfile = hotkeys.HotkeyFile(request.vars.hki.file.getvalue())
-        except:
-            raise HTTP(400, 'File format not recognized')
-    else:
-        raise HTTP(400, 'File not specified')
+    try:
+        hkfile = hotkeys.HotkeyFile(request.vars.hki.file.getvalue())
+    except:
+        raise HTTP(400, 'File format not recognized')
     log.info('File version: {:s}'.format(hkfile.version))
     set_assign(hkfile)
     redirect(URL('default', 'editor'))
