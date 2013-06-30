@@ -2,9 +2,9 @@
 def index():
     return response.render(dict(presets = popular_presets(0), versions={ id : name for (id, head, size, name) in hotkeys.hk_versions}))
 
+@valid_request(str)
 def get():
-    preset_id = request.args[0] if len(request.args) else 0
-    p = load_preset(preset_id)
+    p = load_preset(request.args[0])
     if not p:
         raise HTTP(404, 'Preset not found')
     #this isn't transactional, that's okay
@@ -24,4 +24,4 @@ def add():
     preset_id = db.presets.insert(name=name, version=assign.version, assign = assign)
     cache.ram.clear('index')
     cache.ram.clear('presets')
-    return URL(preset, args=str(preset_id), scheme=True, host=True)
+    return URL('presets', 'get', args=str(preset_id), scheme=True, host=True)

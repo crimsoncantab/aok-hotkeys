@@ -20,20 +20,23 @@ def valid_request(*vargs, **vvars):
     (required_type, default_value)
     """
     def decorator(method):
-        def wrap(*a, **kw):
+        def wrap():
+            def valid_item(valid, item):
+                has_default = type(valid) == tuple
+                t = valid[0] if has_default else valid
+                if not (item or has_default): raise HTTP(400) #not found if no arg and no default
+                try: return t(item if item else valid[1])
+                except (TypeError, ValueError):
+                    log.warn('Could not cast var')
+                    raise HTTP(400) #not found if we can't cast
+                #TODO should be a runtime error if we can't cast the default value
             rargs = request.args
             rargs += [None]*(len(vargs)-len(rargs)) #pad rargs to be same length as vargs
-            for i, (rarg, varg) in enumerate(zip(list(rargs), vargs)):
-                if not (rarg or (type(varg) == tuple and len(varg) == 2)): raise HTTP(404) #not found if no arg and no default
-                try: rargs[i] = varg[0](rarg if rarg else varg[1])
-                except (TypeError, ValueError): raise HTTP(400) #not found if we can't cast
-                #TODO should be a runtime error if we can't cast the default value
+            for i, varg in enumerate(vargs):
+                rargs[i] = valid_item(varg, rargs[i])
             rvars = request.vars
-            for k, vvar in vvars:
-                rvar = rvars[k]
-                if not (rvar or (type(vvar) == tuple and len(vvar) == 2)): raise HTTP(400) #not found if no arg and no default
-                try: rvars[k] = vvar[0](rvar if rvar else vvar[1])
-                except (TypeError, ValueError): raise HTTP(400) #not found if we can't cast
-                #TODO should be a runtime error if we can't cast the default value
+            for k, vvar in vvars.items():
+                rvars[k] = valid_item(vvar, rvars[k])
+            method()
         return wrap
     return decorator
