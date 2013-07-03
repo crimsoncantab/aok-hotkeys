@@ -15,7 +15,7 @@ else:
     #from google.appengine.api.memcache import Client
     #session.connect(request, response, db = MEMDB(Client()))
 
-response.generic_patterns = ['*'] if request.is_local else []
+response.generic_patterns = ['*.json']
 pickled = SQLCustomType(
     type = 'text',
     native = 'text',
