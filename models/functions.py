@@ -1,4 +1,3 @@
-from gluon.contrib import simplejson as json
 import hotkeys, os
 
 #@arg_cache(cache_key = lambda n : 'presets_' + str(n))

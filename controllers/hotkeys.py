@@ -1,3 +1,5 @@
+from gluon.contrib import simplejson as json
+
 def get():
     assign = get_assign()
     return assign.get_hotkeys(version_hotkeys(assign.version))
