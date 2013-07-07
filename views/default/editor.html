@@ -17,8 +17,7 @@
     }
     
     function save() {
-        serialize_hotkeys();
-        $.ajax({url : '{{=URL('hotkeys', 'save')}}', type: "POST", data : {'hotkeys' : $('#hotkeys').val()}})
+        $.ajax({url : '{{=URL('hotkeys', 'save')}}', type: "POST", data : {'hotkeys' : serialize_hotkeys()}})
         	.done(function() { notify('Hotkeys Saved',800);})
             .fail(function() { notify('Error Saving Hotkeys',3000);});
     }
@@ -115,7 +114,7 @@
         $('.hk-click').each(function() {
         	add_to_hotkeys(hotkeys, $(this));
         });
-        $('#hotkeys').val(JSON.stringify(hotkeys));
+        return JSON.stringify(hotkeys);
     }
     
     function deserialize_hotkeys(data) {
@@ -148,8 +147,7 @@
     }
     
     function create_preset() {
-        serialize_hotkeys();
-        $.ajax({url : '{{=URL('presets', 'add')}}', type: "POST", data : {hotkeys : $('#hotkeys').val(), name : $('#presetname').val()}})
+        $.ajax({url : '{{=URL('presets', 'add')}}', type: "POST", data : {hotkeys : serialize_hotkeys(), name : $('#presetname').val()}})
             .done(function(data) { notify('Preset Created!',1500); $('#preseturl').html('Preset url: <textarea readonly>' + data + '</textarea>')})
             .fail(function(data) { notify('Error Creating Preset: ' + data.responseText,3000);})
         	.always(function() {place_assignments();});
@@ -265,7 +263,7 @@
         </select>
     <form action="{{=URL('hotkeys', 'download', args='player1.hki')}}" method="post">
         <input type="hidden" id="hotkeys" name="hotkeys" />
-        <input id="generate-file" type="submit" onclick="serialize_hotkeys();" value="Generate .hki File" />
+        <input id="generate-file" type="submit" onclick="$('#hotkeys').val(serialize_hotkeys());" value="Generate .hki File" />
     </form>
     </div>
     <div id="setpreset" style="float:left">
