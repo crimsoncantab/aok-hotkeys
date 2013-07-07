@@ -1,3 +1,5 @@
+from gluon.contrib import simplejson as json
+
 @arg_cache('presets')
 def index():
     return response.render(dict(presets = popular_presets(0), versions={ id : name for (id, head, size, name) in hotkeys.hk_versions}))
