@@ -27,3 +27,19 @@ def add():
     cache.ram.clear('index')
     cache.ram.clear('presets')
     return URL('presets', 'get', args=str(preset_id), scheme=True, host=True)
+
+@request.restful()
+def api():
+    response.view='generic.json'
+    @arg_cache('test')
+    def GET(*args, **vars):
+        patterns = [
+            '/p[presets]',
+            '/p/{presets.id}'
+        ]
+        parser = db.parse_as_rest(patterns, args, vars)
+        if parser.status == 200:
+            return dict(content = parser.response)
+        else:
+            raise HTTP(parser.status, parser.error)
+    return locals()
