@@ -45,13 +45,8 @@
   response.files.append(URL('static','js/mousewheel.js'))
   response.files.append(URL('static','js/json2.js'))
   response.files.append(URL('static','js/masonry.min.js'))
-  response.files.insert(0,URL('static','js/jquery.js'))
-#response.files.insert(1,URL('static','css/calendar.css'))
-#response.files.insert(2,URL('static','js/calendar.js'))
-#response.files.insert(3,URL('static','js/web2py.js'))
-response.include_meta()
-response.include_files()
   }}
+  {{include 'web2py_ajax.html'}}
   <style>
       .navbar {
           height: 45px;
