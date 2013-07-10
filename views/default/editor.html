@@ -267,10 +267,11 @@
     </form>
     </div>
     <div id="setpreset" style="float:left">
-        Create preset bindings that others can use as a starting point:
+        {{=LOAD('presets','addtest.load',ajax=True)}}
+        <!--Create preset bindings that others can use as a starting point:
         <input type="text" id="presetname" maxlength="32" placeholder="Preset Name"/>
         <input type="button" id="preset" onclick="create_preset();" value="Create Preset" />
-        <div id="preseturl"></div>
+        <div id="preseturl"></div>-->
     </div>
     <div id="extras" style="float:left">
         <div>Type &lt;Esc&gt; to unassign the given hotkey.  Use the buttons below for the &lt;Back&gt; and &lt;Forward&gt; buttons on the mouse.  The mousewheel works also, with modifier keys.</div>

@@ -43,3 +43,24 @@ def api():
         else:
             raise HTTP(parser.status, parser.error)
     return locals()
+
+def valid_add_preset(form):
+    hotkeys.update(form.vars.hotkeys)
+    form.vars.assign=hotkeys.HotkeyAssign(load_file(form.vars.version))
+    form.vars.assign.hotkeys.update(json.loads(request.vars.hotkeys))
+
+def addtest():
+    form = FORM(
+              INPUT(_placeholder='Preset Name:', _name='name', requires=IS_NOT_EMPTY()),
+              INPUT(_value='Create Preset', _type='submit'),
+              INPUT(_name='hotkeys', _id='p_hotkeys', _type='hidden', requires=IS_NOT_EMPTY()),
+              INPUT(_name='version', _id='p_version', _type='hidden', requires=IS_NOT_EMPTY()),
+              onvalidation=valid_add_preset,
+              _onsubmit="$('#p_hotkeys').val(serialize_hotkeys()); $('#p_version').val($('#versions').val());"
+              )
+    form.vars.hotkeys = request.vars.hotkeys
+    if form.accepts(request, session):
+        log.info("Adding preset called {}".format(form.vars.name))
+        preset_id = db.presets.insert(name=form.vars.name, version=form.vars.version, assign=form.vars.assign)
+        return dict(form=form, preset=URL('presets', 'get', args=str(preset_id), scheme=True, host=True))
+    return dict(form=form)
