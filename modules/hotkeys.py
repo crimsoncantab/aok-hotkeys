@@ -171,8 +171,11 @@ hk_ids = {
     'sgroup16' : 0x2c33f,
     'sgroup17' : 0x2c340,
     'sgroup18' : 0x2c341,
-    'sgroup19' : 0x2c342
+    'sgroup19' : 0x2c342,
+    'attack' : 0x30d48
 }
+
+valid_ids = set(hk_ids.values())
 
 #the strings that (most) of the above numerical ids/text ids map to
 hk_desc = {
@@ -290,6 +293,7 @@ hk_desc = {
     'mission' : 'Missionary',
     'monk' : 'Monk',
     'cart' : 'Trade Cart',
+    'attack' : 'Attack Move',
     'agg' : 'Aggressive',
     'box' : 'Box',
     'def' : 'Defensive',
@@ -458,6 +462,7 @@ hk_groups = [
         'stop'
 	]),
 	('Military Units', [
+        'attack' ,
         'patrol' ,
         'guard' ,
         'follow' ,
@@ -577,7 +582,8 @@ hk_versions = [
     ('aok', 0x3f800000, 2080, 'Vanilla AoK'),
     ('aoc', 0x3f800000, 2192, 'AoC/FE/HD2.0'),
     ('22' , 0x40000000, 2432, 'HD2.2-3'),
-    ('24' , 0x40400000, 2192, 'HD2.4+')
+    ('24' , 0x40400000, 2192, 'HD2.4-8'),
+    ('30' , 0x40400000, 2204, 'HDF3.0')
 ]
 header_format = count_format = struct.Struct('<I')
 hk_format = struct.Struct('<Ii???x')
@@ -622,6 +628,8 @@ class HotkeyFile:
                 if (id != -1):
                     while id in hk_map: id+=0x1000000
                     hk_map[id] = hotkey
+                    if id not in valid_ids:
+                        raise Exception('Corrupted file')
                 offset += hk_format.size
                 menu.append(hotkey)
 
@@ -664,4 +672,4 @@ if __name__ == '__main__':
 	for i, hk in enumerate(hk_groups[2][1]):
 		hotkey_file[hk]['code'] = 252 - i
     
-	print hotkey_file.serialize()
+	#print hotkey_file.data
