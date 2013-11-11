@@ -595,10 +595,14 @@ def copy_dict(d, *keys):
 class HotkeyAssign:
     def __init__(self, hkfile):
         self.version, self.hotkeys = hkfile.version, { k : copy_dict(v,'code', 'ctrl', 'alt', 'shift') for (k,v) in hkfile}
-        self.hotkeys.update({ k : {'code':0, 'ctrl' : False, 'alt' : False, 'shift' : False} for k in hk_desc if k not in self.hotkeys})
+        self.update()
         
     def get_hotkeys(self, version_hotkeys):
         return {k : v for (k,v) in self.hotkeys.items() if k in version_hotkeys}
+
+    def update(self):
+        self.hotkeys.update({ k : {'code':0, 'ctrl' : False, 'alt' : False, 'shift' : False} for k in hk_desc if k not in self.hotkeys})
+
 
 class HotkeyFile:
 

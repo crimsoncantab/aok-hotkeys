@@ -18,7 +18,11 @@ def version_hotkeys(version):
 #this can't be cached right now...
 #@arg_cache(cache_key = lambda p : 'preset_' + p)
 def load_preset(preset_id):
-    return db.presets[preset_id]
+    p = db.presets[preset_id]
+    p.assign.update()
+    p.usage += 1
+    p.update_record()
+    return p
 
 def set_assign(hkfile):
     session.assign = hotkeys.HotkeyAssign(hkfile)

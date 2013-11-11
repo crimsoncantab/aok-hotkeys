@@ -12,8 +12,6 @@ def get():
     #this isn't transactional, that's okay
     #usage field doesn't have to be exact
     session.assign = p.assign
-    p.usage += 1
-    p.update_record()
     redirect(URL('default', 'editor'))
 
 def add():
