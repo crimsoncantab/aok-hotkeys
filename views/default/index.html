@@ -34,7 +34,7 @@
 <tbody>
 {{for p in presets: }}
 	<tr>
-        <td><a href="{{=URL('preset', args=p.id)}}">{{=p.name}}</a></td>
+        <td><a href="{{=URL('presets', 'get', args=p.id)}}">{{=p.name}}</a></td>
         <td>{{=versions[p.version]}}</td>
 	</tr>
 {{pass}}
