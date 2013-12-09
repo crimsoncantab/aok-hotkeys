@@ -17,7 +17,7 @@ def editor():
                 ))
 
 def preset():
-    redirect(URL('presets', 'get', r=request))
+    redirect(URL('presets', 'get', args=request.args))
     
 def googled34aee2b940141cc():
     return open(os.path.join(request.folder, 'private', 'googled34aee2b940141cc.html')).read()
