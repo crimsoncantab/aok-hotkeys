@@ -19,6 +19,8 @@ def version_hotkeys(version):
 #@arg_cache(cache_key = lambda p : 'preset_' + p)
 def load_preset(preset_id):
     p = db.presets[preset_id]
+    if not p:
+        raise HTTP(404, 'Preset not found')
     p.assign.update()
     p.usage += 1
     p.update_record()
@@ -30,7 +32,7 @@ def set_assign(hkfile):
 def get_assign(*args):
     if not session.assign:
         log.warn('Setting default session data')
-        set_assign(load_file('22'))
+        set_assign(load_file(hotkeys.hk_versions[-1][0])) #most recent version
     return session.assign
 
 def update_assign(data):
