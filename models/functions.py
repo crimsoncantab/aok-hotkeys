@@ -13,7 +13,8 @@ def load_file(version):
 
 @arg_cache(cache_key = lambda v : 'version_{:s}'.format(v))
 def version_hotkeys(version):
-    return [k for k in hotkeys.hk_desc if k in load_file(version)]
+    f = load_file(version)
+    return [k for k in hotkeys.hk_desc if k in f]
 
 #this can't be cached right now...
 #@arg_cache(cache_key = lambda p : 'preset_' + p)

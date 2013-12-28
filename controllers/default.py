@@ -6,7 +6,6 @@ def cacheversion():
 
 @arg_cache('index')
 def index():
-    log.info(type(request.args))
     return response.render(dict(presets = popular_presets(10), versions = { id : name for (id, head, size, name) in hotkeys.hk_versions}))
 
 @arg_cache('editor_{:s}'.format(get_assign().version))

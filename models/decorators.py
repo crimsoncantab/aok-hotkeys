@@ -1,4 +1,4 @@
-def arg_cache(cache_key, time_expire=None):
+def arg_cache(cache_key, time_expire=0):
     def decorator(method):
         def wrap(*args, **kwargs):
             try:
