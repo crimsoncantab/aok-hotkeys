@@ -17,9 +17,19 @@
     }
     
     function save() {
-        $.ajax({url : '{{=URL('hotkeys', 'save')}}', type: "POST", data : {'hotkeys' : serialize_hotkeys()}})
-            .done(function() { notify('Hotkeys Saved',1500);})
-            .fail(function() { notify('Error Saving Hotkeys',3000);});
+        $.cookie('hotkeys',serialize_hotkeys());
+        //$.ajax({url : '{{=URL('hotkeys', 'save')}}', type: "POST", data : {'hotkeys' : serialize_hotkeys()}})
+        //.done(function() { notify('Hotkeys Saved',1500);})
+        //    .fail(function() { notify('Error Saving Hotkeys',3000);});
+    }
+    
+    function load() {
+        var data = $.cookie('hotkeys')
+        if (data) {
+            deserialize_hotkeys(data);
+            return true;
+        }
+        return false;
     }
     
     function sync($sp) {
@@ -131,13 +141,14 @@
     }
     
     function load_hotkeys() {
-        $('#generate-file').attr('disabled','disabled');
-        $('.hk').removeClass('hk-click hk-pending hk-unassign hk-assign').off('mousedown').html('Disabled');
-        $.ajax('{{=URL('hotkeys','get.json')}}')
-        	.done(function(data) { deserialize_hotkeys(data); $('#generate-file').removeAttr('disabled');})
-            .fail(function() { alert("There was an error loading the hotkey file into the editor"); })
-            .always(function() { $('.hk-click').mousedown(event_handler); });
-    	
+        if (!load()) {
+            $('#generate-file').attr('disabled','disabled');
+            $('.hk').removeClass('hk-click hk-pending hk-unassign hk-assign').off('mousedown').html('Disabled');
+            $.ajax('{{=URL('hotkeys','get.json')}}')
+                .done(function(data) { deserialize_hotkeys(data); save(); $('#generate-file').removeAttr('disabled');})
+                .fail(function() { alert("There was an error loading the hotkey file into the editor"); })
+                .always(function() { $('.hk-click').mousedown(event_handler); });
+        }
     }
     
     function change_version(v) {
@@ -154,6 +165,12 @@
     }
     
     $(document).ready(function() {
+        $.cookie.defaults.expires = 365
+        $.cookie.defaults.path = '/'
+        $.cookie.json = true;
+        
+        $.cookie('testing_cookie', 'blah blah');
+        alert($.cookie('testing_cookie'));
         place_assignments();
         
         $('#assignments').masonry();
