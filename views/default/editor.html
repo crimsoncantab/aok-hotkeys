@@ -261,7 +261,7 @@
             <option value="{{=v}}" {{= 'selected' if v == version else ''}}>{{=desc}}</option>
             {{pass}}
         </select>
-    <form action="{{=URL('hotkeys', 'download', args='player1.hki')}}" method="post">
+    <form action="{{=URL('hotkeys', 'download', args='player0.hki')}}" method="post">
         <input type="hidden" id="hotkeys" name="hotkeys" />
         <input id="generate-file" type="submit" onclick="$('#hotkeys').val(serialize_hotkeys());" value="Generate .hki File" />
     </form>
