@@ -172,7 +172,12 @@ hk_ids = {
     'sgroup17' : 0x2c340,
     'sgroup18' : 0x2c341,
     'sgroup19' : 0x2c342,
-    'attack' : 0x30d48
+    'attack' : 0x30d48,
+    'bpgate' : 0x4b0c,
+    'bfeitoria' : 0x4a83,
+    'genitour' : 0x4a58,
+    'siegetower' : 0x4a68,
+    'caravel' : 0x4a6d,
 }
 
 valid_ids = set(hk_ids.values())
@@ -256,6 +261,7 @@ hk_desc = {
     'bnext' : 'More Buildings',
     'boutpost' : 'Outpost',
     'bpalisade' : 'Palisade Wall',
+    'bpgate' : 'Palisade Gate',
     'bsiege' : 'Siege Workshop',
     'bstable' : 'Stable',
     'bwall' : 'Stone Wall',
@@ -263,10 +269,11 @@ hk_desc = {
     'btc' : 'Town Center',
     'buniversity' : 'University',
     'bwonder' : 'Wonder',
+    'bfeitoria' : 'Feitoria',
     'work' : 'Go Back to Work',
     'bell' : 'Ring Town Bell',
     'vill' : 'Villager',
-    'longboat' : 'Build Longboat',
+    'longboat' : 'Longboat',
     'gcannon' : 'Cannon Galleon',
     'demoship' : 'Demolition Ship, Heavy Demolition Ship',
     'fireship' : 'Fire Ship, Fast Fire Ship',
@@ -274,6 +281,7 @@ hk_desc = {
     'galley' : 'Galley, War Galley, Galleon',
     'cog' : 'Trade Cog',
     'transport' : 'Transport',
+    'caravel' : 'Longboat, Caravel',
     'turtle' : 'Turtle Ship, Elite Turtle Ship',
     'eagle' : 'Eagle Warrior, Elite Eagle Warrior',
     'huskarl' : 'Huskarl',
@@ -281,7 +289,8 @@ hk_desc = {
     'spear' : 'Spearman, Pikeman, Halberdier',
     'archer' : 'Archer, Crossbowman, Arbalest (archers)',
     'cavarcher' : 'Cavarly Archer, Heavy Cavalry Archer',
-    'hcannon' : 'Hand Cannoneer',
+    'genitour' : 'Genitour',
+    'hcannon' : 'Hand Cannoneer, Slinger',
     'skirm' : 'Skirmister, Elite Skirmisher',
     'camel' : 'Camel, Heavy Camel',
     'knight' : 'Knit, Cavalier, Paladin (knights)',
@@ -290,6 +299,7 @@ hk_desc = {
     'bcannon' : 'Bombard Cannon',
     'mangonel' : 'Mangonel, Onager, Siege Onager',
     'scorpion' : 'Scorpion, Heavy Scorpion',
+    'siegetower' : 'Siege Tower',
     'mission' : 'Missionary',
     'monk' : 'Monk',
     'cart' : 'Trade Cart',
@@ -506,6 +516,7 @@ hk_groups = [
         'buniversity' ,
         'btc' ,
         'bwonder',
+        'bfeitoria',
         'bnext'
 	]),('Military Build Menu', [
         'brax' ,
@@ -518,6 +529,7 @@ hk_groups = [
         'btower' ,
         'bbombard' ,
         'bgate' ,
+        'bpgate' ,
         'bcastle'
 	]),
 	('Fishing Ship Build', [
@@ -536,6 +548,7 @@ hk_groups = [
         'fireship' ,
         'gcannon' ,
         'longboat' ,
+        'caravel' ,
         'turtle'
 	]),
 	('Barracks', [
@@ -548,6 +561,7 @@ hk_groups = [
         'archer' ,
         'skirm' ,
         'cavarcher' ,
+        'genitour' ,
         'hcannon'
 	]),
 	('Stable', [
@@ -559,7 +573,8 @@ hk_groups = [
         'ram' ,
         'mangonel' ,
         'scorpion',
-        'bcannon'
+        'bcannon',
+        'siegetower'
 	]),
 	('Monastery', [
         'monk',
@@ -583,7 +598,8 @@ hk_versions = [
     ('aoc', 0x3f800000, 2192, 'AoC/FE/HD2.0'),
     ('22' , 0x40000000, 2432, 'HD2.2-3'),
     ('24' , 0x40400000, 2192, 'HD2.4-8'),
-    ('30' , 0x40400000, 2204, 'HD3.0')
+    ('30' , 0x40400000, 2204, 'HD3.0-4.3'),
+    ('44' , 0x40400000, 2252, 'HD4.4+'),
 ]
 header_format = count_format = struct.Struct('<I')
 hk_format = struct.Struct('<Ii???x')
@@ -615,7 +631,7 @@ class HotkeyFile:
             if len(hk_data) == size and header == head:
                 version = k
         if not version:
-            raise Exception('Unrecognized file format')
+            raise Exception('Unrecognized file format, header: {:x}, length: {:d}'.format(header, len(hk_data)))
         offset += header_format.size
         num_menus, = count_format.unpack_from(hk_data, offset)
         offset += count_format.size
@@ -633,7 +649,7 @@ class HotkeyFile:
                     while id in hk_map: id+=0x1000000
                     hk_map[id] = hotkey
                     if id not in valid_ids:
-                        raise Exception('Corrupted file')
+                        raise Exception('Corrupted file: {:x}'.format(id))
                 offset += hk_format.size
                 menu.append(hotkey)
 
