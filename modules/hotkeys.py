@@ -1,4 +1,4 @@
-#!/bin/python
+#!/usr/bin/python
 import hkizip, struct
 from collections import namedtuple
 #these are derived from the numerical ids/text ids in the game configs
@@ -110,6 +110,7 @@ hk_ids = {
     'camel' : 0x4a57,
     'knight' : 0x4a56,
     'scout' : 0x4a74,
+    'elephant' : 0x4a59,
     'ram' : 0x4a70,
     'bcannon' : 0x4a67,
     'mangonel' : 0x4b55,
@@ -295,6 +296,7 @@ hk_desc = {
     'camel' : 'Camel, Heavy Camel',
     'knight' : 'Knit, Cavalier, Paladin (knights)',
     'scout' : 'Scout Cavalry, Light Cavalry, Hussar',
+    'elephant' : 'Battle Elephant, Elite Battle Elephant',
     'ram' : 'Battering Ram, Capped Ram, Siege Ram',
     'bcannon' : 'Bombard Cannon',
     'mangonel' : 'Mangonel, Onager, Siege Onager',
@@ -567,7 +569,8 @@ hk_groups = [
 	('Stable', [
         'scout',
         'knight' ,
-        'camel'
+        'camel',
+        'elephant',
 	]),
 	('Siege Workshop', [
         'ram' ,
@@ -599,7 +602,8 @@ hk_versions = [
     ('22' , 0x40000000, 2432, 'HD2.2-3'),
     ('24' , 0x40400000, 2192, 'HD2.4-8'),
     ('30' , 0x40400000, 2204, 'HD3.0-4.3'),
-    ('44' , 0x40400000, 2252, 'HD4.4+'),
+    ('44' , 0x40400000, 2252, 'HD4.4-4.9'),
+    ('50' , 0x40400000, 2264, 'HD5.0+'),
 ]
 header_format = count_format = struct.Struct('<I')
 hk_format = struct.Struct('<Ii???x')
