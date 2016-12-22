@@ -226,7 +226,8 @@ var GECKO_IE_KEYMAP = {
     59: 186, // ;: in Mozilla
     173: 189, // -_ in Mozilla
     61: 187, // =+ in Mozilla
-    2: 253 //middle button
+    2: 253, //middle button
+    162: 222, // " ın Mozılla on Turkısh Q
 };
 
 //the original library used ascii codes for some symbols.
