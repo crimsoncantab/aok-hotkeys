@@ -294,7 +294,7 @@ hk_desc = {
     'hcannon' : 'Hand Cannoneer, Slinger',
     'skirm' : 'Skirmister, Elite Skirmisher',
     'camel' : 'Camel, Heavy Camel',
-    'knight' : 'Knit, Cavalier, Paladin (knights)',
+    'knight' : 'Knight, Cavalier, Paladin (knights)',
     'scout' : 'Scout Cavalry, Light Cavalry, Hussar',
     'elephant' : 'Battle Elephant, Elite Battle Elephant',
     'ram' : 'Battering Ram, Capped Ram, Siege Ram',
