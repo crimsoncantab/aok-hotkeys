@@ -604,6 +604,7 @@ hk_versions = [
     ('30' , 0x40400000, 2204, 'HD3.0-4.3'),
     ('44' , 0x40400000, 2252, 'HD4.4-4.9'),
     ('50' , 0x40400000, 2264, 'HD5.0+'),
+    ('wk', 0x3f800000, 2240, 'WololoKingdoms'),
 ]
 header_format = count_format = struct.Struct('<I')
 hk_format = struct.Struct('<Ii???x')
