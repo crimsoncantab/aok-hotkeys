@@ -2,8 +2,8 @@
 import struct
 from collections import namedtuple
 
-header_format = count_format = struct.Struct('<I')
-hk_format = struct.Struct('<Ii???x')
+HEADER_FORMAT = COUNT_FORMAT = struct.Struct('<I')
+HOTKEY_FORMAT = struct.Struct('<Ii???x')
 Hotkey = namedtuple('Hotkey', 'code id ctrl alt shift')
 
 
@@ -17,13 +17,13 @@ class HkParser(object):
         self._result = {}
         self._hk_bytes = hk_bytes
 
-    def _unpack(self, struct_format=count_format):
+    def _unpack(self, struct_format=COUNT_FORMAT):
         data = struct_format.unpack_from(self._hk_bytes, self._offset)
         self._offset += struct_format.size
         return data
 
     def _parse_header(self):
-        self._result['header'], = self._unpack(header_format)
+        self._result['header'], = self._unpack(HEADER_FORMAT)
 
     def _parse_menus(self):
         num_menus, = self._unpack()
@@ -34,7 +34,7 @@ class HkParser(object):
         return [self._parse_hotkey() for _ in range(num_hotkeys)]
 
     def _parse_hotkey(self):
-        return Hotkey(*self._unpack(hk_format))._asdict()
+        return Hotkey(*self._unpack(HOTKEY_FORMAT))._asdict()
 
     def parse_to_dict(self, hk_bytes):
         self._reset(hk_bytes)
@@ -55,12 +55,12 @@ class HkUnparser(object):
         self._result = bytearray(hk_dict['size']) if hk_dict else None
 
     def _pack(self, *data, **kwargs):
-        struct_format = kwargs.get('struct_format', count_format)
+        struct_format = kwargs.get('struct_format', COUNT_FORMAT)
         struct_format.pack_into(self._result, self._offset, *data)
         self._offset += struct_format.size
 
     def _unparse_header(self, header):
-        self._pack(header, struct_format=header_format)
+        self._pack(header, struct_format=HEADER_FORMAT)
 
     def _unparse_menus(self, menus):
         self._pack(len(menus))
@@ -73,7 +73,7 @@ class HkUnparser(object):
             self._unparse_hotkey(hotkey)
 
     def _unparse_hotkey(self, hotkey):
-        self._pack(*Hotkey(**hotkey))
+        self._pack(*Hotkey(**hotkey), struct_format=HOTKEY_FORMAT)
 
     def unparse_to_bytes(self, hk_dict):
         self._reset(hk_dict)
@@ -88,5 +88,4 @@ if __name__ == '__main__':
     hk = sys.stdin.read()
     hotkeys = HkParser().parse_to_dict(hk)
     print(hotkeys)
-    assert hk == HkUnparser().unparse_to_bytes(hotkeys)
-
+    print(hk == HkUnparser().unparse_to_bytes(hotkeys))
