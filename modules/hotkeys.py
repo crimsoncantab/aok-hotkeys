@@ -363,7 +363,7 @@ hk_desc = {
     'sgroup16': 'Select Group #16',
     'sgroup17': 'Select Group #17',
     'sgroup18': 'Select Group #18',
-    'sgroup19': 'Select Group #19'
+    'sgroup19': 'Select Group #19',
 }
 assert len(hk_desc) == len(hk_ids)
 
@@ -639,7 +639,7 @@ class HotkeyFile:
         self._file_size = hk_dict['size']
         self.version = self._find_version(self._file_size, self._header)
         self.data = hk_dict['menus']
-        self.hk_map, self._orphan_ids = self._build_id_map(self.data)
+        self.hk_map, self.orphan_ids = self._build_id_map(self.data)
         if validate:
             parser.validate_size()
             self.validate()
@@ -648,9 +648,9 @@ class HotkeyFile:
         if not self.version:
             raise Exception(
                 'Unrecognized file format, header: {:x}, length: {:d}'.format(self._header, self._file_size))
-        if self._orphan_ids:
+        if self.orphan_ids:
             raise Exception(
-                'Unrecognized hotkey ids: {}'.format(','.join('{:x}'.format(i) for i in self._orphan_ids)))
+                'Unrecognized hotkey ids: {}'.format(','.join('{:d}'.format(i) for i in self.orphan_ids)))
 
     @staticmethod
     def _build_id_map(menus):
@@ -658,7 +658,7 @@ class HotkeyFile:
         for menu in menus:
             for hotkey in menu:
                 id = hotkey['id']
-                if id != -1:
+                if id >= 0:
                     while id in hk_map: id += 0x1000000
                     hk_map[id] = hotkey
         return hk_map, set(hk_map.keys()) - valid_ids
@@ -688,20 +688,9 @@ class HotkeyFile:
         raw = unparser.unparse_to_bytes(hk_dict)
         return hkizip.compress(str(raw))
 
-
-def _try_describe_hotkey(hotkey):
-    # replaces the id with the string version, if possible
-    if hotkey['id'] in hk_names:
-        hotkey = hotkey.copy()
-        hotkey['id'] = hk_names[hotkey['id']]
-    return hotkey
-
-
 if __name__ == '__main__':
     import sys
-    import json
 
     hki = sys.stdin.read()
     hotkey_file = HotkeyFile(hki, False)
-    named_data = [[_try_describe_hotkey(hotkey) for hotkey in menu] for menu in hotkey_file.data]
-    print(json.dumps(named_data))
+    hotkey_file.validate()
