@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import hkizip, struct
+import hkizip, struct, hkparse
 from collections import namedtuple
 
 # these are derived from the numerical ids/text ids in the game configs
@@ -629,39 +629,45 @@ class HotkeyAssign:
 
 class HotkeyFile:
 
-    def __init__(self, hki):
-        hk_data = hkizip.decompress(hki)
-        offset = 0
-        header, = header_format.unpack_from(hk_data, offset)
-        version = None
-        for (k, head, size, desc) in hk_versions:
-            if len(hk_data) == size and header == head:
-                version = k
-        if not version:
-            raise Exception('Unrecognized file format, header: {:x}, length: {:d}'.format(header, len(hk_data)))
-        offset += header_format.size
-        num_menus, = count_format.unpack_from(hk_data, offset)
-        offset += count_format.size
-        data = []
+    def __init__(self, hki, validate=True):
+        hk_bytes = hkizip.decompress(hki)
+        parser = hkparse.HkParser()
+        hk_dict = parser.parse_to_dict(hk_bytes)
+        self._header = hk_dict['header']
+        self._file_size = hk_dict['size']
+        self.version = self._find_version(self._file_size, self._header)
+        self.data = hk_dict['menus']
+        self.hk_map, self._orphan_ids = self._build_id_map(self.data)
+        if validate:
+            parser.validate_size()
+            self.validate()
+
+    def validate(self):
+        if not self.version:
+            raise Exception(
+                'Unrecognized file format, header: {:x}, length: {:d}'.format(self._header, self._file_size))
+        if self._orphan_ids:
+            raise Exception(
+                'Unrecognized hotkey ids: {}'.format(','.join('{:x}'.format(i) for i in self._orphan_ids)))
+
+    @staticmethod
+    def _build_id_map(menus):
         hk_map = {}
-        for i in range(num_menus):
-            menu = []
-            data.append(menu)
-            menu_size, = count_format.unpack_from(hk_data, offset)
-            offset += count_format.size
-            for j in range(menu_size):
-                hotkey = Hotkey(*hk_format.unpack_from(hk_data, offset))._asdict()
+        for menu in menus:
+            for hotkey in menu:
                 id = hotkey['id']
-                if (id != -1):
+                if id != -1:
                     while id in hk_map: id += 0x1000000
                     hk_map[id] = hotkey
-                    if id not in valid_ids:
-                        raise Exception('Corrupted file: {:x}'.format(id))
-                offset += hk_format.size
-                menu.append(hotkey)
+        return hk_map, set(hk_map.keys()) - valid_ids
 
-        self.data, self.hk_map, self.version = data, hk_map, version
-        self._header, self._file_size = header, offset
+    @staticmethod
+    def _find_version(file_size, header):
+        version = None
+        for (k, head, size, desc) in hk_versions:
+            if file_size == size and header == head:
+                version = k
+        return version
 
     def __getitem__(self, key):
         return self.hk_map[hk_ids[key]]
@@ -675,20 +681,9 @@ class HotkeyFile:
                 yield k, self[k]
 
     def serialize(self):
-        offset = 0
-        # update raw from data
-        raw = bytearray(self._file_size)
-        header_format.pack_into(raw, offset, self._header)
-        offset += header_format.size
-        count_format.pack_into(raw, offset, len(self.data))
-        offset += count_format.size
-        for menu in self.data:
-            count_format.pack_into(raw, offset, len(menu))
-            offset += count_format.size
-            for hotkey in menu:
-                hk_format.pack_into(raw, offset, *Hotkey(**hotkey))
-                offset += hk_format.size
-        assert offset == self._file_size
+        unparser = hkparse.HkUnparser()
+        hk_dict = dict(size=self._file_size, header=self._header, menus=self.data)
+        raw = unparser.unparse_to_bytes(hk_dict)
         return hkizip.compress(str(raw))
 
 
@@ -700,4 +695,3 @@ if __name__ == '__main__':
     for i, hk in enumerate(hk_groups[2][1]):
         hotkey_file[hk]['code'] = 252 - i
 
-# print hotkey_file.data

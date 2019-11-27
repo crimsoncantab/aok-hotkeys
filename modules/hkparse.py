@@ -43,6 +43,11 @@ class HkParser(object):
         self._result['size'] = self._offset
         return self._result
 
+    def validate_size(self):
+        if self._result['size'] != len(self._hk_bytes):
+            raise Exception(
+                'Size {:d} does not equal bytearray length {:d}'.format(self._result['size'], len(self._hk_bytes)))
+
 
 class HkUnparser(object):
 
@@ -86,6 +91,8 @@ if __name__ == '__main__':
     import sys
 
     hk = sys.stdin.read()
-    hotkeys = HkParser().parse_to_dict(hk)
+    parser = HkParser()
+    hotkeys = parser.parse_to_dict(hk)
+    parser.validate_size()
     print(hotkeys)
     print(hk == HkUnparser().unparse_to_bytes(hotkeys))
