@@ -610,9 +610,6 @@ hk_versions = [
     ('wk', 0x3f800000, 2240, 'WololoKingdoms'),
     ('de', 0x40400000, 4632, 'Definitive Edition'),
 ]
-header_format = count_format = struct.Struct('<I')
-hk_format = struct.Struct('<Ii???x')
-Hotkey = namedtuple('Hotkey', 'code id ctrl alt shift')
 
 
 def copy_dict(d, *keys):
