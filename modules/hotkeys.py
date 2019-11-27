@@ -184,7 +184,10 @@ hk_ids = {
 
 valid_ids = set(hk_ids.values())
 
-# the strings that (most) of the above numerical ids/text ids map to
+#the reverse of hk_ids
+hk_names = {v:k for k,v in hk_ids.iteritems()}
+assert len(hk_names) == len(hk_ids)
+# the strings that the above numerical ids/text ids map to
 hk_desc = {
     'ground': 'Attack Ground',
     'convert': 'Convert',
@@ -363,6 +366,7 @@ hk_desc = {
     'sgroup18': 'Select Group #18',
     'sgroup19': 'Select Group #19'
 }
+assert len(hk_desc) == len(hk_ids)
 
 hk_groups = [
 
@@ -593,6 +597,7 @@ hk_groups = [
         'seed'
     ])
 ]
+assert sum(len(group[1]) for group in hk_groups) == len(hk_ids)
 
 hk_versions = [
     ('aok', 0x3f800000, 2080, 'Vanilla AoK'),
@@ -690,8 +695,9 @@ class HotkeyFile:
 if __name__ == '__main__':
     import sys
 
+
     hki = sys.stdin.read()
-    hotkey_file = HotkeyFile(hki)
-    for i, hk in enumerate(hk_groups[2][1]):
-        hotkey_file[hk]['code'] = 252 - i
+    hotkey_file = HotkeyFile(hki, False)
+    print(hotkey_file._orphan_ids)
+    # named_data = [[ids_to_desc[hotkey['id']] if  for hotkey in menu] for menu in hotkey_file.data]
 
