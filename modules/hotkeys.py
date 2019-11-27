@@ -1,6 +1,5 @@
 #!/usr/bin/python
-import hkizip, struct, hkparse
-from collections import namedtuple
+import hkizip, hkparse
 
 # these are derived from the numerical ids/text ids in the game configs
 hk_ids = {
