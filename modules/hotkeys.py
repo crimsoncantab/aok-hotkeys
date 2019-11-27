@@ -184,8 +184,8 @@ hk_ids = {
 
 valid_ids = set(hk_ids.values())
 
-#the reverse of hk_ids
-hk_names = {v:k for k,v in hk_ids.iteritems()}
+# the reverse of hk_ids
+hk_names = {v: k for k, v in hk_ids.iteritems()}
 assert len(hk_names) == len(hk_ids)
 # the strings that the above numerical ids/text ids map to
 hk_desc = {
@@ -692,12 +692,19 @@ class HotkeyFile:
         return hkizip.compress(str(raw))
 
 
+def _try_describe_hotkey(hotkey):
+    # replaces the id with the string version, if possible
+    if hotkey['id'] in hk_names:
+        hotkey = hotkey.copy()
+        hotkey['id'] = hk_names[hotkey['id']]
+    return hotkey
+
+
 if __name__ == '__main__':
     import sys
-
+    import json
 
     hki = sys.stdin.read()
     hotkey_file = HotkeyFile(hki, False)
-    print(hotkey_file._orphan_ids)
-    # named_data = [[ids_to_desc[hotkey['id']] if  for hotkey in menu] for menu in hotkey_file.data]
-
+    named_data = [[_try_describe_hotkey(hotkey) for hotkey in menu] for menu in hotkey_file.data]
+    print(json.dumps(named_data))
