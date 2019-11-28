@@ -30,6 +30,4 @@ if __name__ == '__main__':
     descs = {i: string_map.get(i, 'UNKNOWN') for i in hkfile.orphan_ids}
     with open('output.out', 'w') as output:
         for k, v in descs.items():
-            output.write('\'\' : \'{:x}\' #{}\n'.format(k, v))
-        for k, v in descs.items():
-            output.write('\'\' : \'{}\'\n'.format(v))
+            output.write('\'\' : (0x{:x}, {}),\n'.format(k, repr(v)))
