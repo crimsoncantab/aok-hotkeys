@@ -8,7 +8,8 @@ from cgi import FieldStorage
 @valid_request(hki=FieldStorage)
 def upload():
     try:
-        hkfile = hotkeys.HotkeyFile(request.vars.hki.file.getvalue())
+        hki_binary = request.vars.hki.value
+        hkfile = hotkeys.HotkeyFile(hki_binary)
     except Exception as e:
         raise HTTP(400, 'File format not recognized: {}'.format(e.message))
     log.info('File version: {:s}'.format(hkfile.version))
