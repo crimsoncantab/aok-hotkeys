@@ -9,8 +9,8 @@ from cgi import FieldStorage
 def upload():
     try:
         hkfile = hotkeys.HotkeyFile(request.vars.hki.file.getvalue())
-    except:
-        raise HTTP(400, 'File format not recognized')
+    except Exception as e:
+        raise HTTP(400, 'File format not recognized: {}'.format(e.message))
     log.info('File version: {:s}'.format(hkfile.version))
     set_assign(hkfile)
     redirect(URL('default', 'editor'))
