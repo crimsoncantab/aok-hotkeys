@@ -5,7 +5,7 @@ import hkizip, hkparse, hkstrings
 _hk_names = {k: v[0] for k, v in hkstrings.hk_mapping.items()}
 # the reverse of _hk_names
 _hk_ids = {v: k for k, v in _hk_names.iteritems()}
-_valid_ids = set(_hk_names.keys())
+_valid_ids = set(_hk_ids.keys())
 # the strings that the above numerical ids/text ids map to
 hk_desc = {k: v[1] for k, v in hkstrings.hk_mapping.items()}
 
