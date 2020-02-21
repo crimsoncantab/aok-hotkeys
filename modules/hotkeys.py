@@ -20,7 +20,8 @@ hk_versions = [
     ('44', 0x40400000, 2252, 'HD4.4-4.9'),
     ('50', 0x40400000, 2264, 'HD5.0+'),
     ('wk', 0x3f800000, 2240, 'WololoKingdoms'),
-    ('de', 0x40400000, 4632, 'Definitive Edition'),
+    ('deo', 0x40400000, 4632, 'DE (old)'),
+    ('de', 0x40400000, 4644, 'Definitive Edition'),
 ]
 
 

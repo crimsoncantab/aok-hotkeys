@@ -360,6 +360,9 @@ hk_mapping = {
     'tsupplies': (0x4bfe, 'Tech: Supplies'),
     'tsquires': (0x4bff, 'Tech: Squires'),
 
+    #added later in de
+    'tchief' : (0x1c90, 'Chieftains'),
+
 }
 
 hk_groups = [
@@ -744,6 +747,7 @@ hk_groups = [
         'tuu',
         'tuitech',
         'tuctech',
+        'tchief',
         'thoardings',
         'tsappers',
         'tconscription',
