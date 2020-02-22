@@ -4,7 +4,7 @@
 <style>
     #welcome {
         width: 30%;
-        margin: 100px auto 0px;
+        margin: 100px auto 0;
     }
     #presets {
         position:absolute;
@@ -41,7 +41,7 @@
 </tbody>
 </table>
     </div>
-    {{if len(presets) == 10:}}<div><a href="{{=URL('presets', 'index')}}">See all &hellip;</a></div>{{pass}}
+    {{if len(presets) == 10:}}<div><a href="{{=URL('presets', 'index')}}">See more &hellip;</a></div>{{pass}}
 </div>
 <div id="features">
 <h4>Features</h4>
@@ -58,7 +58,7 @@
 </div>
 </div>
 <div id="welcome">
-    <p style="color:red;border: 1px solid #cccccc;padding:4px;border-radius:4px;">Welcome to the web-based Age of Empires II (AoK) hotkey editor! This website assumes you have played AoK and are familiar with its hotkey system. If not, go <a href="http://store.steampowered.com/app/221380" target="_blank">check out the HD version</a> right now! Or take a look at the excellent fan-made expansion <a href="http://www.forgottenempires.net/" target="_blank">Forgotten Empires</a>!</p>
+    <p style="color:red;border: 1px solid #cccccc;padding:4px;border-radius:4px;">Welcome to the web-based Age of Empires II (AoK) hotkey editor! This website assumes you have played AoK and are familiar with its hotkey system. If not, go <a href="https://store.steampowered.com/app/813780/Age_of_Empires_II_Definitive_Edition/" target="_blank">check out the Definitive Edition</a> right now!</p>
     <h4>Get Started</h4>
     <p>If you've used the editor before, you can <a onclick="function(e){e.stopPropagation();}();return false;" href="{{=URL('editor')}}">pick up where you left off</a> (requires session cookie). Alternatively pick a preset from the list on the right or upload your current hotkeys directly to the editor:</p>
     <form action="">
@@ -69,14 +69,15 @@
     </form>
     <h4>How?</h4>
     <ol>
-        <li>Upload a your own <span style="font-weight:bold">*.hki</span> file or choose a preset</li>
+        <li>Upload a your own <span style="font-weight:bold">*.hki</span> file or choose a preset. The file is generally located:
+            <ul>
+                <li>For AoK/AoC/FE:<textarea style="white-space: nowrap;" readonly>C:\Program Files (x86)\Microsoft Games\Age of Empires II\player0.hki</textarea></li>
+                <li>For HD:<textarea style="white-space: nowrap;" readonly>C:\Program Files (x86)\Steam\SteamApps\common\Age2HD\profiles\player0.hki</textarea></li>
+                <li>For DE:<textarea style="white-space: nowrap;" readonly>%USERPROFILE%\Games\Age of Empires 2 DE\{your-steam-id}\profile\{profile-name}.hki</textarea></li>
         <li>Edit your hotkey bindings directly in the browser</li>
         <li>Download the new <span style="font-weight:bold">player0.hki</span> file</li>
-        <li>Replace the file in your game directory. The file is generally located:
-        <ul>
-            <li>For AoK/AoC/FE:<textarea style="white-space: nowrap;" readonly>C:\Program Files (x86)\Microsoft Games\Age of Empires II\player0.hki</textarea></li>
-            <li>For HD:<textarea style="white-space: nowrap;" readonly>C:\Program Files (x86)\Steam\SteamApps\common\Age2HD\profiles\player0.hki</textarea></li>
-        </ul>Note that you may need to change the "0" in the file name depending on your profile setup.</li>
+        <li>Replace the file in your game directory.</li>
+        </ul>Note that you may need to change the file name depending on your profile setup.</li>
         <li>Start the game and enjoy!</li>
     </ol>
 
