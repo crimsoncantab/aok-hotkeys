@@ -361,7 +361,7 @@ hk_mapping = {
     'tsquires': (0x4bff, 'Tech: Squires'),
 
     #added later in de
-    'tchief' : (0x1c90, 'Chieftains'),
+    'kipchak' : (0x1c90, 'Elite Kipchak (Mercenary)'),
 
 }
 
@@ -744,10 +744,10 @@ hk_groups = [
         'uu',
         'treb',
         'petard',
+        'kipchak',
         'tuu',
         'tuitech',
         'tuctech',
-        'tchief',
         'thoardings',
         'tsappers',
         'tconscription',
