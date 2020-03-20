@@ -596,6 +596,9 @@ hk_groups = [
         'repair',
         'cancel',
     ]),
+    ('Scout', [
+        'autoscout',
+    ]),
     ('Buildings/Transports', [
         'setgather',
         'unsetgather',
