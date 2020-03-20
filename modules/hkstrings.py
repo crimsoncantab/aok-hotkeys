@@ -363,6 +363,11 @@ hk_mapping = {
     #added later in de
     'kipchak' : (0x1c90, 'Elite Kipchak (Mercenary)'),
 
+    #added later in de
+    'autoscout' : (0x4b96, 'Auto Scout'),
+
+
+
 }
 
 hk_groups = [

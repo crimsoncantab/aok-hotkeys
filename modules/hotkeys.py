@@ -12,16 +12,16 @@ hk_desc = {k: v[1] for k, v in hkstrings.hk_mapping.items()}
 hk_groups = hkstrings.hk_groups
 
 hk_versions = [
-    ('aok', 0x3f800000, 2080, 'Vanilla AoK'),
-    ('aoc', 0x3f800000, 2192, 'AoC/FE/HD2.0'),
-    ('22', 0x40000000, 2432, 'HD2.2-3'),
-    ('24', 0x40400000, 2192, 'HD2.4-8'),
-    ('30', 0x40400000, 2204, 'HD3.0-4.3'),
-    ('44', 0x40400000, 2252, 'HD4.4-4.9'),
-    ('50', 0x40400000, 2264, 'HD5.0+'),
-    ('wk', 0x3f800000, 2240, 'WololoKingdoms'),
-    ('deo', 0x40400000, 4632, 'DE (old)'),
-    ('de', 0x40400000, 4644, 'Definitive Edition'),
+    ('aok', 0x3f800000, {2080}, 'Vanilla AoK'),
+    ('aoc', 0x3f800000, {2192}, 'AoC/FE'),
+    ('22', 0x40000000, {}, 'HD2.2-3'), #don't ever pick this version
+    ('24', 0x40400000, {}, 'HD2.4-8'), #don't ever pick this version
+    ('30', 0x40400000, {}, 'HD3.0-4.3'), #don't ever pick this version
+    ('44', 0x40400000, {}, 'HD4.4-4.9'), #don't ever pick this version
+    ('50', 0x40400000, {2432, 2192, 2204, 2252, 2264}, 'HD5.0+'),
+    ('wk', 0x3f800000, {2240}, 'WololoKingdoms'),
+    ('deo', 0x40400000, {}, 'DE (old)'), #don't ever pick this version
+    ('de', 0x40400000, {4632, 4644, 4664}, 'Definitive Edition'),
 ]
 
 
@@ -80,8 +80,8 @@ class HotkeyFile:
     @staticmethod
     def _find_version(file_size, header):
         version = None
-        for (k, head, size, desc) in hk_versions:
-            if file_size == size and header == head:
+        for (k, head, sizes, desc) in hk_versions:
+            if file_size in sizes and header == head:
                 version = k
         return version
 

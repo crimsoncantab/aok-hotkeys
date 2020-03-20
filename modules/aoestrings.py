@@ -27,6 +27,7 @@ if __name__ == '__main__':
         string_map = get_string_mapping(stringsfile)
     hki = sys.stdin.read()
     hkfile = hotkeys.HotkeyFile(hki, False)
+    print(hkfile.orphan_ids)
     descs = {i: string_map.get(i, 'UNKNOWN') for i in hkfile.orphan_ids}
     with open('output.out', 'w') as output:
         for k, v in descs.items():
