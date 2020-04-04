@@ -14,11 +14,11 @@ hk_groups = hkstrings.hk_groups
 hk_versions = [
     ('aok', 0x3f800000, {2080}, 'Vanilla AoK'),
     ('aoc', 0x3f800000, {2192}, 'AoC/FE'),
-    ('22', 0x40000000, {}, 'HD2.2-3'), #don't ever pick this version
+    ('22', 0x40000000, {2432}, 'HD2.2-3'), #different header, gotta keep this one
     ('24', 0x40400000, {}, 'HD2.4-8'), #don't ever pick this version
     ('30', 0x40400000, {}, 'HD3.0-4.3'), #don't ever pick this version
     ('44', 0x40400000, {}, 'HD4.4-4.9'), #don't ever pick this version
-    ('50', 0x40400000, {2432, 2192, 2204, 2252, 2264}, 'HD5.0+'),
+    ('50', 0x40400000, {2192, 2204, 2252, 2264}, 'HD5.0+'),
     ('wk', 0x3f800000, {2240}, 'WololoKingdoms'),
     ('deo', 0x40400000, {}, 'DE (old)'), #don't ever pick this version
     ('de', 0x40400000, {4632, 4644, 4664}, 'Definitive Edition'),
