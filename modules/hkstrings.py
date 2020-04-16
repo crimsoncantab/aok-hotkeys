@@ -361,13 +361,13 @@ hk_mapping = {
     'tsquires': (0x4bff, 'Tech: Squires'),
 
     # added later in de
-    'kipchak': (0x1c90, 'Elite Kipchak (Mercenary)'),
+    'kipchak_old': (0x1c90, 'Elite Kipchak (Mercenary)'), #don't show this one anymore, but keep it so files still parse
 
     # added later in de
     'autoscout': (0x4b96, 'Auto Scout'),
 
     # added later in de
-    'kipchak2': (0x4aba, 'Elite Kipchak (2)'),
+    'kipchak': (0x4aba, 'Elite Kipchak'), #this one changed numerical ids
     'flamingcamel': (0x4abe, 'Flaming Camel'),
 
 }
@@ -755,7 +755,6 @@ hk_groups = [
         'treb',
         'petard',
         'kipchak',
-        'kipchak2',
         'flamingcamel',
         'tuu',
         'tuitech',
