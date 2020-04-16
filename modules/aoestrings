@@ -1,4 +1,4 @@
- // **************************************************************
+// **************************************************************
 // this section is to force including all the printable ASCII characters into the fontmap
 // ### ASCII printable characters (32-127) ###
 // !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
@@ -102,6 +102,12 @@
 2311 "Your empire is worthy of my allegiance."
 2312 "%s is attacking me--please help!"
 2313 "I am preparing to attack %s, please join me."
+2314 "I am attacking %s."
+2315 "%s is located in this area."
+2316 "I am building a base in this location."
+2317 "I am sending my armies to assist you, %s!"
+2318 "I am preparing to send you as many resources as I can spare, %s."
+
 2400 "********** TRIBE ERRORS **********"
 2401 "An error occurred while trying to start the game."
 2402 "The game could not be saved."
@@ -819,7 +825,7 @@
 4912 "<b>More Buildings<b> \nDisplay the other buildings."
 4913 "<b>Chat<b> \nSend commands to allied computer players. In a multiplayer game, send typed messages or prerecorded taunts to other human players."
 4914 "<b>Diplomacy<b> \nChange your diplomatic stance (ally, neutral, enemy) toward other players. After you build a Market, also lets you send a tribute of resources to other players."
-4915 "<b>Menu<b> \nSave, restart, or quit this game, load a different game, or change your screen size, sound volume, and other options. (Hotkey: F10)"
+4915 "<b>Menu<b> \nSave, restart, or quit this game, load a different game, or change your screen size, sound volume, and other options."
 4916 "<b>Statistics On<b> \nTurn on statistics that appear above the mini-map."
 4917 "<b>Statistics Off<b> \nTurn off the statistics that appear above the mini-map."
 4918 "<b>More Dock Items<b> \nDisplay the other ships and technologies."
@@ -1959,7 +1965,7 @@
 7264 "Elite Boyar"
 7265 "Elite Kamayuk"
 7266 "Andean Sling"
-7267 "Couriers"
+7267 "Fabric Shields"
 7268 "Orthodoxy"
 7269 "Druzhina"
 7270 "Sultans"
@@ -2169,7 +2175,7 @@
 8264 "Upgrade to Elite Boyar"
 8265 "Upgrade to Elite Kamayuk"
 8266 "Research Andean Sling (Skirmishers and Slingers no minimum range)"
-8267 "Research Couriers (Kamayuks, Slingers, Eagles +1 armor/+2 pierce armor.)"
+8267 "Research Fabric Shields (Kamayuks, Slingers, Eagles +1 armor/+2 pierce armor.)"
 8268 "Research Orthodoxy (Monks have extra armor)"
 8269 "Research Druzhina (Infantry damage adjacent units)"
 8270 "Research Sultans (All gold income 10% faster)"
@@ -2358,6 +2364,7 @@
 8894 "Display Resource Gauge on Harvest"
 8895 "Graphics Presets"
 8896 "Selection Modifier Hotkeys"
+8897 "Shift Group Appending"
 
 9001 "Game Paused"
 9002 "Select Object"
@@ -2396,7 +2403,7 @@
 9060 "Previous Seasons"
 9061 "Current Standing"
 9062 "Wins"
-9063 "Loses"
+9063 "Losses"
 9064 "Season"
 9065 "Total RM Wins: %s"
 9066 "Total RM Losses: %s"
@@ -2406,7 +2413,7 @@
 
 9077 "Change Icon"
 
-9078 "Highest Achieved Rank: %s"
+9078 "Highest Achieved: %s"
 9079 "Ranked Wins: %s"
 9080 "Ranked Games: %s"
 9081 "Total Wins: %s"
@@ -2960,7 +2967,7 @@
 10028 "Music"
 10029 "Sounds"
 10030 "Speech"
-10031 "Random Maps" 
+10031 "Random Maps"
 10032 "Custom Campaigns"
 10033 "Click to show and play subscribed custom campaigns made by the community."
 10034 "User Interface"
@@ -3558,6 +3565,8 @@
 10927 "CtR Monsoon"
 10928 "CtR Pyramid Descent"
 10929 "CtR Spiral"
+10930 "Golden Swamp"
+10931 "Four Lakes"
 11001 "Pregame Cinematic"
 11002 "Victory Cinematic"
 11003 "Loss Cinematic"
@@ -4188,6 +4197,7 @@
 13591 "Region"
 14068 "Knight"
 14070 "Cavalier"
+14077 "Heavy Swordsman"
 14078 "Spearman"
 14079 "Militia"
 14080 "Man-at-Arms"
@@ -4363,6 +4373,7 @@
 14731 "Turtle Ship"
 14732 "Elite\nTurtle Ship"
 14739 "Dragon Ship"
+14740 "Seed:"
 
 //
 // Resource List
@@ -4741,7 +4752,7 @@
 17262 "Onager"
 17263 "Siege\nRam"
 17266 "Andean Sling"
-17267 "Couriers"
+17267 "Fabric\nShields"
 17268 "Orthodoxy"
 17269 "Druzhina"
 17270 "Sultans"
@@ -4960,6 +4971,8 @@
 19127 "Steppe Lancer"
 19128 "Click-Drag Scroll"
 19129 "Toggle Health Bar"
+19130 "Elite Kipchak (Mercenary)"
+19134 "Flaming Camel"
 5000 "Test String"
 19200 "Farm"
 19201 "Tower"
@@ -5077,6 +5090,8 @@
 19321 "Trebuchet"
 19329 "Krepost"
 19350 "Auto Scout"
+19351 "Resume Game"
+
 //
 // Civilization descriptions used by tech tree.
 //
@@ -5531,6 +5546,11 @@
 22077 "39 Here is some food!"
 22078 "39 Here is some gold!"
 22079 "39 Here is some stone!"
+22080 "Wood: %d"
+22081 "Food: %d"
+22082 "Gold: %d"
+22083 "Stone: %d"
+22084 "Population: %d"
 22096 "My armies will easily crush you!"
 22097 "You cannot possibly defeat my mighty forces."
 22098 "Or the blades of my invincible warriors shall fall upon you."
@@ -5664,6 +5684,7 @@
 24574 "<b>Next Chapter<b> \nSkip to the next chapter."
 26068 "Create <b>Knight<b> (<cost>) \nPowerful all-purpose cavalry. Strong vs. infantry and archers. Weak vs. Pikemen, Camel Riders, and Monks.<i> Upgrades: attack, armor (Blacksmith); speed, hit points, to Cavalier 300F, 300G (Stable); creation speed (Castle); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range>"
 26070 "Create <b>Cavalier<b> (<cost>) \nPowerful all-purpose cavalry. Strong vs. infantry and archers. Weak vs. Pikemen, Camel Riders, and Monks.<i> Upgrades: attack, armor (Blacksmith); speed, hit points, to Paladin 1300F, 750G (Stable); creation speed (Castle); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range>"
+26077 "Create <b>Heavy Swordsman<b> (<cost>) \nAll-purpose infantry unit. Strong vs. buildings and infantry. Weak vs. archers at long range.<i> Upgrades: attack, armor (Blacksmith); speed (Barracks); creation speed (Castle); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range>"
 26078 "Create <b>Spearman<b> (<cost>) \nAnti-cavalry infantry unit. Strong vs. mounted units, especially elephants. Weak vs. archers and infantry.<i> Upgrades: attack, armor (Blacksmith); speed, to Pikeman 215F, 90G (Barracks); creation speed (Castle); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range>"
 26079 "Create <b>Militia<b> (<cost>) \nAll-purpose infantry unit. Strong vs. buildings and infantry. Weak vs. archers at long range.<i> Upgrades: attack, armor (Blacksmith); cost, speed, to Man-at-Arms 100F, 40G (Barracks); creation speed (Castle); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range>"
 26080 "Create <b>Man-at-Arms<b> (<cost>) \nAll-purpose infantry unit. Strong vs. buildings and infantry. Weak vs. archers at long range.<i> Upgrades: attack, armor (Blacksmith); cost, speed, to Long Swordsman 200F, 65G (Barracks); creation speed (Castle); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range>"
@@ -5742,7 +5763,7 @@
 26160 "Build <b>Fire Galley<b> (<cost>) \nWarship that spews fire at close range. Strong vs. Galleys. Weak vs. Demolition Rafts.<i> Upgrades: armor, speed, cost, to Fire Ship 230F, 100G (Dock); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range>"
 26161 "Build <b>Market<b> (<cost>) \nUsed to buy and sell resources, trade with other players by land, and research trade technologies. Required to send resources to other players. Enables you to see the line of sight of your allies.<i> Upgrades: line of sight (Town Center); hit points, armor (University); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range>"
 26162 "Build <b>Demolition Raft<b> (<cost>) \nDemolition ship armed with explosives. Strong vs. Fire Galleys and buildings. Self-destructs when used.<i> Upgrades: armor, speed, cost, to Demolition Ship 230F, 100G (Dock); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range>"
-26164 "Build <b>Town Center<b> (<cost>) \nUsed to train Villagers, deposit resources, advance to the next Age, and research technologies. Units can garrison inside for protection. Archers and Villagers provide additional projectiles. Provides 5 population. Cannot be converted by enemy Monks.<i> Upgrades: line of sight (Town Center); hit points, armor, accuracy (University); attack, range (Blacksmith).<i> \n<hp> <attack> <armor> <piercearmor> <range> <garrison>"
+26164 "Build <b>Town Center<b> (<cost>) \nUsed to train Villagers, deposit resources, advance to the next Age, and research technologies. Units can garrison inside for protection. Archers and Villagers provide additional projectiles. Provides 5 population. Cannot be converted by enemy Monks.<i> Upgrades: line of sight (Town Center); hit points, armor, accuracy (University); attack (Blacksmith).<i> \n<hp> <attack> <armor> <piercearmor> <range> <garrison>"
 26169 "Build <b>Siege Workshop<b> (<cost>) \nUsed to build and upgrade siege weapons.<i> Upgrades: line of sight (Town Center); hit points, armor (University); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range> <garrison>"
 26171 "Build <b>Stable<b> (<cost>) \nUsed to train and upgrade cavalry units.<i> Upgrades: production speed (Castle); line of sight (Town Center); hit points, armor (University); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range> <garrison>"
 26176 "Build <b>University<b> (<cost>) \nUsed to research technologies to improve units and buildings.<i> Upgrades: line of sight (Town Center); hit points, armor (University); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range>"
@@ -5763,7 +5784,7 @@
 26311 "Build <b>Town Center<b> (<cost>) \nUsed to train Villagers, deposit resources, advance to the next Age, and research technologies. Units can garrison inside for protection. Archers and Villagers provide additional projectiles. Provides 5 population. Cannot be converted by enemy Monks.<i> Upgrades: line of sight (Town Center); hit points, armor, accuracy (University); attack (Blacksmith).<i> \n<hp> <attack> <armor> <piercearmor> <range> <garrison>"
 26326 "Create <b>Scout Cavalry<b> (<cost>) \nFast cavalry for scouting and raiding. Resistant to conversion. Strong vs. Monks. Weak vs. Pikemen and Camel Riders.<i> Upgrades: attack, armor (Blacksmith); speed, hit points (Stable); speed, to Light Cavalry 150F, 50G (Stable); creation speed (Castle); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range>"
 26344 "Build <b>House<b> (<cost>) \nProvides 5 population each. Your current/supportable population is shown at the top of the screen.<i> Upgrades: line of sight (Town Center); hit points, armor (University); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range>"
-26375 "Create <b>Flaming Camel<b> (<cost>) \nDemolition camel armed with inflammable hay. Strong vs. buildings and siege units. Weak vs. archers at long range. Self-destructs when used.<i> Upgrades: creation speed (Castle); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range>"
+26375 "Create <b>Flaming Camel<b> (<cost>) \nIncendiary camel loaded with flammable hay and brush. Strong vs. mounted units, especially elephants. Weak vs. archers and infantry. Self-destructs when used.<i> Upgrades: creation speed (Castle); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range>"
 26381 "Build <b>Trebuchet<b> (<cost>) \nPowerful anti-building siege weapon with long range. Must be packed to move, unpacked to attack. Cannot attack enemies at close range. Strong vs. buildings. Can attack ground and destroy trees.<i> Upgrades: attack, range (University); creation speed (Castle); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range>"
 26408 "Create <b>Pikeman<b> (<cost>) \nAnti-cavalry infantry unit. Strong vs. mounted units, especially elephants. Weak vs. archers and infantry.<i> Upgrades: attack, armor (Blacksmith); speed, to Halberdier 300F, 600G (Barracks); creation speed (Castle); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range>"
 26409 "Create <b>Halberdier<b> (<cost>) \nAnti-cavalry infantry unit. Strong vs. mounted units, especially elephants. Weak vs. archers and infantry.<i> Upgrades: attack, armor (Blacksmith); speed (Barracks); creation speed (Castle); more resistant to Monks (Monastery).<i> \n<hp> <attack> <armor> <piercearmor> <range>"
@@ -5895,12 +5916,12 @@
 28101 "Advance to <b>Feudal Age<b> (<cost>; two Dark Age buildings) \nImproves your civilization. Gives you access to different buildings, more powerful military units, and stronger technologies. Before you can advance, you must have any two Dark Age buildings: Lumber Camp, Mining Camp, Mill, Dock, or Barracks."
 28102 "Advance to <b>Castle Age<b> (<cost>; two Feudal Age buildings) \nImproves your civilization. Gives you access to different buildings, more powerful military units, and stronger technologies. Before you can advance, you must have any two Feudal Age buildings: Archery Range, Stable, Blacksmith, or Market."
 28103 "Advance to <b>Imperial Age<b> (<cost>; two Castle Age buildings or a Castle/Krepost) \nImproves your civilization. Gives you access to different buildings, more powerful military units, and stronger technologies. Before you can advance, you must have a Castle/Krepost or any two Castle Age buildings: University, Siege Workshop, or Monastery."
-28150 "Research <b>Bodkin Arrow<b> (<cost>) \nArchers, cavalry archers, galleys, Viking Longboats, Town Centers, Castles, and towers have +1 attack and +1 range."
-28151 "Research <b>Bracer<b> (<cost>) \nArchers, cavalry archers, galleys, Viking Longboats, Town Centers, Castles, and towers have +1 attack and +1 range."
+28150 "Research <b>Bodkin Arrow<b> (<cost>) \nArchers, cavalry archers, galleys, Castles, and towers have +1 attack and +1 range. Town Centers have +1 attack."
+28151 "Research <b>Bracer<b> (<cost>) \nArchers, cavalry archers, galleys, Castles, and towers have +1 attack and +1 range. Town Centers have +1 attack."
 28163 "Upgrade to <b>Fortified Wall<b> (<cost>) \nUpgrades your Stone Walls and lets you build Fortified Walls, which are stronger and harder to breach. Also increases the hit points of your Gates, which makes them harder to destroy."
 28164 "Research <b>Revetments<b> (<cost>) \nUpgrades your Palisade Walls to make them stronger and harder to breach. Also increases the hit points of your Palisade Gates, which makes them harder to destroy."
 28165 "Research <b>Bombard Cannon<b> (<cost>) \nLets you build Bombard Cannons."
-28172 "Research <b>Fletching<b> (<cost>) \nArchers, cavalry archers, galleys, Viking Longboats, Town Centers, Castles, and towers have +1 attack and +1 range."
+28172 "Research <b>Fletching<b> (<cost>) \nArchers, cavalry archers, galleys, Castles, and towers have +1 attack and +1 range. Town Centers have +1 attack."
 28176 "Upgrade to <b>Pikeman<b> (<cost>) \nUpgrades your Spearmen and lets you create Pikemen, which are stronger."
 28180 "Research <b>Gold Shaft Mining<b> (<cost>) \nVillagers mine gold 15% faster."
 28186 "Upgrade to <b>Guard Tower<b> (<cost>) \nUpgrades your Watch Towers and lets you build Guard Towers, which are stronger and have more attack strength."
@@ -5951,7 +5972,7 @@
 28264 "Upgrade to <b>Elite Boyar<b> (<cost>) \nUpgrades your Boyars and lets you create Elite Boyars, which are stronger."
 28265 "Upgrade to <b>Elite Kamayuk<b> (<cost>) \nUpgrades your Kamayuks and lets you create Elite Kamayuks, which are stronger."
 28266 "Research <b>Andean Sling<b> (<cost>) \nUpgrades your skirmishers and slingers by removing their minimum range."
-28267 "Research <b>Couriers<b> (<cost>) \nKamayuks, Slingers, Eagles have +1 armor/+2 pierce armor."
+28267 "Research <b>Fabric Shields<b> (<cost>) \nKamayuks, Slingers, Eagles have +1 armor/+2 pierce armor."
 28268 "Research <b>Orthodoxy<b> (<cost>) \nMonks have extra armor."
 28269 "Research <b>Druzhina<b> (<cost>) \nInfantry damage adjacent units."
 28270 "Research <b>Sultans<b> (<cost>) \nAll gold income 10% faster (Trade, mines, relics)."
@@ -6109,6 +6130,8 @@
 30160 "CtR Monsoon - One of the three most challenging Capture the Relic maps. There is only limited space to build on as most of the map is covered in endless marshes, which in the coldest seasons turn to ice. The relic stands in the center, enclosed in a sacred grove of trees."
 30161 "CtR Pyramid Descent - One of the three most challenging Capture the Relic maps. Players appear huddled up around the relic atop a vast pyramid but their monasteries lie all the way on the bottom stair."
 30162 "CtR Spiral - One of the three most challenging Capture the Relic maps. The center of the map has been engulfed in a spiral of deep waters and the only way to reach the relic is to follow the current in long and treacherous circles."
+30163 "Golden Swamp - A tropical marsh lies at the center of a jungle, enshrouding a small island brimming with gold. The rest of the jungle remains bereft of riches, rendering this swampland too enticing to pass up."
+30164 "Four Lakes - An ordinary land at first sight, with four serene lakes resting in the corners of the map, it rapidly breaks into a race for control of the much-coveted waters, for they hold the greatest abundance of fish."
 30170 "Random Map - Most common game; you choose the settings and victory conditions."
 30171 "Regicide - Your King must be the last to survive. If your King dies, you're out of the game."
 30172 "Death Match - All players start with huge stockpiles of wood, food, gold, and stone and then fight to the death."
@@ -7285,7 +7308,7 @@
 44805	"Chinon"
 44806	"Southern English"
 44808	"1. The French army is limited to the Castle Age and a population of 125.\n\n2. Hurry to Orléans before the English can cause much damage. Be wary of English forces south of the river, but do not forget to rendezvous with your army in Blois.\n\n3. Once the supplies arrive in Orléans, you will be able to build up your forces. Frankish Knights are useful for taking care of English Longbowmen and siege weapons. Frankish Castles are inexpensive and provide excellent defense.\n\n4. Use your Market to trade for resources until you can venture outside of the city.\n\n5. The English Castles have large garrisons. It is best to assemble a large attack force before attempting to storm them.\n\n6. Rich farmland is located west of Orléans, but outside of the city walls and vulnerable."
-44809	"Your scouts report:\n\n- Joan and her escort (Blue) is leaving for Orléans. Reinforcements and supplies are waiting for her in Blois (Cyan). Finally, the army must reach the city of Orléans (Grey) across the river and relieve the English siege of the city.\n\n-The English have divided their army, surrounding Orléans from both sides and occupying several castles. To the north is the Northern English army (Red), and to the south the Southern English army (Orange). You will need siege equipment to destroy their castles.\n\n- The Burgundians camp to the east. They are not a real threat at first, but left alone they will train a sizeable infantry army."
+44809	"Your scouts report:\n\n- Joan and her escort (Blue) is leaving for Orléans. Reinforcements and supplies are waiting for her in Blois (Cyan). Finally, the army must reach the city of Orléans (Grey) across the river and relieve the English siege of the city.\n\n- The English have divided their army, surrounding Orléans from both sides and occupying several castles. To the north is the Northern English army (Red), and to the south the Southern English army (Orange). You will need siege equipment to destroy their castles.\n\n- The Burgundians camp to the east. They are not a real threat at first, but left alone they will train a sizeable infantry army."
 44810	"<GREY>Orléans Villager: Hurrah! Joan of Arc has brought us supplies! Now we can muster the forces we need to raze one of the English castles."
 44811	"<BLUE>Alencon: This Burgundian rabble shall not stop us!"
 44812	"<GREY>Orléans Villager: Joan the Maid has come! We are saved!"
@@ -7941,7 +7964,7 @@
 60003	"Persians"
 60004	"Eastern Roman Empire"
 60008	"1. The Huns may only reach the Castle Age and support a population of 125.\n\n2. Bleda may be defeated in several ways; you can change your stance with him to Enemy and attack him, see that he dies in an accident, or refuse his challenge altogether and flee the Hunnic camp. \n\n 3. Look for allies in unlikely places. The Scythians (Green) are not on good terms with their neighbors, so it may be possible to convince them to fight against each other."
-60009	"Your scouts report:\n\n- Attila the Hun (Yellow) initially commands no troops as all of the Huns are loyal to the Hunnic king, Bleda (Purple). Attila must somehow depose Bleda in order to inherit troops and villagers. \n\n There are three other enemies scattered across the landscape:\n\n- The Eastern Roman Empire (Blue) has a fort to the south where it holds some Huns captive. The Romans rely on their infantry in combat.\n\n- The Scythians (Green) have a scattered encampment to the west. Because the Scythians are a nomadic people, there are unmined reserves of stone in their area.\n\n- The most dangerous enemy is the Persian city (Red) across the bay to the east. The Persians hoard lots of gold, but their army consists of Mangonels and War Elephants as well as a considerable navy."
+60009	"Your scouts report:\n\n- Attila the Hun (Yellow) initially commands no troops as all of the Huns are loyal to the Hunnic king, Bleda (Purple). Attila must somehow depose Bleda in order to inherit troops and villagers.\n\nThere are three other enemies scattered across the landscape:\n\n- The Eastern Roman Empire (Blue) has a fort to the south where it holds some Huns captive. The Romans rely on their infantry in combat.\n\n- The Scythians (Green) have a scattered encampment to the west. Because the Scythians are a nomadic people, there are unmined reserves of stone in their area.\n\n- The most dangerous enemy is the Persian city (Red) across the bay to the east. The Persians hoard lots of gold, but their army consists of Mangonels and War Elephants as well as a considerable navy."
 60010	"<PURPLE>Bleda the Hun: You challenge my every decision. It is as if you seek to lead the Huns yourself."
 60011	"<GREEN>Leipoxais: Attila's honor is meaningless! We will bring death to the treacherous Huns."
 60012	"<GREEN>Leipoxais: The Huns have killed my son! We will spit on Attila's grave!"
@@ -8105,7 +8128,7 @@
 60404	"Alans"
 60405	"Franks"
 60408	"1. The Huns are restricted to a population limit of 150.\n\n2. This battle will play like a Death Match. Prepare for attack almost immediately, but do not forget to collect resources to replenish your losses."
-60409	"Your scouts report:\n\n- The Huns (Yellow) and their allies, the Ostrogoths (Red), occupy the right-hand side of the battlefield. \n\n- The Romans (Blue) and their allies, the Visigoths (Green) and Alans (Cyan), are drawn up across the creek on the left-hand side of the battlefield. \n\n- The embattled Franks (Grey) have been caught in the middle of the battle, and will soon be defeated. Their fate is none of the Huns' concern. \n\n- Among your enemies, the Romans are the most dangerous. Their infantry, Cataphracts, and siege weapons will initially try and hit the Ostrogoths on the Huns' flank. The Visigoths train Huskarls and some cavalry, while the Alan force is composed mostly of Knights and Cavalry Archers."
+60409	"Your scouts report:\n\n- The Huns (Yellow) and their allies, the Ostrogoths (Red), occupy the right-hand side of the battlefield.\n\n- The Romans (Blue) and their allies, the Visigoths (Green) and Alans (Cyan), are drawn up across the creek on the left-hand side of the battlefield.\n\n- The embattled Franks (Grey) have been caught in the middle of the battle, and will soon be defeated. Their fate is none of the Huns' concern.\n\n- Among your enemies, the Romans are the most dangerous. Their infantry, Cataphracts, and siege weapons will initially try and hit the Ostrogoths on the Huns' flank. The Visigoths train Huskarls and some cavalry, while the Alan force is composed mostly of Knights and Cavalry Archers."
 60410	"<RED>Ostrogoths: Attila! You brought us to this accursed battlefield. Now you must keep the Romans from killing us all!"
 60411	"<RED>Ostrogoths: This river will run red with the blood of Visigoths and Romans!"
 60412	"<RED>Ostrogoths: Attila! Our forces are being slaughtered! You must come to our aid soon or else face the Romans alone."
@@ -12338,7 +12361,7 @@
 //
 
 73008	"1. Incorporate the landscape into your tactical decisions. Cliffs and hills in particular can be used to your advantage.\n\n2. Use your units according to their respective strengths:\n\n- Archers are ranged units that are strong against Men-at-Arms and Spearmen, but weak against Skirmishers and cavalry units. They are best used in hit-and-run attacks against slower units.\n\n- Men-at-Arms are generic melee units that are especially strong against buildings and certain types of infantry, but are weak against cavalry and ranged units.\n\n- Spearmen deal considerable bonus damage to cavalry, but are weak against nearly every other unit.\n\n- Skirmishers are strong against Archers and Spearmen, but perform poorly against other units, especially because they cannot fire on units that are too close to them.\n\n- Scout Cavalry are strong against ranged units, but should avoid Spearmen or large groups of Archers."
-73009	"Your scouts report:\n\n- A Feudal Age army consisting of Archers, Skirmishers, Men-at-Arms, Spearmen, and Scout Cavalry is at your disposal to repel the enemy attacks.\n\n- Your opponent (Red) has gathered a Feudal Age army as well and plans to invade your territory." 
+73009	"Your scouts report:\n\n- A Feudal Age army consisting of Archers, Skirmishers, Men-at-Arms, Spearmen, and Scout Cavalry is at your disposal to repel the enemy attacks.\n\n- Your opponent (Red) has gathered a Feudal Age army as well and plans to invade your territory."
 73010	"Welcome! In this challenge, you must defend several areas against enemy attacks. Choose the units that are best suited to fend off each enemy army and try not to lose too many of your own soldiers."
 73011	"Consult the Hints section if you need a reminder about unit strengths and weaknesses."
 73012	"The enemy is preparing to attack you. Study the composition of the enemy forces and choose the soldiers that you want to send into battle by selecting one of the unit types available to you."
@@ -12502,7 +12525,7 @@
 
 120150 "Foot Archer civilization \n\n• Town Centers cost -50% wood in Castle Age \n• Foot archers (except skirmishers) have +1 range Castle Age, +1 range Imperial Age (for +2 total)\n• Shepherds work 25% faster \n\n<b>Unique Unit:<b>  \nLongbowman (archer) \n\n<b>Unique Techs:<b>  \n• Yeomen (+1 foot archer range \n+2 tower attack) \n• Warwolf (Trebuchets do blast damage)\n\n<b>Team Bonus:<b>  \nArchery Ranges work 20% faster"
 120151 "Cavalry civilization \n\n• Castles cost -25% \n• Cavalry +20% hit points starting in Feudal Age \n• Farm upgrades free (require Mill)\n• Foragers work 25% faster \n\n<b>Unique Unit:<b>  \nThrowing Axeman (infantry) \n\n<b>Unique Techs:<b>  \n• Chivalry (Stables work 40% faster) \n• Bearded Axe (+1 Throwing Axemen range)\n\n<b>Team Bonus:<b>  \nKnights +2 line of sight"
-120152 "Infantry civilization \n\n• Infantry cost -35%\n• Infantry +1 attack vs. buildings \n• Villagers +5 attack vs. wild boar; hunters carry +15 meat \n• +10 population in Imperial Age \n\n<b>Unique Unit:<b>  \nHuskarl (infantry) \n\n<b>Unique Techs:<b>  \n• Anarchy (create Huskarls at Barracks) \n• Perfusion (Barracks work 100% faster) \n\n<b>Team Bonus:<b>  \nBarracks work 20% faster"
+120152 "Infantry civilization \n\n• Infantry cost -20% in Dark, -25% in Feudal, -30% in Castle, -35% in Imperial Age\n• Infantry +1 attack vs. buildings per age (starting from Feudal Age) \n• Villagers +5 attack vs. wild boar; hunters carry +15 meat \n• +10 population in Imperial Age \n\n<b>Unique Unit:<b>  \nHuskarl (infantry) \n\n<b>Unique Techs:<b>  \n• Anarchy (create Huskarls at Barracks) \n• Perfusion (Barracks work 100% faster) \n\n<b>Team Bonus:<b>  \nBarracks work 20% faster"
 120153 "Infantry civilization \n\n• Monks healing range 2x \n• Towers garrison 2x units \n• Murder Holes, Herbal Medicine free \n• Farms cost -40% \n• Town Center garrison +10 \n• Barracks units +1 armor (starting from Castle Age) \n\n<b>Unique Unit:<b>  \nTeutonic Knight (infantry) \n\n<b>Unique Techs:<b>  \n• Ironclad (siege weapons extra melee armor) \n• Crenellations (+3 range Castles \ngarrisoned infantry fire arrows)\n\n<b>Team Bonus:<b>  \nUnits resist conversion"
 120154 "Infantry civilization \n\n• Fishing Ships 2x hit points; +2P armor; work rate +5% Dark, +10% Feudal, +15% Castle, +20% Imperial Age\n• Mill, Lumber/Mining Camps cost -50% \n• Infantry attack 25% faster starting in Feudal Age \n\n<b>Unique Unit:<b>  \nSamurai (infantry) \n\n<b>Unique Techs:<b>  \n• Yasama (Towers shoot extra arrows) \n• Kataparuto (Trebuchets fire, pack faster)\n\n<b>Team Bonus:<b>  \nGalleys +50% line of sight"
 120155 "Archer civilization \n\n• Start with +3 villagers, -50 wood, -200 food \n• Technologies cost -10% Feudal,  \n-15% Castle, -20% Imperial Age \n• Town Centers support 10 population and +5 LOS\n• Demolition ships +50% hit points \n\n<b>Unique Unit:<b>  \nChu Ko Nu (archer) \n\n<b>Unique Techs:<b>  \n• Great Wall (Walls and towers +30% HP) \n• Rocketry (Chu Ko Nu +2, scorpions +4 attack)\n\n<b>Team Bonus:<b>  \nFarms +45 food"
@@ -12520,7 +12543,7 @@
 120167 "Defensive and Naval civilization \n\n• Villagers +3 line of sight \n• Stone miners work 20% faster \n• Tower upgrades free (Bombard Tower requires Chemistry)\n• Tower range +1 Castle, +2 Imperial Age\n• Military units (except siege weapons) cost -15% wood \n\n<b>Unique Units:<b>  \nWar Wagon (cavalry archer), Turtle Ship (war ship)\n\n<b>Unique Techs:<b>  \n• Panokseon (Turtle Ships move 15% faster) \n• Shinkichon (Mangonel-line +1 range)\n\n<b>Team Bonus:<b>  \nMangonel-line minimum range reduced"
 120168 "Archer and Naval civilization \n\n• Advancing to the next age costs -15% \n• Dock technologies cost -50% \n• Fishing Ships cost -15%\n• Gunpowder units cost -20%\n\n<b>Unique Units:<b>  \nGenoese Crossbowman (archer), Condottiero (infantry)\n\n<b>Unique Techs:<b>  \n• Pavise (foot archers +1 armor/+1 pierce armor) \n• Silk Road (trade units cost -50%)\n\n<b>Team Bonus:<b>  \nCondottiero available in the Barracks in Imperial Age"
 120169 "Camel and Gunpowder civilization \n\n• Villagers cost -10% Dark, -15% Feudal, -20% Castle, -25% Imperial Age \n• Fishermen work 15% faster and carry +15 \n• Camel Riders +1P armor \n\n<b>Unique Units:<b>  \nElephant Archer (cavalry archer), Imperial Camel Rider (camel rider)\n\n<b>Unique Techs:<b>  \n• Sultans (All gold income 10% faster) \n• Shatagni (Hand Cannoneers +1 range)\n\n<b>Team Bonus:<b>  \nCamel units +5 attack vs. buildings"
-120170 "Infantry civilization \n\n• Start with a free Llama \n• Villagers affected by Blacksmith upgrades \n• Houses support 10 population \n• Buildings cost -15% stone\n\n<b>Unique Units:<b>  \nKamayuk (infantry), Slinger (archer)\n\n<b>Unique Techs:<b>  \n• Andean Sling (Skirmishers and Slingers no minimum range) \n• Couriers (Kamayuks, Slingers, Eagles +1/+2P armor)\n\n<b>Team Bonus:<b>  \nFarms built 50% faster"
+120170 "Infantry civilization \n\n• Start with a free Llama \n• Villagers affected by Blacksmith upgrades \n• Houses support 10 population \n• Buildings cost -15% stone\n\n<b>Unique Units:<b>  \nKamayuk (infantry), Slinger (archer)\n\n<b>Unique Techs:<b>  \n• Andean Sling (Skirmishers and Slingers no minimum range) \n• Fabric Shields (Kamayuks, Slingers, Eagles +1/+2P armor)\n\n<b>Team Bonus:<b>  \nFarms built 50% faster"
 120171 "Cavalry civilization \n\n• Villagers kill wolves with 1 strike \n• Forging, Iron Casting, Blast Furnace free\n• Scout Cavalry, Light Cavalry, Hussar cost -15% \n\n<b>Unique Unit:<b>  \nMagyar Huszar (cavalry)\n\n<b>Unique Techs:<b>  \n• Corvinian Army (Magyar Huszars cost no gold) \n• Recurve Bow (Cavalry archers +1 range, +1 attack)\n\n<b>Team Bonus:<b>  \nFoot archers +2 LOS"
 120172 "Infantry and Siege civilization \n\n• Farmers work 10% faster \n• Supplies free \n• Siege Workshop units 15% cheaper\n\n<b>Unique Unit:<b>  \nBoyar (cavalry)\n\n<b>Unique Techs:<b>  \n• Orthodoxy (Monks +3/+3P armor) \n• Druzhina (Infantry damage adjacent units)\n\n<b>Team Bonus:<b>  \nMilitary buildings provide +5 population room"
 120173 "Naval and Gunpowder civilization \n\n• All units cost -15% gold \n• Ships +10% HP \n• Can build Feitoria in Imperial Age \n\n<b>Unique Units:<b>  \nOrgan Gun (siege), Caravel (war ship)\n\n<b>Unique Techs:<b>  \n• Carrack (Ships +1/+1 armor) \n• Arquebus (gunpowder units more accurate)\n\n<b>Team Bonus:<b>  \nLine of sight is shared with the team starting in the Dark Age"
@@ -15031,8 +15054,8 @@ UNRANKED_VIA_RESOURCES "Your ELO score has not changed. Too high starting resour
 106234 "Yabgu Shahmalik"
 
 120181 "Infantry and Cavalry civilization \n\n• Militia-line upgrades free \n• Town Centers cost -50% stone\n• Can build Krepost \n\n<b>Unique Unit:<b> \nKonnik (cavalry)\n\n<b>Unique Techs:<b> \n• Stirrups (Light Cavalry and Konniks attack 25% faster) \n• Bagains (Militia-line gains +5 armor) \n\n<b>Team Bonus:<b> \nBlacksmiths work 50% faster"
-120182 "Cavalry Archer civilization \n\n• Villagers gather +50% food from herdables \n• Units deal +25% damage when fighting from higher elevation \n• Parthian Tactics free \n\n<b>Unique Unit:<b> \nKeshik (raiding cavalry)\n\n<b>Unique Techs:<b> \n• Silk Armor (Light Cavalry and Cavalry Archers receive +1P armor) \n• Timurid Siegecraft (Trebuchets +1 range)\n\n<b>Team Bonus:<b> \nCavalry Archers +2 LOS"
-120183 "Cavalry civilization \n\n• Additional Town Center can be built in the Feudal Age \n• Siege Workshop and Battering Ram available in the Feudal Age\n• Cavalry 5% faster each age (starting in Feudal Age) \n\n<b>Unique Unit:<b> \nKipchak (cavalry archer)\n\n<b>Unique Techs:<b> \n• Steppe Husbandry (Light Cavalry and Cavalry Archers trained 80% faster) \n• Cuman Mercenaries (team members can create 10 free Elite Kipchaks in the Castle)\n\n<b>Team Bonus:<b> \nPalisade Walls +50% HP"
+120182 "Cavalry Archer civilization \n\n• Villagers gather +50% food from herdables \n• Units deal +25% damage when fighting from higher elevation \n• Thumb Ring, Parthian Tactics free \n\n<b>Unique Units:<b> \nKeshik (raiding cavalry), Flaming Camel (petard)\n\n<b>Unique Techs:<b> \n• Silk Armor (Light Cavalry, Steppe Lancers and Cavalry Archers receive +1P armor) \n• Timurid Siegecraft (Trebuchets +2 range, enables Flaming Camels)\n\n<b>Team Bonus:<b> \nCavalry Archers +2 LOS"
+120183 "Cavalry civilization \n\n• Additional Town Center can be built in the Feudal Age \n• Siege Workshop and Battering Ram available in the Feudal Age; Capped Ram upgrade available in Castle Age\n• Cavalry 5% faster each age (starting in Feudal Age) \n\n<b>Unique Unit:<b> \nKipchak (cavalry archer)\n\n<b>Unique Techs:<b> \n• Steppe Husbandry (Light Cavalry, Steppe Lancers and Cavalry Archers trained 50% faster) \n• Cuman Mercenaries (team members can create 10 free Elite Kipchaks in the Castle)\n\n<b>Team Bonus:<b> \nPalisade Walls +50% HP"
 120184 "Cavalry and Monk civilization \n\n• Start with +150 food \n• Spearman-line and Skirmishers move 10% faster\n• Each garrisoned relic gives +1 attack to Knights and Leitis (maximum +4) \n\n<b>Unique Unit:<b> \nLeitis (cavalry)\n\n<b>Unique Techs:<b> \n• Hill Forts (Town Centers +3 range) \n• Tower Shields (Spearman-line and Skirmishers +1P armor)\n\n<b>Team Bonus:<b> \nMonasteries work 20% faster"
 
 5288 "Konnik"
@@ -15241,7 +15264,6 @@ UNRANKED_VIA_RESOURCES "Your ELO score has not changed. Too high starting resour
 7309 "Silk Armor"
 7310 "Timurid Siegecraft"
 7311 "Steppe Husbandry"
-7312 "Elite Kipchak (Mercenary)"
 7398 "Cuman Mercenaries"
 7399 "Hill Forts"
 7400 "Tower Shields"
@@ -15255,9 +15277,9 @@ UNRANKED_VIA_RESOURCES "Your ELO score has not changed. Too high starting resour
 8306 "Upgrade to Elite Leitis"
 8307 "Research Stirrups (Light Cavalry and Konnik attack 25% faster)"
 8308 "Research Bagains (Militia-line receives +5 melee armor)"
-8309 "Research Silk Armor (Light Cavalry and Cavalry Archers receive +1 pierce armor)"
-8310 "Research Timurid Siegecraft (Trebuchets +1 range)"
-8311 "Research Steppe Husbandry (Light Cavalry and Cavalry Archers trained 80% faster)"
+8309 "Research Silk Armor (Light Cavalry, Steppe Lancers and Cavalry Archers receive +1 pierce armor)"
+8310 "Research Timurid Siegecraft (Trebuchets +1 range, enables Flaming Camel)"
+8311 "Research Steppe Husbandry (Light Cavalry, Steppe Lancers and Cavalry Archers trained 50% faster)"
 8398 "Research Cuman Mercenaries (Team receives 10 free Elite Kipchak in Castle)"
 8399 "Research Hill Forts (Town Centers +3 range)"
 8400 "Research Tower Shields (Pikemen and Skirmishers receive +1 pierce armor)"
@@ -15281,7 +15303,7 @@ UNRANKED_VIA_RESOURCES "Your ELO score has not changed. Too high starting resour
 14016 "Ninja"
 14039 "Mounted Samurai"
 14040 "Xolotl Warrior"
-14375 "Flaming Camel"
+14375 "Flaming\nCamel"
 
 17307 "Stirrups"
 17308 "Bagains"
@@ -15317,9 +15339,9 @@ UNRANKED_VIA_RESOURCES "Your ELO score has not changed. Too high starting resour
 
 28307 "Research <b>Stirrups<b> (<cost>) \nLight Cavalry and Konnik attack 25% faster."
 28308 "Research <b>Bagains<b> (<cost>) \nMilitia-line receives +5 melee armor."
-28309 "Research <b>Silk Armor<b> (<cost>) \nLight Cavalry and Cavalry Archers receive +1 pierce armor."
-28310 "Research <b>Timurid Siegecraft<b> (<cost>) \nTrebuchets receive +1 range."
-28311 "Research <b>Steppe Husbandry<b> (<cost>) \nLight Cavalry and Cavalry Archers trained 80% faster."
+28309 "Research <b>Silk Armor<b> (<cost>) \nLight Cavalry, Steppe Lancers and Cavalry Archers receive +1 pierce armor."
+28310 "Research <b>Timurid Siegecraft<b> (<cost>) \nTrebuchets receive +2 range. Enables Flaming Camels."
+28311 "Research <b>Steppe Husbandry<b> (<cost>) \nLight Cavalry, Steppe Lancers and Cavalry Archers trained 50% faster."
 28398 "Research <b>Cuman Mercenaries<b> (<cost>) \nTeam receives 10 free Elite Kipchak in Castle."
 28399 "Research <b>Hill Forts<b> (<cost>) \nTown Centers receive +3 range."
 28400 "Research <b>Tower Shields<b> (<cost>) \nPikemen and Skirmishers receive +1 pierce armor."
@@ -15528,6 +15550,7 @@ SPECIALMAP_SPRAWLINGSTREAMS_ROLLOVER "Narrow rivers flow in unison, forming isla
 98870 "Click to display a grid on the terrains. A terrain grid helps to measure distances and find potential building sites."
 98871 "Click to enable selection modifier hotkeys. Selection modifiers allow you to select specific unit types. CTRL selects military units only while ALT selects civilian units only, SHIFT will select both civilian and military units."
 98872 "Click to enable rollover info. Rollover info will show details about an object when you move your cursor onto it. The information will display in the status area as though it was selected."
+98873 "Click to enable Shift Group Appending. This will allow you to select and merge multiple groups into one single control group."
 98876 "Click to specify the color to be used for the terrain grid."
 99151 "Click to set your voting status to wait."
 99153 "Click to start a vote with other playes to save and exit the game so you can resume it later."
@@ -15584,7 +15607,7 @@ SPECIALMAP_SPRAWLINGSTREAMS_ROLLOVER "Narrow rivers flow in unison, forming isla
 99646 "Click to select your player's color and starting position on the map. In a multiplayer game, if two or more players select the same player number, they can play a cooperative game and share control of the same civilization."
 99647 "Click to select your team number. Players on the same team automatically have their diplomatic stance set to Ally and Allied Victory set. A dash (-) indicates no team. A question mark (?) indicates random teams."
 99663 "Click when you are ready to start the game. The game creator cannot start the game until all players are ready. The names of players who are ready are shown in green."
-99664 "Click to mute chat with player."
+99664 "Click to mute chat from this player for the duration of the match."
 99679 "Click to see \"player\" slot options."
 99680 "Click to see the player names. Close some of the positions to limit a game to fewer than 8 players. Closing a position occupied by a player ejects that player from the game"
 99681 "Click to select a civilization. Each civilization has special abilities and can research different technologies. Click the Technology Tree button (bottom of screen) to learn more about each civilization. More than one player can select the same civilization."
@@ -17380,7 +17403,7 @@ SPECIALMAP_SPRAWLINGSTREAMS_ROLLOVER "Narrow rivers flow in unison, forming isla
 300047 "Tech"
 300048 "Battle \nEvent"
 300049 "Wonder\nDestruction"
-300050 "Wonder\nConstruction" 
+300050 "Wonder\nConstruction"
 300051 "Imperial\nAge"
 300052 "Castle\nAge"
 300053 "Feudal\nAge"
@@ -17578,8 +17601,8 @@ SPECIALMAP_SPRAWLINGSTREAMS_ROLLOVER "Narrow rivers flow in unison, forming isla
 300207 "Search for Clans."
 300208 "Information about the selected Clan."
 
-300209 "Set your Clan Tag. Must be between 3-5 characters. Cannot be changed once your Clan is created. Clan Tag will be appended to the start of your name in Multiplayer."
-300210 "Name your Clan."
+300209 "Set your Clan Tag. It cannot be changed once your Clan is created. Must be between 3-5 characters, and must not contain spaces or any of the following character: \\ / : \" |"
+300210 "Set your Clan Name. It cannot be changed once your Clan is created. Must be between 3-24 characters, and must not contain spaces or any of the following character: \\ / : \" |"
 300211 "Enter a brief description to describe what your Clan is all about. This can be changed at a later time. This description will be public regardless of Visibility setting."
 300212 "Visibility setting of Clan. Public means that anyone can join, and requests will be automatically accepted. Private means invitations need to be accepted by the Clan Leader or members with Admin privileges."
 300213 "Create this Clan. Warning: you will be unable to change the Clan Tag or Name after clicking Create."
@@ -17828,7 +17851,7 @@ IDS_MATCHMAKING_BENCHMARK_NOTIFY_1V1_ONLY "* Your current performance score of %
 300405 "Click to sell 100 stone for %d gold"
 300406 "Click to buy 100 wood for %d gold"
 300407 "Click to buy 100 food for %d gold"
-300408 "Click to buy 100 stone for %d gold" 
+300408 "Click to buy 100 stone for %d gold"
 
 
 300409 "Toggle Extended Tooltips"
@@ -17952,6 +17975,17 @@ IDS_MATCHMAKING_BENCHMARK_NOTIFY_1V1_ONLY "* Your current performance score of %
 300564 "Play any Multiplayer game"
 300565 "Play %s Multiplayer games"
 
+300566 "Collection"
+300567 "Player Stats"
+300568 "General:"
+300569 "Campaigns:"
+300570 "Completion: %d%%"
+300571 "Levels completed on Standard: %d%%"
+300572 "Levels completed on Moderate: %d%%"
+300573 "Levels completed on Hard: %d%%"
+300574 "Blocked"
+300575 "Muted"
+300576 "Player Icons"
 
 
 IDS_OPTIONS_GAMESPEED "Game Speed"
@@ -18133,9 +18167,9 @@ IDS_STATISTICS_NO_TIME      				 "None"
 IDS_STATISTICS_HOURS_ONLY     			     "%0i hours"
 IDS_STATISTICS_MINUTES_ONLY   				 "%1i minutes"
 IDS_STATISTICS_HOURS_AND_MINUTES  			 "%0i hours, and %1i minutes"
-IDS_STATISTICS_SECONDS_ONLY    			     "%2i seconds"   
-IDS_STATISTICS_HOURS_AND_SECONDS    		 "%0i hours, and %2i seconds"      
-IDS_STATISTICS_MINUTES_AND_SECONDS 			 "%1i minutes, and %2i seconds"   
+IDS_STATISTICS_SECONDS_ONLY    			     "%2i seconds"
+IDS_STATISTICS_HOURS_AND_SECONDS    		 "%0i hours, and %2i seconds"
+IDS_STATISTICS_MINUTES_AND_SECONDS 			 "%1i minutes, and %2i seconds"
 IDS_STATISTICS_HOURS_MINTUSE_AND_SECONDS     "%0i hours, %1i minutes, and %2i seconds"
 
 IDS_GAME_NOTIFICATION_PANEL_DEFEAT	"%s was defeated"
@@ -18147,8 +18181,11 @@ IDS_LOBBY_FILE_TRANSFER_CONFIRM	"The host has enabled user generated content for
 IDS_LOBBY_FILE_TRANSFER_EXTRA_FILES " and %i other files."
 IDS_LOBBY_FILE_TRANSFER_CONFIRM_CONTINUE	"Continue?"
 IDS_LOBBY_FILE_TRANSFER_CONFIRM_DISABLE_NOTIFICATION	"* This warning can be disabled in the Options Screen, Game tab. *"
+IDS_LOBBY_FILE_TRANSFER_CONFIRM_RESTORE "In order to participate in this lobby, you must download the restore file from the host."
 
 IDS_LOBBY_FILE_TRANSFER_CHAT_NOTIFICATION	"* The Host is configuring lobby settings which may require a file transfer *"
+IDS_LOBBY_FILE_TRANSFER_CHAT_NOTIFICATION_RESTORE	"* This is a restore lobby and will require a file transfer *"
+
 IDS_LOBBY_MSIXVC_LAN_WARNING_P1	"* Having trouble hosting a LAN game? *"
 IDS_LOBBY_MSIXVC_LAN_WARNING_P2	"* Please visit https://www.ageofempires.com/support/aoe2/#lan-issues for help. *"
 
@@ -18156,7 +18193,7 @@ IDS_BLOCKED_CHARACTER "█"
 
 IDS_TEAM_NAME "%s's Team"
 
-IDS_RANKED_SAVED_WARNING "Please note: The saved game will not count as ranked when it is restored." 
+IDS_RANKED_SAVED_WARNING "Please note: The saved game will not count as ranked when it is restored."
 
 IDS_FAILED_TO_HOST "Failed To Host Game \nPlease try again"
 
@@ -18283,10 +18320,10 @@ IDS_NETWORK_DISCONNECTED_MESSAGE "You have been disconnected from the network.  
 IDS_FINAL_OPPONENT_DISCONNECTED_MESSAGE "Player \"%s\" has disconnected.\nA save has been created for restoring.\nWould you like to exit without viewing the map and final game statistics?"
 IDS_FINAL_OPPONENT_DISCONNECTED_RANKED_MESSAGE "\n(A result has already been recorded for this game. Restoring this save will not affect either player's Ranked rating.)"
 
-IDS_LEAVE_MAP "Leave Map"  
+IDS_LEAVE_MAP "Leave Map"
 
 IDS_MATCHMAKING_INVITE_TO_PARTY "Invite To Party"
-IDS_STATISTICS_BLOCK_HELP_TEXT "Block player. When blocked this player will be automatically muted in lobbies and multiplayer games." 
+IDS_STATISTICS_BLOCK_HELP_TEXT "Block player. When blocked this player will be automatically muted in lobbies and multiplayer games."
 
 IDS_PROFILE_LOSSES "Losses"
 IDS_PROFILE_TOTAL "Total"
@@ -18331,7 +18368,7 @@ IDS_FULLDESKTOP_ERROR "Your monitors may not be set up with the correct configur
 
 IDS_MATCHMAKING_MAP_SELECTION "Ban Map (%d):"
 IDS_MATCHMAKING_MAP_POOL "Map Pool:"
-IDS_MATCHMAKING_MAP_SELECTION_UNAVAILABLE "Ban Map (not available in 4v4):"
+IDS_MATCHMAKING_MAP_SELECTION_UNAVAILABLE "(Bans not available in 4v4)"
 
 IDS_MATCHMAKING_MAP_GAME_SETTINGS "Game Settings:"
 IDS_MATCHMAKING_MAP_WAIT_FOR_HOST "Waiting for host..."
@@ -18433,6 +18470,7 @@ IDS_EVENT_REWARD_MONK_REPLACED "Monks replaced with AoE Priest"
 IDS_EVENT_REWARD_WOLOLO "Wololo sound for Monk conversions"
 IDS_EVENT_REWARD_AOE_SCOUT "Scout replaced with AoE Scout"
 IDS_EVENT_REWARD_PHOTONMAN "Permanently unlock the 'photon man' cheat code"
+IDS_EVENT_REWARD_RETAIN_UNLOCKS "Retain unlocked content after this event"
 
 IDS_EVENT_NAME "Age of Empires DE Anniversary Event"
 IDS_EVENT_NAME_SHORT "AoE DE Anniversary Event"
@@ -18477,7 +18515,7 @@ IDS_REPORTING_REPORT_SUBMITTED "REPORT SUBMITTED"
 IDS_REPORTING_THANKS "Thank you for your report"
 IDS_REPORTING_SERIOUSLY_TEXT "We take reports very seriously."
 IDS_REPORTING_OK "OK"
-IDS_REPORTING_SORRY "Sorry, the report failed to send." 
+IDS_REPORTING_SORRY "Sorry, the report failed to send."
 IDS_REPORTING_TRY_AGAIN_LATER "Please try again later."
 
 IDS_REPORTING_CHEATING_HELP_TEXT "Report this player for cheating. This can include modifying game files for an advantage, getting access to content unavailable to other players or performing an action that is beyond the rules of the game."
@@ -18485,8 +18523,8 @@ IDS_REPORTING_GRIEFING_HELP_TEXT "Report this player for griefing. This can incl
 IDS_REPORTING_INACTIVITY_HELP_TEXT "Report this player for inactivity. This can include immediately leaving the game, not actively playing the game in a competitive match or leaving the game early."
 IDS_REPORTING_VERBAL_ABUSE_HELP_TEXT "Report this player for verbal abuse. This can include inappropriate language, hate speech or general bullying."
 IDS_REPORTING_BAD_CLAN_NAME_HELP_TEXT "Report this clan for using an inappropriate name."
-IDS_REPORTING_BAD_CLAN_TAG_HELP_TEXT "Report this clan for using an inappropriate clan tag." 
-IDS_REPORTING_BAD_CLAN_DESC_HELP_TEXT "Report this clan for using an inappropriate description." 
+IDS_REPORTING_BAD_CLAN_TAG_HELP_TEXT "Report this clan for using an inappropriate clan tag."
+IDS_REPORTING_BAD_CLAN_DESC_HELP_TEXT "Report this clan for using an inappropriate description."
 IDS_REPORTING_SENDTO_TEAM_HELP_TEXT "Send a report to the Age of Empires community team."
 IDS_REPORTING_BAD_LOBBY_NAME_HELP_TEXT "Report this player for using an inappropriate lobby name. This can include inappropriate language or hate speech."
 IDS_REPORTING_BAD_PLAYER_NAME_HELP_TEXT "Report this player for using an inappropriate player name. This can include inappropriate language or hate speech."
@@ -18496,3 +18534,75 @@ IDS_MATCHMAKING_MAP_AVAILABLE_FOR_TEAM "This map is not available for team games
 IDS_MATCHMAKING_MAP_AVAILABLE_IN_TEAM "This map is only available in team games."
 
 IDS_NEXT_DAILY_CHALLENGE_REWARD "Next Daily Challenge (Unlocked at 8am GMT)"
+IDS_LOBBYBROWSER_TREATY "Treaty:"
+IDS_SPECTATOR_CAUGHT_UP "Caught up to live gameplay."
+
+IDS_LOBBYBROWSER_PASSWORD_FILTER_HELP_TEXT "Filter lobbies by whether they are password protected. Check to only display lobbies that have a password. Cross to only display lobbies that don't have a password."
+
+IDS_LOBBY_BROWSER_FILTER_SERVER "Server:"
+IDS_LOBBY_BROWSER_FILTER_GAME_MODE "Game Mode:"
+
+IDS_MATCHMAKING_MAP_TAB_TEAM "Team"
+IDS_MATCHMAKING_MAP_TAB_TEAM_HELP_TEXT "Shows the list of Team Maps"
+
+IDS_MACTHMAKING_MAP_TAB_ONEVONE "1v1"
+IDS_MATCHMAKING_MAP_TAB_ONEVONE_HELP_TEXT "Shows the list of 1v1 Maps"
+
+IDS_MACTHMAKING_MAP_TAB_BANS "(Bans %d/%d)"
+
+IDS_INGAME_SPECTATORS "Spectators: %d"
+
+//
+// Spring Event Strings
+//
+
+IDS_EVENT_NAME_SPRING "Spring Celebration Event"
+IDS_EVENT_NAME_SHORT_SPRING "Spring Celebration Event"
+
+IDS_EVENT_CHALLENGE_HAND_CART "Research Hand Cart"
+IDS_EVENT_CHALLENGE_TRADE_CART "Build at least %s Trade Carts"
+IDS_EVENT_CHALLENGE_FARMS "Build at least %s farms"
+IDS_EVENT_CHALLENGE_FOOD "Gather at least %s food"
+IDS_EVENT_CHALLENGE_POPULATION "Reach at least %s population"
+
+IDS_EVENT_CHALLENGE_HAND_CART_TEXT "Research Hand Cart in %s Standard games OR in %s MP game"
+IDS_EVENT_CHALLENGE_TRADE_CART_TEXT "Build at least %s Trade Carts in a Standard games or %s Trade Carts in MP games"
+IDS_EVENT_CHALLENGE_FARMS_TEXT "Build at least %s farms in %s Standard games OR in 1 MP game"
+IDS_EVENT_CHALLENGE_FOOD_TEXT "Gather at least %s food in %s Standard games or in %s MP game"
+IDS_EVENT_CHALLENGE_POPULATION_TEXT "Reach at least %s population in %s Standard games OR in %s MP game"
+
+IDS_EVENT_REWARD_HAND_CART "Town Centers have more plants/flowers"
+IDS_EVENT_REWARD_TRADE_CART "Profile Icon"
+IDS_EVENT_REWARD_FARMS "Completing building construction launches splash of petals"
+IDS_EVENT_REWARD_FOOD "Profile Icon"
+IDS_EVENT_REWARD_POPULATION "Explosions from petards and demolition ships replaced by floral explosions"
+
+
+IDS_EVENT_CHALLENGE_HAND_CART_BACKUP "Research Hand Cart"
+IDS_EVENT_CHALLENGE_TRADE_CART_BACKUP "Build a Trade Cart"
+IDS_EVENT_CHALLENGE_FARMS_BACKUP "Build %s farms in a single game"
+IDS_EVENT_CHALLENGE_FOOD_BACKUP "Gather %s food in a single game"
+IDS_EVENT_CHALLENGE_POPULATION_BACKUP "Reach %s population"
+
+IDS_EVENT_CHALLENGE_HAND_CART_BACKUP_TEXT "Research Hand Cart in a Standard or Multiplayer game."
+IDS_EVENT_CHALLENGE_TRADE_CART_BACKUP_TEXT "Build a Trade Cart in a Standard or Multiplayer game."
+IDS_EVENT_CHALLENGE_FARMS_BACKUP_TEXT "Build at least %s farms in a single Standard or Multiplayer game."
+IDS_EVENT_CHALLENGE_FOOD_BACKUP_TEXT "Gather at least %s food in a single Standard or Multiplayer game."
+IDS_EVENT_CHALLENGE_POPULATION_BACKUP_TEXT "Reach at least %s population in Standard or Multiplayer game."
+
+IDS_EVENT_REWARD_HAND_CART_BACKUP "Town Centers have more plants/flowers"
+IDS_EVENT_REWARD_TRADE_CART_BACKUP "Berry bushes replaced by pink petal bushes"
+IDS_EVENT_REWARD_FARMS_BACKUP "Terrains updated to be more lush"
+IDS_EVENT_REWARD_FOOD_BACKUP "Explosions from petards and demolition ships replaced by floral explosions"
+IDS_EVENT_REWARD_POPULATION_BACKUP "All arrows replaced by flowers"
+
+IDS_MAINTENANCE_NOTIFICATION "Maintenance In %d Minutes"
+IDS_MAINTENANCE_CHAT_NOTIFICATION  "In %d minutes the servers will be taken offline for maintenance, if you are in a ranked game you will not loss ELO."
+IDS_MAINTENANCE_MAIN_MENU "Maintenance In %s"
+IDS_MAINTENANCE_RANKED_WARNING "Ranked queue is disabled in preparation for maintenance."
+IDS_MAINTENANCE_LOBBY_WARNING "In less than 1 hour the multiplayer servers will be taken offline for maintenance. This may not be enough time to finish a game. Do you want to create the game anyway?"
+
+IDS_LOGIN_AS "You are currently signed in as "
+
+IDS_MAINMENU_CANT_CONNECT  "Reconnect to Multiplayer Services"
+IDS_MAINMENU_CANT_CONNECT_HELP_TEXT "Click to connect to Multiplayer Services."

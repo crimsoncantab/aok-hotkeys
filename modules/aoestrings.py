@@ -1,6 +1,8 @@
 import re
 import hotkeys
 
+AOESTRINGS = r'aoestrings'
+
 
 def get_string_mapping(stringsfile):
     pattern = re.compile(
@@ -23,10 +25,11 @@ def get_string_mapping(stringsfile):
 if __name__ == '__main__':
     import sys
 
-    with open('aoestrings') as stringsfile:
+    with open(AOESTRINGS) as stringsfile:
         string_map = get_string_mapping(stringsfile)
     hki = sys.stdin.read()
     hkfile = hotkeys.HotkeyFile(hki, False)
+    print(hkfile._file_size)
     print(hkfile.orphan_ids)
     descs = {i: string_map.get(i, 'UNKNOWN') for i in hkfile.orphan_ids}
     with open('output.out', 'w') as output:

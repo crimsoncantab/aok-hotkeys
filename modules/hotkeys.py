@@ -21,7 +21,7 @@ hk_versions = [
     ('50', 0x40400000, {2192, 2204, 2252, 2264}, 'HD5.0+'),
     ('wk', 0x3f800000, {2240}, 'WololoKingdoms'),
     ('deo', 0x40400000, {}, 'DE (old)'), #don't ever pick this version
-    ('de', 0x40400000, {4632, 4644, 4664}, 'Definitive Edition'),
+    ('de', 0x40400000, {4632, 4644, 4664, 4676}, 'Definitive Edition'),
 ]
 
 
