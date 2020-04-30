@@ -370,6 +370,10 @@ hk_mapping = {
     'kipchak': (0x4aba, 'Elite Kipchak'), #this one changed numerical ids
     'flamingcamel': (0x4abe, 'Flaming Camel'),
 
+    # update 36906
+    'smarket' : (0x4abb, 'Select all Markets'),
+    'ssmith' : (0x4abc, 'Select all Blacksmiths'),
+    'suniversity' : (0x4abd, 'Select all Universities'),
 }
 
 hk_groups = [
@@ -558,6 +562,9 @@ hk_groups = [
         'skrepost',
         'smonastery',
         'stc',
+        'smarket',
+        'ssmith',
+        'suniversity',
         'sland',
         'sidlev',
         'slandvis',
