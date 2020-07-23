@@ -374,6 +374,9 @@ hk_mapping = {
     'smarket' : (0x4abb, 'Select all Markets'),
     'ssmith' : (0x4abc, 'Select all Blacksmiths'),
     'suniversity' : (0x4abd, 'Select all Universities'),
+
+    #update 39284
+    'droprelic' : (0x4b21, 'Drop Relic'),
 }
 
 hk_groups = [
@@ -597,7 +600,8 @@ hk_groups = [
     ]),
     ('Monks', [
         'convert',
-        'heal'
+        'heal',
+        'droprelic',
     ]),
     ('Villagers', [
         'build',
