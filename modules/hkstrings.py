@@ -377,6 +377,10 @@ hk_mapping = {
 
     #update 39284
     'droprelic' : (0x4b21, 'Drop Relic'),
+
+    #update 42848
+    'strade' : (0x4ac3, 'Select all Trade Carts/Cogs'),
+    'king': (0x4abf, 'Go to King'),
 }
 
 hk_groups = [
@@ -553,6 +557,7 @@ hk_groups = [
         'selected',
         'last',
         'last2',
+        'king',
     ]),
     ('Select Commands', [
         'smilitaryb',
@@ -572,6 +577,7 @@ hk_groups = [
         'sidlev',
         'slandvis',
         'sidlet',
+        'strade',
     ]),
     ('All Units', [
         'delete',
