@@ -1,7 +1,7 @@
 import re
 import hotkeys
 
-AOESTRINGS = r'aoestrings'
+AOESTRINGS = r'key-value-strings-utf8.txt'
 
 
 def get_string_mapping(stringsfile):
