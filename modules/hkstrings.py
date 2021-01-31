@@ -361,34 +361,35 @@ hk_mapping = {
     'tsquires': (0x4bff, 'Tech: Squires'),
 
     # added later in de
-    'kipchak_old': (0x1c90, 'Elite Kipchak (Mercenary)'), #don't show this one anymore, but keep it so files still parse
+    # don't show this one anymore, but keep it so files still parse
+    'kipchak_old': (0x1c90, 'Elite Kipchak (Mercenary)'),
 
     # added later in de
     'autoscout': (0x4b96, 'Auto Scout'),
 
     # added later in de
-    'kipchak': (0x4aba, 'Elite Kipchak'), #this one changed numerical ids
+    'kipchak': (0x4aba, 'Elite Kipchak'),  # this one changed numerical ids
     'flamingcamel': (0x4abe, 'Flaming Camel'),
 
     # update 36906
-    'smarket' : (0x4abb, 'Select all Markets'),
-    'ssmith' : (0x4abc, 'Select all Blacksmiths'),
-    'suniversity' : (0x4abd, 'Select all Universities'),
+    'smarket': (0x4abb, 'Select all Markets'),
+    'ssmith': (0x4abc, 'Select all Blacksmiths'),
+    'suniversity': (0x4abd, 'Select all Universities'),
 
-    #update 39284
-    'droprelic' : (0x4b21, 'Drop Relic'),
+    # update 39284
+    'droprelic': (0x4b21, 'Drop Relic'),
 
-    #update 42848
-    'strade' : (0x4ac3, 'Select all Trade Carts/Cogs'),
+    # update 42848
+    'strade': (0x4ac3, 'Select all Trade Carts/Cogs'),
     'king': (0x4abf, 'Go to King'),
 
-    #update 44725
-    'donjon' : (0x4ac0, 'Go to Donjon'),
-    'sdonjon' : (0x4ac1, 'Select all Donjons'),
-    'bdonjon' : (0x4ac2, 'Donjon'),
-    'sallidlemil' : (0x4ac4, 'Select all Idle Land/Naval Military Units'),
-    'flemmilitia' : (0x4ac5, 'Flemish Militia'),
-    'militarybuild' : (0x4b98, 'Build (Serjeant)'),
+    # update 44725
+    'donjon': (0x4ac0, 'Go to Donjon'),
+    'sdonjon': (0x4ac1, 'Select all Donjons'),
+    'bdonjon': (0x4ac2, 'Donjon'),
+    'sallidlemil': (0x4ac4, 'Select all Idle Land/Naval Military Units'),
+    'flemmilitia': (0x4ac5, 'Flemish Militia'),
+    'militarybuild': (0x4b98, 'Build (Serjeant)'),
 }
 
 hk_groups = [
