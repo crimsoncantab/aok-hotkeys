@@ -35,3 +35,4 @@ if __name__ == '__main__':
     with open('output.out', 'w') as output:
         for k, v in descs.items():
             output.write('\'\' : (0x{:x}, {}),\n'.format(k, repr(v)))
+    hkfile.validate()

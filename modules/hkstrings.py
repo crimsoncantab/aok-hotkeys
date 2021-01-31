@@ -381,6 +381,14 @@ hk_mapping = {
     #update 42848
     'strade' : (0x4ac3, 'Select all Trade Carts/Cogs'),
     'king': (0x4abf, 'Go to King'),
+
+    #update 44725
+    'donjon' : (0x4ac0, 'Go to Donjon'),
+    'sdonjon' : (0x4ac1, 'Select all Donjons'),
+    'bdonjon' : (0x4ac2, 'Donjon'),
+    'sallidlemil' : (0x4ac4, 'Select all Idle Land/Naval Military Units'),
+    'flemmilitia' : (0x4ac5, 'Flemish Militia'),
+    'militarybuild' : (0x4b98, 'Build (Serjeant)'),
 }
 
 hk_groups = [
@@ -558,6 +566,7 @@ hk_groups = [
         'last',
         'last2',
         'king',
+        'donjon',
     ]),
     ('Select Commands', [
         'smilitaryb',
@@ -568,6 +577,7 @@ hk_groups = [
         'ssiege',
         'scastle',
         'skrepost',
+        'sdonjon',
         'smonastery',
         'stc',
         'smarket',
@@ -577,6 +587,7 @@ hk_groups = [
         'sidlev',
         'slandvis',
         'sidlet',
+        'sallidlemil',
         'strade',
     ]),
     ('All Units', [
@@ -598,6 +609,7 @@ hk_groups = [
         'box',
         'stag',
         'flank',
+        'militarybuild',
     ]),
     ('Siege Units', [
         'unpack',
@@ -656,6 +668,8 @@ hk_groups = [
         'gatecounterclock',
         'bcastle',
         'bkrepost',
+    ]), ('Serjeant Build Menu', [
+        'bdonjon',
     ]),
     ('Fishing Ship Build', [
         'btrap',
@@ -664,6 +678,7 @@ hk_groups = [
     ]),
     ('Town Center', [
         'vill',
+        'flemmilitia',
         'bell',
         'tloom',
         'twheel',
