@@ -390,6 +390,29 @@ hk_mapping = {
     'sallidlemil': (0x4ac4, 'Select all Idle Land/Naval Military Units'),
     'flemmilitia': (0x4ac5, 'Flemish Militia'),
     'militarybuild': (0x4b98, 'Build (Serjeant)'),
+
+    # community patch 1.6
+    'cpsteppe': (0x16a8, 'Steppe Lancer (CP)'),
+    'cpatonement': (0x4aac, 'Atonement (CP)'),
+    'cpblock': (0x4aad, 'Block Printing (CP)'),
+    'cpfaith': (0x4aae, 'Faith (CP)'),
+    'cpfervor': (0x4aaf, 'Fervor (CP)'),
+    'cpsaranges': (0x4195, 'Select all Archery ranges (CP)'),
+    'cpsarax': (0x4194, 'Select all Barracks (CP)'),
+    'cpsacastles': (0x419b, 'Select all Castles (CP)'),
+    'cpsadocks': (0x4198, 'Select all Docks (CP)'),
+    'cpsadonjons': (0x419d, 'Select all Donjons (CP)'),
+    'cpsaidlemil': (0x4191, 'Select all Idle_military (CP)'),
+    'cpsakreposts': (0x419c, 'Select all Kreposts (CP)'),
+    'cpsamarkets': (0x4199, 'Select all Markets (CP)'),
+    'cpsamonasteries': (0x419a, 'Select all Monasteries (CP)'),
+    'cpsamilitary': (0x419e, 'Select all Military_Buildings (CP)'),
+    'cpsasiege': (0x4197, 'Select all Siege_workshops (CP)'),
+    'cpsastables': (0x4196, 'Select all Stables (CP)'),
+    'cpsatcs': (0x4193, 'Select all Town_centers (CP)'),
+    'cpsatrade': (0x4192, 'Select all Trade_carts (CP)'),
+    'cpsaidlevil': (0x4190, 'Select all Idle_villagers (CP)'),
+    'cpsaflaming': (0x14ff, 'Flaming Camel (CP)'),
 }
 
 hk_groups = [
