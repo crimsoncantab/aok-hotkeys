@@ -613,6 +613,21 @@ hk_groups = [
         'sidlet',
         'sallidlemil',
         'strade',
+        'cpsaranges',
+        'cpsarax',
+        'cpsacastles',
+        'cpsadocks',
+        'cpsadonjons',
+        'cpsaidlemil',
+        'cpsakreposts',
+        'cpsamarkets',
+        'cpsamonasteries',
+        'cpsamilitary',
+        'cpsasiege',
+        'cpsastables',
+        'cpsatcs',
+        'cpsatrade',
+        'cpsaidlevil',
     ]),
     ('All Units', [
         'delete',
@@ -769,6 +784,7 @@ hk_groups = [
         'telephant',
         'tbloodlines',
         'thusbandry',
+        'cpsteppe',
     ]),
     ('Siege Workshop', [
         'ram',
@@ -793,6 +809,10 @@ hk_groups = [
         'theresy',
         'ttheocracy',
         'therbal',
+        'cpatonement',
+        'cpblock',
+        'cpfaith',
+        'cpfervor',
     ]),
     ('Market', [
         'cart',
@@ -819,6 +839,7 @@ hk_groups = [
         'tsappers',
         'tconscription',
         'tspies',
+        'cpsaflaming'
     ]),
     ('Mill', [
         'seed',
