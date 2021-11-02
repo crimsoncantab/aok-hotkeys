@@ -413,6 +413,9 @@ hk_mapping = {
     'cpsatrade': (0x4192, 'Select all Trade_carts (CP)'),
     'cpsaidlevil': (0x4190, 'Select all Idle_villagers (CP)'),
     'cpsaflaming': (0x14ff, 'Flaming Camel (CP)'),
+
+    # update 50292
+    'tconscription2' : (0x4ac6, 'Conscription'),
 }
 
 hk_groups = [
@@ -838,6 +841,7 @@ hk_groups = [
         'thoardings',
         'tsappers',
         'tconscription',
+        'tconscription2',
         'tspies',
         'cpsaflaming'
     ]),

@@ -1,7 +1,9 @@
 import re
 import hotkeys
+import ConfigParser as configparser
 
 AOESTRINGS = r'key-value-strings-utf8.txt'
+WOLOLOSTRINGS = r'language.ini'
 
 
 def get_string_mapping(stringsfile):
@@ -22,11 +24,19 @@ def get_string_mapping(stringsfile):
     return d
 
 
+def get_ini_string_mapping(stringsfile):
+    config = configparser.RawConfigParser()
+    config.readfp(stringsfile)
+    return {int(x): y for (x, y) in config.items('Default')}
+
+
 if __name__ == '__main__':
     import sys
 
-    with open(AOESTRINGS) as stringsfile:
-        string_map = get_string_mapping(stringsfile)
+    # with open(AOESTRINGS) as stringsfile:
+    #     string_map = get_string_mapping(stringsfile)
+    with open(WOLOLOSTRINGS) as stringsfile:
+        string_map = get_ini_string_mapping(stringsfile)
     hki = sys.stdin.read()
     hkfile = hotkeys.HotkeyFile(hki, False)
     print(hkfile._file_size)
