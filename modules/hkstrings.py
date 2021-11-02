@@ -840,7 +840,7 @@ hk_groups = [
         'tuctech',
         'thoardings',
         'tsappers',
-        'tconscription',
+        # 'tconscription',
         'tconscription2',
         'tspies',
         'cpsaflaming'
