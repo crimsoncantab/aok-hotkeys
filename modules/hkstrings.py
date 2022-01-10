@@ -881,7 +881,9 @@ hk_groups = [
 
 if __name__ == '__main__':
     # check for duplicates in hk_groups
-    assert sum(len(group[1]) for group in hk_groups) == len(hk_mapping)
+    # kipchak & conscription have old versions, so - 2
+    assert sum(len(group[1]) for group in hk_groups) == len(hk_mapping) - 2
 
     # check for presence of all keys in both
-    assert set(hotkey for group in hk_groups for hotkey in group[1]) == set(hk_mapping.keys())
+    assert set(hotkey for group in hk_groups for hotkey in group[1]) == set(hk_mapping.keys()) - {'kipchak_old', 'tconscription'}
+
