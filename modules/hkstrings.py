@@ -887,3 +887,5 @@ if __name__ == '__main__':
     # check for presence of all keys in both
     assert set(hotkey for group in hk_groups for hotkey in group[1]) == set(hk_mapping.keys()) - {'kipchak_old', 'tconscription'}
 
+    import json
+    print(json.dumps(hk_mapping))
