@@ -415,7 +415,10 @@ hk_mapping = {
     'cpsaflaming': (0x14ff, 'Flaming Camel (CP)'),
 
     # update 50292
-    'tconscription2' : (0x4ac6, 'Conscription'),
+    'tconscription2': (0x4ac6, 'Conscription'),
+
+    # update 58259
+    'xolotl': (0x4ac7, 'Xolotl Warrior'),
 }
 
 hk_groups = [
@@ -788,6 +791,8 @@ hk_groups = [
         'tbloodlines',
         'thusbandry',
         'cpsteppe',
+        'xolotl',
+
     ]),
     ('Siege Workshop', [
         'ram',
