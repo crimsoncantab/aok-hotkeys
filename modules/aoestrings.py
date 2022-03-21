@@ -1,6 +1,7 @@
 import re
 import hotkeys
 import ConfigParser as configparser
+import hkstrings
 
 AOESTRINGS = r'key-value-strings-utf8.txt'
 WOLOLOSTRINGS = r'language.ini'
@@ -30,14 +31,20 @@ def get_ini_string_mapping(stringsfile):
     return {int(x): y for (x, y) in config.items('Default')}
 
 
-if __name__ == '__main__':
-    import sys
+def print_for_key(char='A'):
+    ds = [d for l in hkfile.data for d in l if
+          (d['code'] in {ord(char), ord(char) + 32} and not d['ctrl'] and not d['shift'] and not d['alt'])]
+    ids = {d['id'] for d in ds}
+    for (k, v) in hkstrings.hk_mapping.items():
+        if v[0] in ids: print (k, v)
 
+
+def main():
+    global hkfile
     with open(sys.argv[1]) as stringsfile:
         string_map = get_string_mapping(stringsfile)
-    # with open(WOLOLOSTRINGS) as stringsfile:
-    #     string_map = get_ini_string_mapping(stringsfile)
-    hki = sys.stdin.read()
+    with open(sys.argv[2], 'rb') as hkifile:
+        hki = hkifile.read()
     hkfile = hotkeys.HotkeyFile(hki, False)
     print(hkfile._file_size)
     print(hkfile.orphan_ids)
@@ -46,3 +53,10 @@ if __name__ == '__main__':
     for k, v in descs.items():
         print('\'\' : (0x{:x}, {}),\n'.format(k, repr(v)))
     hkfile.validate()
+    print_for_key('W')
+
+
+if __name__ == '__main__':
+    import sys
+
+    main()
