@@ -49,12 +49,8 @@ def main():
     print(hkfile._file_size)
     print(hkfile.orphan_ids)
     descs = {i: string_map.get(i, 'UNKNOWN') for i in hkfile.orphan_ids}
-    # with open('output.out', 'w') as output:
     for k, v in descs.items():
-        print('\'\' : (0x{:x}, {}),\n'.format(k, repr(v)))
-    hkfile.validate()
-    print_for_key('W')
-
+        print('\'\' : (0x{:x}, {}),'.format(k, repr(v)))
 
 if __name__ == '__main__':
     import sys

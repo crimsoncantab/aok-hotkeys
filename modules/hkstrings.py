@@ -419,7 +419,19 @@ hk_mapping = {
 
     # update 58259
     'xolotl': (0x4ac7, 'Xolotl Warrior'),
+
+    # update 61321
+    'changeweapon': (0x4ac8, 'Change Weapon'),
+    'elephantarcher': (0x4ac9, 'Elephant Archer'),
+    'armoredelephant': (0x4aca, 'Armored Elephant'),
+    'shrivamsha': (0x4acb, 'Shrivamsha Rider'),
+    'caravanserai': (0x4acc, 'Caravanserai'),
+    'telephantarcher': (0x4acd, 'Tech: Elite Elephant Archer'),
+    'tsiegeelephant': (0x4ace, 'Tech: Siege Elephant'),
+    'tshrivamsha': (0x4acf, 'Tech: Elite Shrivamsha Rider'),
+    'telitebattleelephant' : (0x4ad0, 'Tech: Elite Battle Elephant'),
 }
+
 
 hk_groups = [
 
@@ -655,6 +667,7 @@ hk_groups = [
         'stag',
         'flank',
         'militarybuild',
+        'changeweapon',
     ]),
     ('Siege Units', [
         'unpack',
@@ -696,7 +709,8 @@ hk_groups = [
         'btc',
         'bwonder',
         'bfeitoria',
-        'bnext'
+        'caravanserai',
+        'bnext',
     ]), ('Military Build Menu', [
         'brax',
         'brange',
@@ -776,6 +790,8 @@ hk_groups = [
         'tgenitour',
         'tthumb',
         'tparthian',
+        'elephantarcher',
+        'telephantarcher',
     ]),
     ('Stable', [
         'scout',
@@ -792,6 +808,9 @@ hk_groups = [
         'thusbandry',
         'cpsteppe',
         'xolotl',
+        'shrivamsha',
+        'tshrivamsha',
+        'telitebattleelephant',
 
     ]),
     ('Siege Workshop', [
@@ -803,6 +822,8 @@ hk_groups = [
         'tram',
         'tmangonel',
         'tscorpion',
+        'armoredelephant',
+        'tsiegeelephant',
     ]),
     ('Monastery', [
         'monk',
@@ -883,7 +904,6 @@ hk_groups = [
         'tbombard',
     ]),
 ]
-
 if __name__ == '__main__':
     # check for duplicates in hk_groups
     # kipchak & conscription have old versions, so - 2
