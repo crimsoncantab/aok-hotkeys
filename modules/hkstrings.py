@@ -429,7 +429,7 @@ hk_mapping = {
     'telephantarcher': (0x4acd, 'Tech: Elite Elephant Archer'),
     'tsiegeelephant': (0x4ace, 'Tech: Siege Elephant'),
     'tshrivamsha': (0x4acf, 'Tech: Elite Shrivamsha Rider'),
-    'telitebattleelephant' : (0x4ad0, 'Tech: Elite Battle Elephant'),
+    'telitebattleelephant': (0x4ad0, 'Tech: Elite Battle Elephant | Tech: Age Up (CP)'),
 }
 
 
