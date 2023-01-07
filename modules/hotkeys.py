@@ -20,7 +20,7 @@ hk_versions = [
     ('44', 0x40400000, {}, 'HD4.4-4.9'), #don't ever pick this version
     ('50', 0x40400000, {2192, 2204, 2252, 2264}, 'HD5.0+'),
     ('wk', 0x3f800000, {2240}, 'WololoKingdoms'),
-    ('cp', 0x3f800000, {2864, 2876}, 'Community Patch v1.6'),
+    ('cp', 0x3f800000, {2864, 2876, 3520}, 'Community Patch v1.6RC'),
     ('deo', 0x40400000, {}, 'DE (old)'), #don't ever pick this version
     ('de', 0x40400000, {4632, 4644, 4664, 4676, 4712, 4724, 4748, 4820, 4832, 4904, 5000}, 'Definitive Edition'),
 ]
