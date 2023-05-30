@@ -493,6 +493,10 @@ hk_mapping = {
     'cptsupplies': (0x40de, 'Tec: Supplies (CP)'),
     'cptsquires': (0x40e0, 'Tec: Squires (CP)'),
     'cptarson': (0x40e2, 'Tec: Arson (CP)'),
+
+    # update 81058
+    'idlepointers': (0x4ad1, 'Toggle Idle Pointers'),
+    'idlepointers2': (0x1004ad1, 'Toggle Idle Pointers (2)'),
 }
 
 hk_groups = [
@@ -517,6 +521,8 @@ hk_groups = [
         'grid',
         'health',
         'tooltips',
+        'idlepointers',
+        'idlepointers2',
     ]),
     ('Game Commands', [
         'flare',
