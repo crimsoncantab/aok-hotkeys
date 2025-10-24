@@ -198,7 +198,7 @@ def get_string_mapping(stringsfile):
 def get_ini_string_mapping(stringsfile):
     config = configparser.RawConfigParser()
     config.readfp(stringsfile)
-    return {int(x): y for (x, y) in config.items('Default')}
+    return {int(x): y for section in config.sections() for (x, y) in config.items(section) if x.isdigit()}
 
 
 def print_for_key(char='A'):

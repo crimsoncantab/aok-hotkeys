@@ -497,6 +497,18 @@ hk_mapping = {
     # update 81058
     'idlepointers': (0x4ad1, 'Toggle Idle Pointers'),
     'idlepointers2': (0x1004ad1, 'Toggle Idle Pointers (2)'),
+
+    # community patch 1.6RC
+    'cpautotrap' : (0x4d20, 'Auto reseed fish traps (CP)'),
+    'cpflemmilitia' : (0x4d22, 'Flemish Militia (CP)'),
+    'cpserjeant' : (0x16c5, 'Serjeant (CP)'),
+    'cpdroprelic' : (0x41a7, 'Drop Relic (CP)'),
+    'cpunknown' : (0x1004a5a, 'UNKNOWN'),
+    'cpkonnik' : (0x16bb, 'Konnik (CP)'),
+    'cptsiegeelephant' : (0x4d1c, 'Tec: Siege Elephant (CP)'),
+    'cparmoredelephant' : (0x4d1a, 'Armored/Siege Elephant (CP)'),
+    'cpidlemonk' : (0x4d1e, 'Select next idle monk (CP)'),
+    'cpgatelock' : (0x41a5, 'Open/Close Gate (CP)'),
 }
 
 hk_groups = [
@@ -714,6 +726,7 @@ hk_groups = [
         'cpsatcs',
         'cpsatrade',
         'cpsaidlevil',
+        'cpidlemonk',
     ]),
     ('All Units', [
         'delete',
@@ -746,6 +759,7 @@ hk_groups = [
         'convert',
         'heal',
         'droprelic',
+        'cpdroprelic',
     ]),
     ('Villagers', [
         'build',
@@ -762,6 +776,7 @@ hk_groups = [
         'work',
         'unload',  # transport is different spot
         'gatelock',
+        'cpgatelock',
         'ungarrison',
     ]),
     ('Economic Build Menu', [
@@ -808,10 +823,12 @@ hk_groups = [
         'btrap',
         'rtrap',
         'autotrap',
+        'cpautotrap',
     ]),
     ('Town Center', [
         'vill',
         'flemmilitia',
+        'cpflemmilitia',
         'bell',
         'tloom',
         'twheel',
@@ -931,7 +948,9 @@ hk_groups = [
         'tmangonel',
         'tscorpion',
         'armoredelephant',
+        'cparmoredelephant',
         'tsiegeelephant',
+        'cptsiegeelephant',
         'cptscorpion',
         'cptbcannon',
         'cptram',
@@ -1035,6 +1054,12 @@ hk_groups = [
         'ttower',
         'twall',
         'tbombard',
+    ]),
+    ('Donjon', [
+        'cpserjeant'
+    ]),
+    ('Krepost', [
+        'cpkonnik'
     ]),
 ]
 if __name__ == '__main__':
